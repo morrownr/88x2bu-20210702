@@ -198,7 +198,7 @@ $ cd ~/src
 ```
 Step 6: Download the driver
 ```bash
-$ https://github.com/morrownr/88x2bu-20210702.git
+$ git clone https://github.com/morrownr/88x2bu-20210702.git
 ```
 Step 7: Move to the newly created driver directory
 ```bash
