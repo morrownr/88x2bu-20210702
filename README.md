@@ -133,7 +133,7 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 ### Installation Steps
 
-Step 1: Open a terminal (e.g.: Ctrl+Alt+T)
+Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
 Step 2: Update system package information (select the option for the OS you are using)
 
@@ -257,7 +257,7 @@ Note: This script removes everything that has been installed, with the exception
 of the packages installed in Step 3 and the driver directory. The driver directory
 can and probably should be deleted in most cases after running the script.
 
-Step 1: Open a terminal (e.g.: Ctrl+Alt+T)
+Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
 Step 2: Move to the driver directory
 ```bash
