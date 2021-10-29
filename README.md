@@ -55,8 +55,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 ### Compatible Kernels
 
-- Kernels: 3.8 - 5.8  (Realtek)
-- Kernels: 5.9 - 5.15 (community support)
+- Kernels: 3.8 - 5.11  (Realtek)
+- Kernels: 5.12 - 5.15 (community support)
 
 ### Tested Linux Distributions
 
@@ -204,7 +204,7 @@ Step 7: Move to the newly created driver directory
 ```bash
 $ cd ~/src/88x2bu-20210702
 ```
-Step 8: **Only for Raspberry Pi systems**
+Step 8: **Only for Raspberry Pi systems (based on ARM or ARM64 CPUs)**
 
 Warning: This step only applies if you are installing to Raspberry Pi *hardware*. You should skip this step if installing to x86 or amd64 based systems.
 
@@ -218,6 +218,12 @@ Run a preparation script
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
     $ ./raspi64.sh
+
+    Note: Other ARM or ARM64 based systems will require modifications
+    similar to those provided in the above scripts for Raspberry Pi hardware but
+    the number and variety of different ARM and ARM64 based systems makes
+    supporting each system unpractical so you will need to research the needs of
+    your system and make the appropriate modifications. 
 ```
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 ```bash
