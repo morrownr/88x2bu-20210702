@@ -155,27 +155,32 @@ Note: If you do not regularly maintain your system by installing updated package
 ```
 
 Step 3: Install the required packages (select the option for the OS you are using)
-```
+
     Option for Raspberry Pi OS
+```
+    sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
+```
 
-    $ sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
-```
-```
     Option for Debian, Kali or Linux Mint Debian Edition (LMDE)
+```
+    sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
+```
 
-    $ sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
-```
-```
     Option for Ubuntu (all flavors) or Linux Mint
+```
+    sudo apt install -y dkms git build-essential
+```
 
-    $ sudo apt install -y dkms git build-essential
+    Option for Fedora
 ```
+    sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 ```
+
     Options for Arch or Manjaro
 
     if using pacman
-
-    $ sudo pacman -S --noconfirm linux-headers dkms git
+```
+    sudo pacman -S --noconfirm linux-headers dkms git
 
     Note: If you are asked to choose a provider, make sure to choose the one that
     corresponds to your version of the linux kernel (for example, "linux510-headers"
@@ -184,15 +189,13 @@ Step 3: Install the required packages (select the option for the OS you are usin
 
     If using other methods, please follow the instructions provided by those methods.
 ```
-```
-    Option for Fedora
 
-    # sudo dnf -y install git dkms kernel-devel kernel-debug-devel
-```
 Step 4: Create a directory to hold the downloaded driver
-```bash
-$ mkdir -p ~/src
+
 ```
+    mkdir -p ~/src
+```
+
 Step 5: Move to the newly created directory
 ```bash
 $ cd ~/src
