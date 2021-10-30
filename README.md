@@ -140,16 +140,20 @@ Step 2: Update system package information (select the option for the OS you are 
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 
     Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
+
 ```
     sudo apt update
+
 ```
 
     Option for Arch based distributions such as Manjaro
+
 ```
     sudo pacman -Syu
 ```
 
     Option for Fedora based distributions
+
 ```
     sudo dnf -y update
 ```
@@ -179,8 +183,10 @@ Step 3: Install the required packages (select the option for the OS you are usin
     Options for Arch or Manjaro
 
     if using pacman
+
 ```
     sudo pacman -S --noconfirm linux-headers dkms git
+```
 
     Note: If you are asked to choose a provider, make sure to choose the one that
     corresponds to your version of the linux kernel (for example, "linux510-headers"
@@ -188,7 +194,6 @@ Step 3: Install the required packages (select the option for the OS you are usin
     to uninstall it and reinstall the correct version.
 
     If using other methods, please follow the instructions provided by those methods.
-```
 
 Step 4: Create a directory to hold the downloaded driver
 
@@ -197,9 +202,11 @@ Step 4: Create a directory to hold the downloaded driver
 ```
 
 Step 5: Move to the newly created directory
-```bash
-$ cd ~/src
+
 ```
+    cd ~/src
+```
+
 Step 6: Download the driver
 ```bash
 $ git clone https://github.com/morrownr/88x2bu-20210702.git
