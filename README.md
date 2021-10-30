@@ -139,7 +139,9 @@ Step 2: Update system package information (select the option for the OS you are 
 
     Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
-        sudo apt update
+```
+    sudo apt update
+```
 
     Option for Arch based distributions such as Manjaro
 
@@ -205,42 +207,51 @@ Step 5: Move to the newly created directory
 ```
 
 Step 6: Download the driver
-```bash
-$ git clone https://github.com/morrownr/88x2bu-20210702.git
+
 ```
+    git clone https://github.com/morrownr/88x2bu-20210702.git
+```
+
 Step 7: Move to the newly created driver directory
-```bash
-$ cd ~/src/88x2bu-20210702
+
 ```
-Step 8: **Only for Raspberry Pi systems (based on ARM or ARM64 CPUs)**
+    cd ~/src/88x2bu-20210702
+```
+
+Step 8:  **Only for Raspberry Pi systems (based on ARM or ARM64 CPUs)**
 
 Warning: This step only applies if you are installing to Raspberry Pi *hardware*. You should skip this step if installing to x86 or amd64 based systems.
 
 Run a preparation script
-```
+
+
     Option for 32 bit operating systems to be installed to Raspberry Pi hardware
 
-    $ ./raspi32.sh
 ```
+    ./raspi32.sh
 ```
+
     Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
-    $ ./raspi64.sh
+```
+    ./raspi64.sh
+```
 
     Note: Other ARM or ARM64 based systems will require modifications
     similar to those provided in the above scripts for Raspberry Pi hardware but
     the number and variety of different ARM and ARM64 based systems makes
     supporting each system unpractical so you will need to research the needs of
     your system and make the appropriate modifications. 
-```
+
 Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
-```bash
-    $ sudo ./install-driver.sh
+
+```
+    sudo ./install-driver.sh
+```
 
     Note: If you elect to skip the reboot at the end of the installation script,
     the driver may not be loaded immediately and the driver options will not be
     applied. Rebooting is strongly recommended.
-```
 
 ### Driver Options
 
@@ -252,11 +263,13 @@ Location: `/etc/modprobe.d/88x2bu.conf`
 
 This file will be read and applied to the driver on each system boot.
 
-To edit the driver options file, run the `edit-options.sh` script.
-```bash
-$ sudo ./edit-options.sh
+To edit the driver options file, run the `edit-options.sh` script
+.
 ```
-Documentation for Driver Options is included in the file `88x2bu.conf`.
+    sudo ./edit-options.sh
+```
+
+Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
 
 ### Removal of the Driver
 
@@ -274,13 +287,17 @@ can and probably should be deleted in most cases after running the script.
 Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
 Step 2: Move to the driver directory
-```bash
-$ cd ~/src/88x2bu-20210702
+
 ```
+    cd ~/src/88x2bu-20210702
+```
+
 Step 3: Run the removal script
-```bash
-$ sudo ./remove-driver.sh
+
 ```
+    sudo ./remove-driver.sh
+```
+
 ### Recommended WiFi Router/ Access Point Settings
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
@@ -307,8 +324,9 @@ After making and saving changes, reboot the router.
 ### Set regulatory domain to correct setting in OS
 
 Check the current setting
-```bash
-$ sudo iw reg get
+
+```
+    sudo iw reg get
 ```
 
 If you get 00, that is the default and may not provide optimal performance.
@@ -316,18 +334,21 @@ If you get 00, that is the default and may not provide optimal performance.
 Find the correct setting here: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
 Set it temporarily
-```bash
-$ sudo iw reg set US
+
 ```
+    sudo iw reg set US
+```
+
 Note: Substitute your country code if you are not in the United States.
 
 Set it permanently
-```bash
-$ sudo nano /etc/default/crda
+
+```
+    sudo nano /etc/default/crda
 
 Change the last line to read:
 
-REGDOMAIN=US
+    REGDOMAIN=US
 ```
 
 ### Recommendations regarding USB
@@ -349,7 +370,7 @@ REGDOMAIN=US
 
 Add the following line to /boot/config.txt
 ```
-dtoverlay=disable-wifi
+    dtoverlay=disable-wifi
 ```
 
 ### How to disable WiFi on most systems
@@ -360,9 +381,11 @@ The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on se
 ### How to forget a saved WiFi network on a Raspberry Pi
 
 1. Edit wpa_supplicant.conf
-```bash
-$ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
 ```
+    sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
 2. Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
 
 3. Press ctrl-x followed by 'y' and enter to save the file.
