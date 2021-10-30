@@ -138,21 +138,22 @@ Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 Step 2: Update system package information (select the option for the OS you are using)
 
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
-```
+
     Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
+```
+    sudo apt update
+```
 
-    $ sudo apt update
-```
-```
     Option for Arch based distributions such as Manjaro
+```
+    sudo pacman -Syu
+```
 
-    $ sudo pacman -Syu
-```
-```
     Option for Fedora based distributions
-
-    # sudo dnf -y update
 ```
+    sudo dnf -y update
+```
+
 Step 3: Install the required packages (select the option for the OS you are using)
 ```
     Option for Raspberry Pi OS
