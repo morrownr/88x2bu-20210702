@@ -66,8 +66,6 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Debian 11 (kernels 5.10 and 5.15)
 
-- Kali Linux (kernel 5.10)
-
 - Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernels 5.4 and 5.11)
 
 - LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
@@ -84,7 +82,6 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [Arch Linux](https://www.archlinux.org)
 - [Debian](https://www.debian.org/)
 - [Fedora](https://getfedora.org)
-- [Kali Linux](https://www.kali.org/)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
@@ -135,9 +132,9 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-Step 2: Update system package information (select the option for the OS you are using)
+Step 2: Update the system package information (select the option for the OS you are using)
 
-    Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
+    Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
 
 ```
     sudo apt update
@@ -164,7 +161,7 @@ Step 3: Install the required packages (select the option for the OS you are usin
     sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 
-    Option for Debian, Kali or Linux Mint Debian Edition (LMDE)
+    Option for Debian, or Linux Mint Debian Edition (LMDE)
 ```
     sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
 ```
@@ -345,9 +342,11 @@ Set it permanently
 
 ```
     sudo nano /etc/default/crda
+```
 
 Change the last line to read:
 
+```
     REGDOMAIN=US
 ```
 
@@ -369,6 +368,7 @@ Change the last line to read:
 ### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
 
 Add the following line to /boot/config.txt
+
 ```
     dtoverlay=disable-wifi
 ```
