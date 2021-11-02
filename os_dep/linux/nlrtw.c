@@ -108,7 +108,7 @@ static struct genl_ops nlrtw_genl_ops[] = {
 	{
 		.cmd = NLRTW_CMD_CHANNEL_UTILIZATION,
 		.flags = 0,
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 2, 0) || !defined(RHEL8))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 2, 0) && !defined(RHEL8))
 		.policy = nlrtw_genl_policy,
 #endif
 		.doit = nlrtw_ch_util_set,
