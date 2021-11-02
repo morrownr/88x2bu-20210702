@@ -2507,7 +2507,7 @@ static int isFileReadable(const char *path, u32 *sz)
 	else {
 		#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
 		oldfs = get_fs();
-		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
+		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0) || defined(RHEL8))
 		set_fs(KERNEL_DS);
 		#else
 		set_fs(get_ds());
@@ -2555,7 +2555,7 @@ static int retriveFromFile(const char *path, u8 *buf, u32 sz)
 
 			#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
 			oldfs = get_fs();
-			#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
+			#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0) || defined(RHEL8))
 			set_fs(KERNEL_DS);
 			#else
 			set_fs(get_ds());
@@ -2602,7 +2602,7 @@ static int storeToFile(const char *path, u8 *buf, u32 sz)
 
 			#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
 			oldfs = get_fs();
-			#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0))
+			#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0) || defined(RHEL8))
 			set_fs(KERNEL_DS);
 			#else
 			set_fs(get_ds());

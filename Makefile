@@ -26,6 +26,11 @@ EXTRA_LDFLAGS += --strip-debug
 
 CONFIG_AUTOCFG_CP = n
 
+RHEL_VER := $(shell echo `grep '^ID_LIKE'  /etc/os-release |grep -qi 'fedora' && grep '^VERSION_ID' /etc/os-release | cut -f2 -d= | cut -c2`)
+ifeq (${RHEL_VER},8)
+EXTRA_CFLAGS += -DRHEL8
+endif
+
 ########################## WIFI IC ############################
 CONFIG_MULTIDRV = n
 CONFIG_RTL8188E = n

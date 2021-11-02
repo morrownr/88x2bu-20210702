@@ -77,6 +77,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.14)
 
+- RHEL 8.4 (kernel 4.18.0)
+
 ### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
@@ -86,12 +88,14 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [Manjaro](https://manjaro.org)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
 - [Ubuntu](https://www.ubuntu.com)
+- [RHEL](https://www.redhat.com)
 
 ### Tested Hardware
 
 - [EDUP EP-AC1605GS WiFi Adapter 1300Mbps USB 3.0 High Gain Wireless Adapter](https://www.amazon.com/gp/product/B07Q56K68T)
 - [FIDECO 6B21-AC1200M WiFi Adapter - AC1200 Dual Band](https://www.amazon.co.uk/gp/product/B08523KPP9)
 - [Cudy WU1400 AC 1300Mbps USB 3.0 WiFi Adapter](https://www.amazon.com/Cudy-WU1200-AC1200Mbps-Wireless-Compatible/dp/B07Q9KY4NT)
+- [jjPlus WMU6202 miniPCIe - USB - WIFI2.4/5.0GHz Bluetooth (RTL8822BU)](https://techship.com/products/jjplus-wmu6202-mpcie-usb-wifi24-50ghz-bluetooth/)
 
 ### Compatible Devices
 
