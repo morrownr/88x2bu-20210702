@@ -130,43 +130,37 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 ### Installation Steps
 
-Step 1: Open a terminal (e.g. Ctrl+Alt+T)
+##### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-Step 2: Update the system package information (select the option for the OS you are using)
+##### Step 2: Update the system package information (select the option for the OS you are using)
 
-    Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
+Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
 
-```
-    sudo apt update
-```
+`sudo apt update`
 
-    Option for Arch based distributions such as Manjaro
+Option for Arch based distributions such as Manjaro
 
-```
-    sudo pacman -Syu
-```
+`sudo pacman -Syu`
 
-    Option for Fedora based distributions
+Option for Fedora based distributions
 
-```
-    sudo dnf -y update
-```
+`sudo dnf -y update`
 
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 
-Step 3: Install the required packages (select the option for the OS you are using)
+##### Step 3: Install the required packages (select the option for the OS you are using)
 
     Option for Raspberry Pi OS
 ```
     sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 
-    Option for Debian, or Linux Mint Debian Edition (LMDE)
+    Option for Debian and Linux Mint Debian Edition (LMDE)
 ```
     sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
 ```
 
-    Option for Ubuntu (all flavors) or Linux Mint
+    Option for Ubuntu (all flavors) and Linux Mint
 ```
     sudo apt install -y dkms git build-essential
 ```
@@ -176,7 +170,7 @@ Step 3: Install the required packages (select the option for the OS you are usin
     sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 ```
 
-    Options for Arch or Manjaro
+    Options for Arch and Manjaro
 
     if using pacman
 
