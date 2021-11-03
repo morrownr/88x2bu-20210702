@@ -132,17 +132,23 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 #### Step 2: Update the system package information (select the option for the OS you are using)
 
-Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
+- Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
 
-```sudo apt update```
+```
+sudo apt update
+```
 
-Option for Arch based distributions such as Manjaro
+- Option for Arch based distributions such as Manjaro
 
-`sudo pacman -Syu`
+```
+sudo pacman -Syu
+```
 
-Option for Fedora based distributions
+- Option for Fedora based distributions
 
-`sudo dnf -y update`
+```
+sudo dnf -y update
+```
 
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 
