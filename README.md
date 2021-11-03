@@ -2,14 +2,14 @@
 
 -----
 
-### 88x2bu ( 88x2bu.ko ) :rocket:
+## 88x2bu ( 88x2bu.ko ) :rocket:
 
-### Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
+## Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
 
 - v5.13.1 (Realtek) (20210702)
 - Plus updates from the Linux community
 
-### Features
+## Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
@@ -32,9 +32,9 @@
 - DFS Channel support and control for AP mode
 - USB mode control
 
-### Note: A FAQ is available at the end of this document.
+## A FAQ is available at the end of this document.
 
-### Problem Reporting
+## Problem Reporting
 
 Problem reports go in ```Issues```.
 
@@ -42,17 +42,17 @@ Problem reports should include the information obtained with the following comma
 ```bash
 $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status && iw dev
 ```
-### Compatible CPUs
+## Compatible CPUs
 
 - x86, amd64
 - ARM, ARM64
 
-### Compatible Kernels
+## Compatible Kernels
 
 - Kernels: 3.8 - 5.11  (Realtek)
 - Kernels: 5.12 - 5.15 (community support)
 
-### Tested Linux Distributions
+## Tested Linux Distributions
 
 - Arch Linux (kernels 5.4 and 5.11)
 
@@ -73,7 +73,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.14)
 
-### Download Locations for Tested Linux Distributions
+## Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
 - [Debian](https://www.debian.org/)
@@ -84,14 +84,14 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [Ubuntu](https://www.ubuntu.com)
 - [RHEL](https://www.redhat.com)
 
-### Tested Hardware
+## Tested Hardware
 
 - [EDUP EP-AC1605GS WiFi Adapter 1300Mbps USB 3.0 High Gain Wireless Adapter](https://www.amazon.com/gp/product/B07Q56K68T)
 - [FIDECO 6B21-AC1200M WiFi Adapter - AC1200 Dual Band](https://www.amazon.co.uk/gp/product/B08523KPP9)
 - [Cudy WU1400 AC 1300Mbps USB 3.0 WiFi Adapter](https://www.amazon.com/Cudy-WU1200-AC1200Mbps-Wireless-Compatible/dp/B07Q9KY4NT)
 - [jjPlus WMU6202 miniPCIe - USB - WIFI2.4/5.0GHz Bluetooth (RTL8822BU)](https://techship.com/products/jjplus-wmu6202-mpcie-usb-wifi24-50ghz-bluetooth/)
 
-### Compatible Devices
+## Compatible Devices
 
 * ASUS AC1300 USB-AC55 B1
 * ASUS AC53 Nano
@@ -108,7 +108,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
-### Installation Information
+## Installation Information
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
@@ -126,7 +126,7 @@ It is recommended that you do not delete the driver directory after installation
 
 There is no need to disable Secure Mode to install this driver. If Secure Mode is properly setup on your system, this installation will support it.
 
-### Installation Steps
+## Installation Steps
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
@@ -152,121 +152,127 @@ sudo dnf -y update
 
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 
-##### Step 3: Install the required packages (select the option for the OS you are using)
+#### Step 3: Install the required packages (select the option for the OS you are using)
 
-    Option for Raspberry Pi OS
-```
-    sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
-```
-
-    Option for Debian and Linux Mint Debian Edition (LMDE)
-```
-    sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
-```
-
-    Option for Ubuntu (all flavors) and Linux Mint
-```
-    sudo apt install -y dkms git build-essential
-```
-
-    Option for Fedora
-```
-    sudo dnf -y install git dkms kernel-devel kernel-debug-devel
-```
-
-    Options for Arch and Manjaro
-
-    if using pacman
+- Option for Raspberry Pi OS
 
 ```
-    sudo pacman -S --noconfirm linux-headers dkms git
+sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 
-    Note: If you are asked to choose a provider, make sure to choose the one that
-    corresponds to your version of the linux kernel (for example, "linux510-headers"
-    for Linux kernel version 5.10). If you install the incorrect version, you'll have
-    to uninstall it and reinstall the correct version.
-
-    If using other methods, please follow the instructions provided by those methods.
-
-Step 4: Create a directory to hold the downloaded driver
+- Option for Debian and Linux Mint Debian Edition (LMDE)
 
 ```
-    mkdir -p ~/src
+sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
 ```
 
-Step 5: Move to the newly created directory
+- Option for Ubuntu (all flavors) and Linux Mint
 
 ```
-    cd ~/src
+sudo apt install -y dkms git build-essential
 ```
 
-Step 6: Download the driver
+- Option for Fedora
 
 ```
-    git clone https://github.com/morrownr/88x2bu-20210702.git
+sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 ```
 
-Step 7: Move to the newly created driver directory
+- Options for Arch and Manjaro
+
+if using pacman
 
 ```
-    cd ~/src/88x2bu-20210702
+sudo pacman -S --noconfirm linux-headers dkms git
 ```
 
-Step 8:  **Only for Raspberry Pi systems (based on ARM or ARM64 CPUs)**
+Note: If you are asked to choose a provider, make sure to choose the one that
+corresponds to your version of the linux kernel (for example, "linux510-headers"
+for Linux kernel version 5.10). If you install the incorrect version, you'll have
+to uninstall it and reinstall the correct version.
 
-Warning: This step only applies if you are installing to Raspberry Pi *hardware*. You should skip this step if installing to x86 or amd64 based systems.
+If using other methods, please follow the instructions provided by those methods.
+
+#### Step 4: Create a directory to hold the downloaded driver
+
+```
+mkdir -p ~/src
+```
+
+#### Step 5: Move to the newly created directory
+
+```
+cd ~/src
+```
+
+#### Step 6: Download the driver
+
+```
+git clone https://github.com/morrownr/88x2bu-20210702.git
+```
+
+#### Step 7: Move to the newly created driver directory
+
+```
+cd ~/src/88x2bu-20210702
+```
+
+#### Step 8:  This step is only for Raspberry Pi systems
+
+Warning: This step only applies if you are installing to Raspberry Pi *hardware*.
+You should skip this step if installing to x86 or amd64 based systems.
 
 Run a preparation script
 
 
-    Option for 32 bit operating systems to be installed to Raspberry Pi hardware
+- Option for 32 bit operating systems to be installed to Raspberry Pi hardware
 
 ```
-    ./raspi32.sh
+./raspi32.sh
 ```
 
-    Option for 64 bit operating systems to be installed to Raspberry Pi hardware
+- Option for 64 bit operating systems to be installed to Raspberry Pi hardware
 
 ```
-    ./raspi64.sh
+./raspi64.sh
 ```
 
-    Note: Other ARM or ARM64 based systems will require modifications
-    similar to those provided in the above scripts for Raspberry Pi hardware but
-    the number and variety of different ARM and ARM64 based systems makes
-    supporting each system unpractical so you will need to research the needs of
-    your system and make the appropriate modifications. 
+Note: Other ARM or ARM64 based systems will require modifications similar to
+those provided in the above scripts for Raspberry Pi hardware but the number and
+variety of different ARM and ARM64 based systems makes supporting each system
+unpractical so you will need to research the needs of your system and make the
+appropriate modifications. 
 
-Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
+#### Step 9: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 
 ```
-    sudo ./install-driver.sh
+sudo ./install-driver.sh
 ```
 
-    Note: If you elect to skip the reboot at the end of the installation script,
-    the driver may not be loaded immediately and the driver options will not be
-    applied. Rebooting is strongly recommended.
+Note: If you elect to skip the reboot at the end of the installation script,
+the driver may not be loaded immediately and the driver options will not be
+applied. Rebooting is strongly recommended.
 
-### Driver Options
+## Driver Options
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by default.
 
-Note: Step 9 of the installation script will prompt you to edit the options before rebooting.
+Note: Step 9 of the installation script will prompt you to edit the options
+before rebooting.
 
 Location: `/etc/modprobe.d/88x2bu.conf`
 
 This file will be read and applied to the driver on each system boot.
 
 To edit the driver options file, run the `edit-options.sh` script
-.
+
 ```
-    sudo ./edit-options.sh
+sudo ./edit-options.sh
 ```
 
 Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
 
-### Removal of the Driver
+## Removal of the Driver
 
 Note: This script should be used in the following situations:
 
@@ -279,21 +285,21 @@ Note: This script removes everything that has been installed, with the exception
 of the packages installed in Step 3 and the driver directory. The driver directory
 can and probably should be deleted in most cases after running the script.
 
-Step 1: Open a terminal (e.g. Ctrl+Alt+T)
+#### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-Step 2: Move to the driver directory
-
-```
-    cd ~/src/88x2bu-20210702
-```
-
-Step 3: Run the removal script
+#### Step 2: Move to the driver directory
 
 ```
-    sudo ./remove-driver.sh
+cd ~/src/88x2bu-20210702
 ```
 
-### Recommended WiFi Router/ Access Point Settings
+#### Step 3: Run the removal script
+
+```
+sudo ./remove-driver.sh
+```
+
+## Recommended WiFi Router/ Access Point Settings
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
@@ -316,12 +322,12 @@ Check congestion: There are apps available for smart phones that allow you to ch
 After making and saving changes, reboot the router.
 
 
-### Set regulatory domain to correct setting in OS
+## Set regulatory domain to correct setting in OS
 
 Check the current setting
 
 ```
-    sudo iw reg get
+sudo iw reg get
 ```
 
 If you get 00, that is the default and may not provide optimal performance.
@@ -331,7 +337,7 @@ Find the correct setting here: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 Set it temporarily
 
 ```
-    sudo iw reg set US
+sudo iw reg set US
 ```
 
 Note: Substitute your country code if you are not in the United States.
@@ -339,16 +345,16 @@ Note: Substitute your country code if you are not in the United States.
 Set it permanently
 
 ```
-    sudo nano /etc/default/crda
+sudo nano /etc/default/crda
 ```
 
 Change the last line to read:
 
 ```
-    REGDOMAIN=US
+REGDOMAIN=US
 ```
 
-### Recommendations regarding USB
+## Recommendations regarding USB
 
 - Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems. Problems include WiFi going on and off as well as connections coming and going.
 
@@ -363,25 +369,25 @@ Change the last line to read:
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is devices that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
 
-### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
+## How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
 
 Add the following line to /boot/config.txt
 
 ```
-    dtoverlay=disable-wifi
+dtoverlay=disable-wifi
 ```
 
-### How to disable WiFi on most systems
+## How to disable WiFi on most systems
 
 The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on several systems, including but not limited to the Raspberry Pi.
 
 
-### How to forget a saved WiFi network on a Raspberry Pi
+## How to forget a saved WiFi network on a Raspberry Pi
 
 1. Edit wpa_supplicant.conf
 
 ```
-    sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
 2. Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
@@ -392,7 +398,7 @@ The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on se
 
 -----
 
-### FAQ:
+## FAQ:
 
 Question: Is WPA3 supported?
 
