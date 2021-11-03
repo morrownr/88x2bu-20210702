@@ -32,13 +32,7 @@
 - DFS Channel support and control for AP mode
 - USB mode control
 
-Note: WPA3-SAE support is in this driver, however, for it to work with current Linux distros, you will need to download, compile and install the current master of wpa_supplicant at the following site:
-
-https://w1.fi/cgit/
-
-If there is interest, I will consider making and posting a guide. I am very busy so if anyone is interested in making a guide/checklist, I will add it to the README.
-
-Note: A FAQ is available at the end of this document.
+### Note: A FAQ is available at the end of this document.
 
 ### Problem Reporting
 
@@ -75,9 +69,9 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
-- Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.14)
-
 - RHEL 8.4 (kernel 4.18.0)
+
+- Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.14)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -134,13 +128,13 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 ### Installation Steps
 
-##### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
+#### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-##### Step 2: Update the system package information (select the option for the OS you are using)
+#### Step 2: Update the system package information (select the option for the OS you are using)
 
 Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
 
-`sudo apt update`
+```sudo apt update```
 
 Option for Arch based distributions such as Manjaro
 
@@ -393,6 +387,18 @@ The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on se
 -----
 
 ### FAQ:
+
+Question: Is WPA3 supported?
+
+Answer: WPA3-SAE support is in this driver, however, for it to work with current
+Linux distros, you will need to download, compile and install the current master
+of wpa_supplicant at the following site:
+
+https://w1.fi/cgit/
+
+If there is interest, I will consider making and posting a guide. I am very busy
+so if anyone is interested in making a guide/checklist.
+
 
 Question: What interface combinations does this driver support?
 
