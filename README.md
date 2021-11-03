@@ -303,21 +303,21 @@ sudo ./remove-driver.sh
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
-Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
+- Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
 
-Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
+- Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
-Channels for 2.4 GHz: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection. As time passes, if you notice poor performance, recheck congestion and set channel appropriately. The environment around you can and does change over time.
+- Channels for 2.4 GHz: Set channel 1 or 6 or 11 depending on the congestion at your location. Do not set automatic channel selection. As time passes, if you notice poor performance, recheck congestion and set channel appropriately. The environment around you can and does change over time.
 
-Mode for 2.4 GHz: For best performance, set "N only" if you no longer use B or G capable devices.
+- Mode for 2.4 GHz: For best performance, set "N only" if you no longer use B or G capable devices.
 
-Network names: Do not set the 2.4 GHz Network and the 5 GHz Network to the same name. Note: Unfortunately many routers come with both networks set to the same name. You need to be able to control which network that is in use.
+- Network names: Do not set the 2.4 GHz Network and the 5 GHz Network to the same name. Note: Unfortunately many routers come with both networks set to the same name. You need to be able to control which network that is in use.
 
-Channels for 5 GHz: Not all devices are capable of using DFS channels (I'm looking at you Roku.) It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHz. (For US, other countries may vary.)
+- Channels for 5 GHz: Not all devices are capable of using DFS channels (I'm looking at you Roku.) It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHz. (For US, other countries may vary.)
 
-Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
+- Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-Check congestion: There are apps available for smart phones that allow you to check the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
+- Check congestion: There are apps available for smart phones that allow you to check the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
 
@@ -384,17 +384,17 @@ The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on se
 
 ## How to forget a saved WiFi network on a Raspberry Pi
 
-1. Edit wpa_supplicant.conf
+#### Step 1: Edit wpa_supplicant.conf
 
 ```
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
-2. Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
+#### Step 2: Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
 
-3. Press ctrl-x followed by 'y' and enter to save the file.
+#### Step 3: Press ctrl-x followed by 'y' and enter to save the file.
 
-4. Reboot
+#### Step 4: Reboot
 
 -----
 
@@ -432,7 +432,7 @@ Answer: You can't. Realtek drivers do not support more than one adapter with the
 
 Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
 
-Answer: Many new Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards for USB WiFi adapters. Realtek drivers are problematic in many ways. You have been WARNED. For information about USB WiFi adapters:
+Answer: Many new Linux users already have adapters based on Realtek chipsets. This repo is for Linux users to support their existing adapters but my STRONG recommendation is for Linux users to seek out WiFi solutions based on Mediatek, Intel or Atheros chipsets and drivers. If users are looking at a USB solution, Mediatek and Atheros based adapters are the best solution. Realtek based USB adapters are not a good solution because Realtek does not follow Linux Wireless standards (mac80211) for USB WiFi adapters and the drivers are not maintained in the Linux kernel. These issues make Realtek drivers problematic in many ways. You have been WARNED. For more information about USB WiFi adapters:
 
 https://github.com/morrownr/USB-WiFi
 
