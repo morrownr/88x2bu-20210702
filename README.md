@@ -81,8 +81,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
-- [Ubuntu](https://www.ubuntu.com)
 - [RHEL](https://www.redhat.com)
+- [Ubuntu](https://www.ubuntu.com)
 
 ## Tested Hardware
 
@@ -356,17 +356,17 @@ REGDOMAIN=US
 
 ## Recommendations regarding USB
 
-- Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems. Problems include WiFi going on and off as well as connections coming and going.
+- Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems.
 
-- If connecting your USB WiFi adapter to a desktop computer, use the USB ports on the rear of the computer. Why? The ports on the rear are directly connected to the motherboard which will reduce problems with interference and disconnection that can happen with front ports that use cables.
+- If connecting your USB WiFi adapter to a desktop computer, use the USB ports on the rear of the computer. Why? The ports on the rear are directly connected to the motherboard which will reduce problems with interference and disconnection.
 
-- If your USB WiFi adapter is USB 3 capable then plug it into a USB 3 port.
+- If your USB WiFi adapter is USB 3 capable and you want it to operate in USB3 mode, plug it into a USB 3 port.
 
 - Avoid USB 3.1 Gen 2 ports if possible as almost all currently available adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and not with USB 3.1 Gen 2.
 
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will at best be limited to USB 2 speeds).
 
-- Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is devices that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
+- Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
 
 ## How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
@@ -427,7 +427,7 @@ Atheros drivers.
 
 Question: I bought two rtl8812bu based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
 
-Answer: You can't. Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in the same computer.
+Answer: You can't without considerable technical skills.  Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in the same computer.
 
 
 Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?

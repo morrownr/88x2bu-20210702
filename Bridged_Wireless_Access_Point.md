@@ -1,4 +1,4 @@
-2021-11-03
+2021-11-04
 
 ## Bridged Wireless Access Point
 
@@ -24,7 +24,7 @@ issue is in progress.
 
 WPA3-SAE works with Mediatek 761x chipset based USB WiFI adapters and, as far as
 I can tell, with all usb wifi adapters that use Linux in-kernel drivers and I
-have tested many..
+have tested many.
 
 Note: This guide uses systemd-networkd for network management. If your Linux
 distro uses Network Manager or Netplan, they must be disabled. Sections that
@@ -83,7 +83,9 @@ prior to continuing.
 
 Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and rtl8814au
 chipsets, the following module parameters may be needed for best performance
-when the adapter is set to support 5 GHz band:
+when the adapter is set to support 5 GHz band: (if using a rtl8812bu based
+adapter with a Raspberry Pi 4B or 400, you may need to limit USB mode to USB2
+due to a bug that causes dropped connections--rtw_switch_usb_mode=2)
 
 ```
 rtw_vht_enable=2 rtw_switch_usb_mode=1
@@ -97,7 +99,7 @@ support 5 GHz band:
 rtw_vht_enable=2
 ```
 
-Note: For USB3 adapters based on the Realtek rtl8812au, rtl8814au, and rtl8812bu
+Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and rtl8814au
 chipsets, the following module parameters may be needed for best performance
 when the adapter is set to support 2.4 GHz band:
 
@@ -258,7 +260,7 @@ File contents
 ```
 # /etc/hostapd/hostapd-5g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-# 2021-10-24
+# 2021-11-04
 
 # SSID
 ssid=myPI-5g
