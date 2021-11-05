@@ -702,7 +702,7 @@ systemctl status systemd-networkd
 ```
 -----
 
-Autostarting iperf3
+Install and autostart iperf3
 ```
 sudo apt install iperf3
 ```

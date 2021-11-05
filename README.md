@@ -260,7 +260,7 @@ applied. Rebooting is strongly recommended.
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by default.
 
-Note: Step 9 of the installation script will prompt you to edit the options
+Note: Step 9 of the installation instructions will prompt you to edit the options
 before rebooting.
 
 Location: `/etc/modprobe.d/88x2bu.conf`
