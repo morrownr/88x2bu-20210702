@@ -13,10 +13,13 @@
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
+- WPA3 (see note in FAQ)
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
 - Power saving modes
+- hostapd compatible
+- AP mode DFS support
 - Supported interface modes
   * IBSS
   * Managed
@@ -29,7 +32,7 @@
 - VHT control (allows 80 MHz channel width in AP mode)
 - SU Beamformee and MU Beamformee control
 - SU Beamformer control
-- DFS Channel support and control for AP mode
+- AP mode DFS Channel control
 - USB mode control
 
 ## A FAQ is available at the end of this document.
