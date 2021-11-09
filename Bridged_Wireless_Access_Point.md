@@ -1,4 +1,4 @@
-2021-11-04
+2021-11-09
 
 ## Bridged Wireless Access Point
 
@@ -85,7 +85,8 @@ Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and rtl8814au
 chipsets, the following module parameters may be needed for best performance
 when the adapter is set to support 5 GHz band: (if using a rtl8812bu based
 adapter with a Raspberry Pi 4B or 400, you may need to limit USB mode to USB2
-due to a bug that causes dropped connections--rtw_switch_usb_mode=2)
+due to a bug, probably in the Raspberry Pi 4B, that causes dropped connections--
+rtw_switch_usb_mode=2)
 
 ```
 rtw_vht_enable=2 rtw_switch_usb_mode=1
@@ -278,11 +279,11 @@ interface=wlan0
 bridge=br0
 
 driver=nl80211
-ctrl_interface=/var/run/hostapd
-ctrl_interface_group=0
+#ctrl_interface=/var/run/hostapd
+#ctrl_interface_group=0
 
 ieee80211d=1
-# Support DFS channels
+# Enables support for 5GHz DFS channels
 #ieee80211h=1
 
 beacon_int=100
@@ -330,10 +331,10 @@ wmm_enabled=1
 # mt7612u - mt7610u
 #ht_capab=[HT40+][HT40-][GF][SHORT-GI-20][SHORT-GI-40]
 #
-# rtl8812au - rtl8814au - rtl8811au 
+# rtl8812au - rtl8814au - rtl8811au - rtl8811cu
 #ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]
 # rtl8812bu
-ht_capab=[LDPC][HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][RX-STBC1][MAX-AMSDU-7935]
+ht_capab=[LDPC][HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]
 #
 
 # IEEE 802.11ac
@@ -344,16 +345,14 @@ ieee80211ac=1
 # mt7612u
 #vht_capab=[RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][MAX-A-MPDU-LEN-EXP3][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN]
 #
-# rtl8812au
-#vht_capab=[MAX-MPDU-11454][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][SU-BEAMFORMER][SOUNDING-DIMENSION-2][HTC-VHT][MAX-A-MPDU-EXP7]
-# rtl8812bu
-vht_capab=[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
+# rtl8812au - rtl8812bu
+vht_capab=[MAX-MPDU-11454][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 # rtl8814au
 #vht_capab=[MAX-MPDU-11454][SHORT-GI-80][SU-BEAMFORMER][HTC-VHT]
-# rtl8811au
+# rtl8811au - rtl8811cu
 #vht_capab=[MAX-MPDU-11454][SHORT-GI-80][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 #
-# Note: [TX-STBC-2BY1] may cause problems
+# Note: [TX-STBC-2BY1] may cause problems with some Realtek drivers
 #
 # Required for 80 MHz width channel operation
 vht_oper_chwidth=1
@@ -424,6 +423,7 @@ File contents
 # /etc/hostapd/hostapd-2g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
 # 2021-11-02
+
 # SSID
 ssid=myPI-2g
 # PASSPHRASE
@@ -477,8 +477,6 @@ wmm_enabled=1
 #
 # Note: Only one ht_capab= line should be active. The content of these lines is
 # determined by the capabilities of your adapter.
-#
-# Need to add RasPi4B internal wifi information
 #
 # RasPi4B internal wifi
 ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][DSSS_CCK-40]
