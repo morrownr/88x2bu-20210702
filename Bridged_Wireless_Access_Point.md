@@ -65,8 +65,8 @@ One that seems to work well here is:
 
 Note: The rtl88XXxu chipset based USB3 WiFi adapters require from 504 mA of
 power up to well over 800 mA of power depending on the adapter. The Raspberry
-Pi 3B, 3B+ and 4B USB subsystems are only able to supple a total of 1200
-mA of power to all attached devices.
+Pi 3B, 3B+ and 4B USB subsystems are only able to supply a total of 1200
+mA of power total divided between all attached devices.
 
 Note: The Alfa AWUS036ACM adapter, a mt7612u based adapter, requests a maximum
 of 400 mA from the USB subsystem during initialization. Testing with a meter
@@ -116,7 +116,7 @@ support 2.4 GHz band:
 rtw_vht_enable=1
 ```
 
-Note: For USB3 or USB2 adapters based on Mediatek mt7612u or my7610u chipsets,
+Note: For USB3 or USB2 adapters based on Mediatek mt7612u or mt7610u chipsets,
 the following module parameter may be needed for best performance:
 
 ```
@@ -261,7 +261,7 @@ File contents
 ```
 # /etc/hostapd/hostapd-5g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-# 2021-11-04
+# 2021-11-09
 
 # SSID
 ssid=myPI-5g
@@ -271,13 +271,18 @@ wpa_passphrase=myPW1234
 hw_mode=a
 # Channel
 channel=36
-# Country
+# Channel width
+vht_oper_chwidth=1
+# VHT center channel (chan + 6)
+vht_oper_centr_freq_seg0_idx=42
+# Country code
 country_code=US
-# WiFi interface
-interface=wlan0
 # Bridge interface
 bridge=br0
+# WiFi interface
+interface=wlan0
 
+# nl80211 is used with all Linux mac80211 and modern Realtek drivers
 driver=nl80211
 #ctrl_interface=/var/run/hostapd
 #ctrl_interface_group=0
@@ -331,10 +336,12 @@ wmm_enabled=1
 # mt7612u - mt7610u
 #ht_capab=[HT40+][HT40-][GF][SHORT-GI-20][SHORT-GI-40]
 #
-# rtl8812au - rtl8814au - rtl8811au - rtl8811cu
+# rtl8812au - rtl8811au - rtl8811cu
 #ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]
 # rtl8812bu
 ht_capab=[LDPC][HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]
+# rtl8814au
+#ht_capab=[LDPC][HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935][DSSS_CCK-40]
 #
 
 # IEEE 802.11ac
@@ -348,20 +355,11 @@ ieee80211ac=1
 # rtl8812au - rtl8812bu
 vht_capab=[MAX-MPDU-11454][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 # rtl8814au
-#vht_capab=[MAX-MPDU-11454][SHORT-GI-80][SU-BEAMFORMER][HTC-VHT]
+#vht_capab=[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 # rtl8811au - rtl8811cu
 #vht_capab=[MAX-MPDU-11454][SHORT-GI-80][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 #
 # Note: [TX-STBC-2BY1] may cause problems with some Realtek drivers
-#
-# Required for 80 MHz width channel operation
-vht_oper_chwidth=1
-#
-# Use the next line with channel 36  (36 + 6 = 42)
-vht_oper_centr_freq_seg0_idx=42
-#
-# Use the next line with channel 149 (149 + 6 = 155)
-#vht_oper_centr_freq_seg0_idx=155
 
 # Event logger - as desired
 #logger_syslog=-1
@@ -422,7 +420,7 @@ File contents
 ```
 # /etc/hostapd/hostapd-2g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-# 2021-11-02
+# 2021-11-09
 
 # SSID
 ssid=myPI-2g
@@ -434,14 +432,15 @@ hw_mode=g
 channel=6
 # Country
 country_code=US
-# WiFi interface
-interface=wlan1
 # Bridge interface
 bridge=br0
+# WiFi interface
+interface=wlan1
 
+# nl80211 is used with all Linux mac80211 and modern Realtek drivers
 driver=nl80211
-ctrl_interface=/var/run/hostapd
-ctrl_interface_group=0
+#ctrl_interface=/var/run/hostapd
+#ctrl_interface_group=0
 
 beacon_int=100
 dtim_period=2
@@ -487,8 +486,10 @@ ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][DSSS_CCK-40]
 # mt7612u - mt7610u
 #ht_capab=[HT40+][HT40-][GF][SHORT-GI-20][SHORT-GI-40]
 #
-# rtl8812au - rtl8811au -  rtl8812bu - rtl8811cu - rtl8814au
+# rtl8812au - rtl8811au -  rtl8812bu - rtl8811cu
 #ht_capab=[HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]
+# rtl8814au
+#ht_capab=[LDPC][HT40+][HT40-][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935][DSSS_CCK-40]
 
 # Event logger - as desired
 #logger_syslog=-1
