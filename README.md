@@ -19,20 +19,21 @@
   * Supports site survey scan and manual connect
 - Power saving modes
 - hostapd compatible
-- AP mode DFS support
+- AP mode DFS channel support
 - Supported interface modes
   * IBSS
   * Managed
   * AP (see ```Bridged_Wireless_Access_Point.md```)
   * P2P-client
   * P2P-GO
+- Concurrent mode (coming soon)
 - Log level control
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
 - SU Beamformee and MU Beamformee control
 - SU Beamformer control
-- AP mode DFS Channel control
+- AP mode DFS channel control
 - USB mode control
 
 ## A FAQ is available at the end of this document.
@@ -413,19 +414,6 @@ https://w1.fi/cgit/
 
 If there is interest, I will consider making and posting a guide. I am very busy
 so if anyone is interested in making a guide/checklist.
-
-
-Question: What interface combinations does this driver support?
-
-Answer: None. Realtek out-of-kernel drivers, including this driver, do not
-support interface combinations. If you need support for interface combinations,
-I suggest adapters based on the Mediatek chipsets.
-
-
-Question: What extended features does this driver support?
-
-Answer: None. For extended features, you need an adapter that uses Mediatek or
-Atheros drivers.
 
 
 Question: I bought two rtl8812bu based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
