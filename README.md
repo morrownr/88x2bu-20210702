@@ -24,6 +24,7 @@
   * IBSS
   * Managed
   * AP (see ```Bridged_Wireless_Access_Point.md```)
+  * Monitor (see ```Monitor_Mode.md and start-mon.sh```)
   * P2P-client
   * P2P-GO
 - Concurrent mode (coming soon)
@@ -97,10 +98,12 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 ## Compatible Devices
 
+* [ALFA AWUS036ACU](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acu-802-11ac-ac1200-dual-band-wifi-usb-dongle-rp-sma-antennas)
 * ASUS AC1300 USB-AC55 B1
 * ASUS AC53 Nano
 * ASUS U2
 * Cudy WU1400
+* [Edimax EW-7822UAD](https://www.amazon.com/Edimax-802-11ac-Dual-Band-Adjustable-EW-7822UAD/dp/B092M5NZ1H)
 * Edimax EW-7822ULC
 * Edimax EW-7822UTC
 * EDUP EP-AC1605GS
