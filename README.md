@@ -13,11 +13,14 @@
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPA3 (see note in FAQ)
+- WPA3 (see issue with title `How to Enable WPA3 support`)
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
 - Power saving modes
+- Wireshark compatible
+- Aircrack-ng compatible
+- Packet injection
 - hostapd compatible
 - AP mode DFS channel support
 - Supported interface modes
@@ -415,8 +418,7 @@ of wpa_supplicant at the following site:
 
 https://w1.fi/cgit/
 
-If there is interest, I will consider making and posting a guide. I am very busy
-so if anyone is interested in making a guide/checklist.
+See issue titled `How to Enable WPA3 support` for more information.
 
 
 Question: I bought two rtl8812bu based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
