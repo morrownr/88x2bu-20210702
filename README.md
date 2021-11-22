@@ -286,14 +286,16 @@ Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
 
 Note: This script should be used in the following situations:
 
-- the driver is no longer needed
-- a fresh start with default settings is needed
-- a new version of the driver needs to be installed
-- a major operating system upgrade is going to be applied
+- if driver installation fails
+- if the driver is no longer needed
+- if a fresh start with default settings is needed
+- if a new version of the driver needs to be installed
+- if a distro version upgrade is going to be installed
 
-Note: This script removes everything that has been installed, with the exception
-of the packages installed in Step 3 and the driver directory. The driver directory
-can and probably should be deleted in most cases after running the script.
+Note: This script removes everything that has been installed, with the
+exception of the packages installed in Step 3 and the driver directory.
+The driver directory can and probably should be deleted in most cases
+after running this script.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
