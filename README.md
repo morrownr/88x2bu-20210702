@@ -58,7 +58,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 ## Compatible Kernels
 
 - Kernels: 3.8 - 5.11  (Realtek)
-- Kernels: 5.12 - 5.15 (community support)
+- Kernels: 5.12 - 5.16 (community support)
 
 ## Tested Linux Distributions
 
@@ -75,6 +75,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
 
 - Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
+
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
 - RHEL 8.4 (kernel 4.18.0)
