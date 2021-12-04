@@ -4,11 +4,11 @@
 #
 # To make this file executable:
 #
-# $ chmod +x edit-options.sh
+# $ chmod +x raspiOS-64.sh
 #
 # To execute this file:
 #
-# $ ./raspi64.sh
+# $ ./raspiOS-64.sh
 
 sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
 RESULT=$?

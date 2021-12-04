@@ -1,11 +1,29 @@
 #!/bin/bash
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20211026"
+SCRIPT_VERSION="20211204"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
 OPTIONS_FILE="88x2bu.conf"
+
+NO_PROMPT=0
+
+# Get the options                                                                                                                                                                                              
+while [ $# -gt 0 ]
+do
+        case $1 in
+                NoPrompt)
+                        NO_PROMPT=1 ;;
+                *h|*help|*)
+                        echo "Syntax $0 <NoPrompt>"
+                        echo "       NoPrompt - noninteractive mode"
+                        echo "       -h|--help - Show help"
+                        exit 1
+                        ;;
+        esac
+        shift
+done
 
 if [[ $EUID -ne 0 ]]
 then
@@ -36,11 +54,14 @@ else
 	exit $RESULT
 fi
 
-read -p "Are you ready to reboot now? [y/N] " -n 1 -r
-echo    # move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    reboot
+if [ $NO_PROMPT -ne 1 ]
+   then
+       read -p "Are you ready to reboot now? [y/N] " -n 1 -r
+       echo                                                                                                                                                                         
+       if [[ $REPLY =~ ^[Yy]$ ]]
+       then
+           reboot
+       fi
 fi
 
 exit 0

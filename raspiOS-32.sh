@@ -2,13 +2,13 @@
 #
 # Purpose: Change settings in the Makefile to support compiling for Raspberry Pi OS (32 bit).
 #
-# To make this file executable:
+# To make this file executable (if necessary):
 #
-# $ chmod +x edit-options.sh
+# $ chmod +x raspiOS-32.sh
 #
 # To execute this file:
 #
-# $ ./raspi32.sh
+# $ ./raspiOS-32.sh
 
 sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
 RESULT=$?
