@@ -69,6 +69,15 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 ### Tested Linux Distributions
 
+Note: One of the goals of this project is to provide driver support that
+is easy to install and works reliably on many distros. Meeting this goal
+depends on you to report your recommendations and updated information. 
+If you see information that needs to be updated, please report the
+updated information and if you do not see adequate support for
+items such as Installation Steps 2, 3 and 9, and you know what updates 
+need to added or you can get that information, please provide it so that
+the Installation Steps can be improved.
+
 - Arch Linux (kernels 5.4 and 5.11)
 
 - Fedora (kernel 5.11)
@@ -264,15 +273,18 @@ Warning: You should skip this step if installing to x86 or amd64 based systems.
 ./raspiOS-64.sh
 ```
 
-Note: Use the 64 bit option for other 64 bit operating systems to be
-installed to Raspberry Pi hardware. An example is Ubuntu for Raspberry
-Pi.
+Note: The best option for other 64 bit operating systems to be
+installed to Raspberry Pi hardware is to use the 64 bit option. An
+example is Ubuntu for Raspberry Pi.
 
 Note: Other ARM or ARM64 based systems will likely require modifications
 similar to those provided in the above scripts for Raspberry Pi hardware
 but the number and variety of different ARM and ARM64 based systems
 makes supporting each system unpractical so you will need to research
-the needs of your system and make the appropriate modifications. 
+the needs of your system and make the appropriate modifications. If you
+discover the settings and make a new script that works with your ARM or
+ARM64 based system, you are welcome to submit the script and information
+to be included here.
 
 #### Step 10: Run the installation script (For automated builds, use _NoPrompt_ as an option)
 
