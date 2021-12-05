@@ -16,18 +16,18 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 -----
 
-## 88x2bu ( 88x2bu.ko ) :rocket:
+### 88x2bu ( 88x2bu.ko ) :rocket:
 
-## Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
+### Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
 
 - v5.13.1 (Realtek) (20210702)
 - Plus updates from the Linux community
 
-## Features
+### Features
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPA3 (see issue with title `How to Enable WPA3 support`)
+- WPA3 (see pinned issue with title `How to Enable WPA3 support`)
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
@@ -42,8 +42,8 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - Supported interface modes
   * IBSS
   * Managed
+  * Monitor
   * AP      (see `Bridged_Wireless_Access_Point.md` the `docs` folder.)
-  * Monitor (see `Monitor_Mode.md` in the `docs` folder.)
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -56,18 +56,18 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - AP mode DFS channel control
 - USB mode control
 
-## Compatible CPUs
+### Compatible CPUs
 
 - x86, amd64
 - ARM, ARM64
 - MIPS
 
-## Compatible Kernels
+### Compatible Kernels
 
 - Kernels: 3.8 - 5.11  (Realtek)
 - Kernels: 5.12 - 5.16 (community support)
 
-## Tested Linux Distributions
+### Tested Linux Distributions
 
 - Arch Linux (kernels 5.4 and 5.11)
 
@@ -91,7 +91,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 - Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.13)
 
-## Download Locations for Tested Linux Distributions
+### Download Locations for Tested Linux Distributions
 
 - [Arch Linux](https://www.archlinux.org)
 - [Debian](https://www.debian.org/)
@@ -103,14 +103,14 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 - [RHEL](https://www.redhat.com)
 - [Ubuntu](https://www.ubuntu.com)
 
-## Tested Hardware
+### Tested Hardware
 
 - [EDUP EP-AC1605GS WiFi Adapter 1300Mbps USB 3.0 High Gain Wireless Adapter](https://www.amazon.com/gp/product/B07Q56K68T)
 - [FIDECO 6B21-AC1200M WiFi Adapter - AC1200 Dual Band](https://www.amazon.co.uk/gp/product/B08523KPP9)
 - [Cudy WU1400 AC 1300Mbps USB 3.0 WiFi Adapter](https://www.amazon.com/Cudy-WU1200-AC1200Mbps-Wireless-Compatible/dp/B07Q9KY4NT)
 - [jjPlus WMU6202 miniPCIe - USB - WIFI2.4/5.0GHz Bluetooth (RTL8822BU)](https://techship.com/products/jjplus-wmu6202-mpcie-usb-wifi24-50ghz-bluetooth/)
 
-## Compatible Devices
+### Compatible Devices
 
 * [ALFA AWUS036ACU](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acu-802-11ac-ac1200-dual-band-wifi-usb-dongle-rp-sma-antennas)
 * ASUS AC1300 USB-AC55 B1
@@ -129,7 +129,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
 
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
-## Installation Information
+### Installation Information
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
@@ -147,7 +147,7 @@ It is recommended that you do not delete the driver directory after installation
 
 There is no need to disable Secure Mode to install this driver. If Secure Mode is properly setup on your system, this installation will support it.
 
-## Installation Steps
+### Installation Steps
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
@@ -284,7 +284,7 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-## Driver Options
+### Driver Options
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by default.
 
@@ -302,7 +302,7 @@ sudo ./edit-options.sh
 
 Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
 
-## Removal of the Driver
+### Removal of the Driver
 
 Note: This script should be used in the following situations:
 
@@ -331,7 +331,7 @@ cd ~/src/88x2bu-20210702
 sudo ./remove-driver.sh
 ```
 
-## Recommended WiFi Router/ Access Point Settings
+### Recommended WiFi Router/ Access Point Settings
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
@@ -354,7 +354,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 After making and saving changes, reboot the router.
 
 
-## Set regulatory domain to correct setting in OS
+### Set regulatory domain to correct setting in OS
 
 Check the current setting
 
@@ -386,7 +386,7 @@ Change the last line to read:
 REGDOMAIN=US
 ```
 
-## Recommendations regarding USB
+### Recommendations regarding USB
 
 - Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems.
 
@@ -401,7 +401,7 @@ REGDOMAIN=US
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
 
-## How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
+### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
 
 Add the following line to /boot/config.txt
 
@@ -409,12 +409,7 @@ Add the following line to /boot/config.txt
 dtoverlay=disable-wifi
 ```
 
-## How to disable WiFi on most systems
-
-The `rfkill` utility can disable WiFi and Bluetooth (internal or external) on several systems, including but not limited to the Raspberry Pi.
-
-
-## How to forget a saved WiFi network on a Raspberry Pi
+### How to forget a saved WiFi network on a Raspberry Pi
 
 #### Step 1: Edit wpa_supplicant.conf
 
@@ -430,7 +425,7 @@ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 -----
 
-## FAQ:
+### FAQ:
 
 Question: Is WPA3 supported?
 
@@ -463,10 +458,6 @@ Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
 
 Question: I am having problems with my adapter and I use Virtualbox?
 
-Answer: The following article may help:
-
-```
-https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/
-```
+Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help:
 
 -----
