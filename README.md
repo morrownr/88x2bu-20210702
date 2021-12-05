@@ -150,7 +150,7 @@ An alternative terminal is to use SSH (Secure Shell) from the same or from anoth
 
 You will need to have sufficient access rights to use `sudo`, so that arbitrary commands can be executed as the `root` user. (If the command `sudo echo Yes` returns "Yes", with or without having to enter your password, you do have sufficient access rights.)
 
-DKMS is used for the installation. DKMS is a system utility which will automatically recompile and install this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
+DKMS is used for the installation. DKMS is a system utility which will automatically recompile and reinstall this driver when a new kernel is installed. DKMS is provided by and maintained by Dell.
 
 It is recommended that you do not delete the driver directory after installation as the directory contains information and scripts that you may need in the future.
 
@@ -162,7 +162,7 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 #### Step 2: Update the system package information (select the option for the OS you are using)
 
-- Option for Debian based distributions such as Ubuntu, Linux Mint, and Raspberry Pi OS
+- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
 ```
 sudo apt update
@@ -190,7 +190,7 @@ Note: If you do not regularly maintain your system by installing updated package
 sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
 ```
 
-- Option for Debian and Linux Mint Debian Edition (LMDE)
+- Option for Debian, Kali and Linux Mint Debian Edition (LMDE)
 
 ```
 sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
@@ -247,7 +247,7 @@ git clone https://github.com/morrownr/88x2bu-20210702.git
 cd ~/src/88x2bu-20210702
 ```
 
-#### Step 8:  Enable Concurrent Mode (optional)
+#### Step 8:  Enable Concurrent Mode ( cmode-on.sh ) (optional)
 
 Note: see `Concurrent_Mode.md` in the `docs` folder.
 
@@ -286,7 +286,9 @@ discover the settings and make a new script that works with your ARM or
 ARM64 based system, you are welcome to submit the script and information
 to be included here.
 
-#### Step 10: Run the installation script (For automated builds, use _NoPrompt_ as an option)
+#### Step 10: Run the installation script ( install-driver.sh )
+
+Note: For automated builds, use _NoPrompt_ as an option.
 
 ```
 sudo ./install-driver.sh
@@ -296,7 +298,7 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-### Driver Options
+### Driver Options ( edit-options.sh )
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by default.
 
@@ -314,7 +316,7 @@ sudo ./edit-options.sh
 
 Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
 
-### Removal of the Driver
+### Removal of the Driver ( remove-driver.sh )
 
 Note: This script should be used in the following situations:
 
