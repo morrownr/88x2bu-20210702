@@ -368,7 +368,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 After making and saving changes, reboot the router.
 
 
-### Set regulatory domain to correct setting in OS
+### Check and set regulatory domain to correct setting
 
 Check the current setting
 
@@ -472,6 +472,6 @@ Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
 
 Question: I am having problems with my adapter and I use Virtualbox?
 
-Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help:
+Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
 
 -----
