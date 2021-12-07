@@ -1,3 +1,5 @@
+-----
+
 #### [Click for USB WiFi Adapter Information for Linux](https://github.com/morrownr/USB-WiFi)
 
 -----
@@ -43,7 +45,7 @@ $ sudo uname -a && mokutil --sb-state && lsusb && rfkill list all && dkms status
   * IBSS
   * Managed
   * Monitor
-  * AP      (see `Bridged_Wireless_Access_Point.md` the `docs` folder.)
+  * AP      (see `Bridged_Wireless_Access_Point.md` in the `docs` folder.)
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -92,7 +94,9 @@ the Installation Steps can be improved.
 
 - Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
 
-- Raspberry Pi OS (2021-05-07) (ARM 32 bit) (kernel 5.10)
+- openSUSE Tumbleweed (rolling) (kernel 5.15)
+
+- Raspberry Pi OS (2021-10-30 (ARM 32 bit) (kernel 5.10)
 
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
@@ -108,6 +112,7 @@ the Installation Steps can be improved.
 - [Kali Linux](https://www.kali.org/)
 - [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
+- [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
 - [RHEL](https://www.redhat.com)
 - [Ubuntu](https://www.ubuntu.com)
@@ -139,6 +144,20 @@ the Installation Steps can be improved.
 Note: Please read "supported-device-IDs" for information about how to confirm the correct driver for your adapter.
 
 ### Installation Information
+
+Warning: Installing multiple drivers for the same hardware usually does
+not end well. If a previous attempt to install this driver failed or if
+you have previously installed another driver for chipsets supported by
+this driver, you MUST remove anything that the previous attempt
+installed BEFORE attempting to install this driver. This driver can be
+removed with the script called `./remove-driver.sh`. Information is
+available below the section called `Removal of the Driver.` You can get
+a  good idea as to whether you need to remove a previously installed
+driver by running the following:
+
+```
+sudo dkms status
+```
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
 
@@ -180,6 +199,12 @@ sudo pacman -Syu
 sudo dnf -y update
 ```
 
+- Option for openSUSE based distributions
+
+```
+sudo zypper update
+```
+
 Note: If you do not regularly maintain your system by installing updated packages, it is a good idea to not only update system package information but also to install the updated packages followed by a system reboot. The installation can then be continued with step 3.
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
@@ -206,6 +231,12 @@ sudo apt install -y dkms git build-essential
 
 ```
 sudo dnf -y install git dkms kernel-devel kernel-debug-devel
+```
+
+- Option for openSUSE
+
+```
+sudo zypper install -t pattern devel_kernel dkms
 ```
 
 - Options for Arch and Manjaro
@@ -368,7 +399,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 After making and saving changes, reboot the router.
 
 
-### Check and set regulatory domain to correct setting
+### Check and set regulatory domain
 
 Check the current setting
 
