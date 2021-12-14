@@ -1,34 +1,42 @@
 #!/bin/bash
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20211204"
+SCRIPT_VERSION="20211212"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
 OPTIONS_FILE="88x2bu.conf"
 
+DRV_DIR="$(pwd)"
+KRNL_VERSION="$(uname -r)"
+
+clear
+echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+
+# support for NoPrompt allows non-interactive use of this script
 NO_PROMPT=0
 
-# Get the options                                                                                                                                                                                              
+# get the options
 while [ $# -gt 0 ]
 do
-        case $1 in
-                NoPrompt)
-                        NO_PROMPT=1 ;;
-                *h|*help|*)
-                        echo "Syntax $0 <NoPrompt>"
-                        echo "       NoPrompt - noninteractive mode"
-                        echo "       -h|--help - Show help"
-                        exit 1
-                        ;;
-        esac
-        shift
+	case $1 in
+		NoPrompt)
+			NO_PROMPT=1 ;;
+		*h|*help|*)
+			echo "Syntax $0 <NoPrompt>"
+			echo "       NoPrompt - noninteractive mode"
+			echo "       -h|--help - Show help"
+			exit 1
+			;;
+	esac
+	shift
 done
 
+# check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
 then
 	echo "You must run this script with superuser (root) privileges."
-	echo "Try \"sudo ./${SCRIPT_NAME}\""
+	echo "Try: \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
 
@@ -47,7 +55,7 @@ then
 	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "The driver was removed successfully."
-	echo "Info: You may now delete the driver directory if desired."
+	echo "You may now delete the driver directory if desired."
 else
 	echo "An error occurred. dkms remove error = ${RESULT}"
 	echo "Please report this error."
@@ -55,13 +63,13 @@ else
 fi
 
 if [ $NO_PROMPT -ne 1 ]
-   then
-       read -p "Are you ready to reboot now? [y/N] " -n 1 -r
-       echo                                                                                                                                                                         
-       if [[ $REPLY =~ ^[Yy]$ ]]
-       then
-           reboot
-       fi
+then
+	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]
+	then
+		reboot
+	fi
 fi
 
 exit 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20211204"
+SCRIPT_VERSION="20211212"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
@@ -10,12 +10,13 @@ OPTIONS_FILE="88x2bu.conf"
 DRV_DIR="$(pwd)"
 KRNL_VERSION="$(uname -r)"
 
-NO_PROMPT=0
-
 clear
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
-# Get the options
+# support for NoPrompt allows non-interactive use of this script
+NO_PROMPT=0
+
+# get the options
 while [ $# -gt 0 ]
 do
 	case $1 in
@@ -43,7 +44,7 @@ fi
 if [[ -d "/usr/src/${DRV_NAME}-${DRV_VERSION}" ]]
 then
 	echo "It appears that this driver may already be installed."
-	echo "You will need to run the following before installing."
+	echo "You will need to run the following before reattempting installation."
 	echo "$ sudo ./remove-driver.sh"
 	exit 1
 fi
@@ -62,6 +63,8 @@ if [[ "$RESULT" != "0" ]]
 then
 	echo "An error occurred. dkms add error = ${RESULT}"
 	echo "Please report this error."
+	echo "You will need to run the following before reattempting installation."
+	echo "$ sudo ./remove-driver.sh"
 	exit $RESULT
 fi
 
@@ -72,6 +75,8 @@ if [[ "$RESULT" != "0" ]]
 then
 	echo "An error occurred. dkms build error = ${RESULT}"
 	echo "Please report this error."
+	echo "You will need to run the following before reattempting installation."
+	echo "$ sudo ./remove-driver.sh"
 	exit $RESULT
 fi
 
@@ -82,24 +87,28 @@ if [[ "$RESULT" != "0" ]]
 then
 	echo "An error occurred. dkms install error = ${RESULT}"
 	echo "Please report this error."
+	echo "You will need to run the following before reattempting installation."
+	echo "$ sudo ./remove-driver.sh"
 	exit $RESULT
 fi
 
 echo "The driver was installed successfully."
 
+# unblock wifi
 rfkill unblock wlan
 
+# if NoPrompt is not used, ask user some questions to complete installation
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to edit the driver options file now? [y/N] " -n 1 -r
-	echo    # move to a new line
+	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		nano /etc/modprobe.d/${OPTIONS_FILE}
 	fi
 
-	read -p "Do you want to reboot now? [y/N] " -n 1 -r
-	echo    # move to a new line
+	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
+	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		reboot
