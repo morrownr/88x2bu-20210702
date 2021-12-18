@@ -60,7 +60,7 @@ sudo ./remove-driver.sh
 ```
 
 Step 5: Follow the installation instructions but do not run the
-optional `cmode-on.sh script`.
+optional `cmode-on.sh` script.
 
 -----
 
