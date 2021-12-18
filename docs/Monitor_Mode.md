@@ -17,7 +17,7 @@ For adapters that use in-kernel drivers, use any of the many guides that
 are available as the in-kernel drivers work in the textbook, standards
 compliant manner.
 
-Please submit corrects or additions via Issues.
+Please submit corrections or additions via Issues.
 
 Monitor mode, or RFMON (Radio Frequency MONitor) mode, allows a computer
 with a wireless network interface controller (WNIC) to monitor all
@@ -97,7 +97,7 @@ Usage:
 sudo ./test-mon.sh [interface:wlan0]
 ```
 
-How, if you want to do things manually, continue below.
+Note: If you want to do things manually, continue below.
 
 -----
 
