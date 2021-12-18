@@ -1,4 +1,4 @@
-2021-11-15
+2021-12-15
 
 ## Bridged Wireless Access Point
 
@@ -8,9 +8,9 @@ extend the network to WiFi capable computers and devices in areas where
 the WiFi signal is weak or otherwise does not meet expectations.
 
 ```
-INTERNET >>> modem/router >>> RasPi (br0) >>> USB Wifi ))) ((( laptop
-            (cable)       ╱               ╱               ╲
-            (fiber)   CAT 5e, 6       CAT 5e, 6            ((( phone
+INTERNET >>> modem/router >>> RasPi ))) ((( laptop
+            (cable)       ╱            ╲
+            (fiber)   CAT 5e, 6         ((( phone
             (dsl)
 ```
 
@@ -84,7 +84,8 @@ shows actual usage of 360 mA during heavy load and usage of 180 mA during
 light loads. This is much lower power usage than most AC1200 class adapters
 which makes this adapter a good choice for a Raspberry Pi based access point. 
 Other mt7612u and mt7610u chipset based adapters also show low power usage.
-
+Another adapter that is very good for use in this setup is the Alfa AWUS036ACHM
+which is an AC600 class adapter that has very impressive range.
 -----
 
 #### Setup Steps
