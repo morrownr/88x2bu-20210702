@@ -1,7 +1,6 @@
 #!/bin/bash
 #
 OPTIONS_FILE="88x2bu.conf"
-
 SCRIPT_NAME="edit-options.sh"
 #
 # Purpose: Make it easier to edit the driver options file.
