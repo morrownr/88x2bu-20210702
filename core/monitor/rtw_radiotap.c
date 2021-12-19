@@ -198,7 +198,6 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 
 	/* each antenna information */
 	rx_cnt = rf_type_to_rf_rx_cnt(pHalData->rf_type);
-#if 0
 	if (rx_cnt > 1) {
 		rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_RADIOTAP_NAMESPACE) |
 		BIT(IEEE80211_RADIOTAP_EXT);
@@ -219,10 +218,9 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 		_rtw_memcpy(&hdr_buf[rt_len], &tmp_32bit, 4);
 		rt_len += 4;
 	}
-#endif
 
 	/* tsft, Required Alignment: 8 bytes */
-	if (0) { //(a->free_cnt) {
+	if (a->free_cnt) {
 		/* TSFT + free_cnt */
 		rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_TSFT);
 		if (!IS_ALIGNED(rt_len, 8))
@@ -287,13 +285,11 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 	hdr_buf[rt_len] = a->phy_info.recv_signal_power;
 	rt_len += 1;
 
-#if 0
 	/* dBm Antenna Noise */
 	rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_DBM_ANTNOISE);
 	hdr_buf[rt_len] = 0;
 	rt_len += 1;
-#endif
-#if 0
+
 	/* Signal Quality, Required Alignment: 2 bytes */
 	rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_LOCK_QUALITY);
 	if (!IS_ALIGNED(rt_len, 2))
@@ -301,21 +297,16 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 	hdr_buf[rt_len] = a->phy_info.signal_quality;
 	rt_len += 2;
 
-#endif
-
-#if 0
 	/* Antenna */
 	rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_ANTENNA);
 	hdr_buf[rt_len] = 0; /* pHalData->rf_type; */
 	rt_len += 1;
-#endif
-#if 0
+
 	/* RX flags, Required Alignment: 2 bytes */
 	rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_RX_FLAGS);
 	tmp_16bit = 0;
 	_rtw_memcpy(&hdr_buf[rt_len], &tmp_16bit, 2);
 	rt_len += 2;
-#endif
 
 	/* MCS information, Required Alignment: 1 bytes */
 	if (a->data_rate >= DESC_RATEMCS0 && a->data_rate <= DESC_RATEMCS31) {
@@ -530,7 +521,7 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 	}
 
 	/* frame timestamp, Required Alignment: 8 bytes */
-	if (0) { //(a->free_cnt) {
+	if (a->free_cnt) {
 		rtap_hdr->it_present |= BIT(IEEE80211_RADIOTAP_TIMESTAMP);
 		if (!IS_ALIGNED(rt_len, 8))
 			rt_len = ((rt_len + 7) & 0xFFF8); /* Alignment */
@@ -556,7 +547,6 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 	}
 
 	/* each antenna information */
-#if 0
 	if (rx_cnt > 1) {
 		for (i = 0; i <= rx_cnt; i++) {
 			/* dBm Antenna Signal */
@@ -574,7 +564,6 @@ sint rtw_fill_radiotap_hdr(_adapter *padapter, struct rx_pkt_attrib *a, u8 *buf)
 			rt_len += 1;
 		}
 	}
-#endif
 
 	/* push to skb */
 	pskb = (_pkt *)buf;
