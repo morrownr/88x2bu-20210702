@@ -86,6 +86,7 @@ which makes this adapter a good choice for a Raspberry Pi based access point.
 Other mt7612u and mt7610u chipset based adapters also show low power usage.
 Another adapter that is very good for use in this setup is the Alfa AWUS036ACHM
 which is an AC600 class adapter that has very impressive range.
+
 -----
 
 #### Setup Steps
