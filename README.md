@@ -360,8 +360,7 @@ Note: This script should be used in the following situations:
 
 - if driver installation fails
 - if the driver is no longer needed
-- if a fresh start with default settings is needed
-- if a new version of the driver needs to be installed
+- if a new or updated version of the driver needs to be installed
 - if a distro version upgrade is going to be installed
 
 Note: This script removes everything that has been installed, with the
@@ -397,7 +396,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 - Network names: Do not set the 2.4 GHz Network and the 5 GHz Network to the same name. Note: Unfortunately many routers come with both networks set to the same name. You need to be able to control which network that is in use so changing the name of one of the networks is recommended. Since many IoT devices use the 2.4 GHz network, it may be better to change the name of the 5 GHz network.
 
-- Channels for 5 GHz: Not all devices are capable of using DFS channels (I'm looking at you Roku.) It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 161 in order for all of your devices to work on 5 GHz. (For US, other countries may vary.)
+- Channels for 5 GHz: Not all devices are capable of using DFS channels (I'm looking at you Roku.) It may be necessary to set a fixed channel in the range of 36 to 48 or 149 to 165 in order for all of your devices to work on 5 GHz. (For US, other countries may vary.)
 
 - Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
@@ -450,6 +449,8 @@ REGDOMAIN=US
 
 - If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will at best be limited to USB 2 speeds).
 
+- Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
+
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
 
@@ -493,7 +494,7 @@ See issue titled `How to Enable WPA3 support` for more information.
 
 Question: I bought two rtl8812bu based adapters and am planning to run one of them as an AP and another as a WiFi client. How do I set that up?
 
-Answer: You can't without considerable technical skills.  Realtek drivers do not support more than one adapter with the same chipset in the same computer. However, testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in various configurations.
+Answer: You can't without considerable technical skills.  Realtek drivers do not support more than one adapter with the same chipset in the same computer. You have multiple Realtek based adapters in the same computer as long as the adapters are based on different chipsets. Testing has shown that the Mediatek drivers do support more than one adapter with the same chipset in various configurations.
 
 
 Question: Why do you recommend Mediatek based adapters when you maintain this repo for a Realtek driver?
