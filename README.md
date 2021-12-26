@@ -129,6 +129,8 @@ the Installation Steps can be improved.
 
 ### Compatible Devices
 
+Warning: Adapters listed here are not recommended for purchase as I do not recommend Linux users buy Realtek based USB WiFi adapters due to the lack of mac80211 technology drivers that are supported in-kernel. This repo is supported for the benefit of Linux users who already have adapters based on the supported chipsets. Click [here](https://github.com/morrownr/USB-WiFi) for information about and links to recommended adapters.
+
 * [ALFA AWUS036ACU](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acu-802-11ac-ac1200-dual-band-wifi-usb-dongle-rp-sma-antennas)
 * ASUS AC1300 USB-AC55 B1
 * ASUS AC53 Nano
