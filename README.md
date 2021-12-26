@@ -1,6 +1,6 @@
 -----
 
-#### [Click for USB WiFi Adapter Information for Linux](https://github.com/morrownr/USB-WiFi)
+#### Click [here](https://github.com/morrownr/USB-WiFi) for USB WiFi Adapter Information for Linux
 
 -----
 
@@ -42,8 +42,8 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - Supported interface modes
   * IBSS
   * Managed
-  * Monitor (see `Monitor_Mode.md` in the `docs` folder.)
   * AP [1] see below
+  * Monitor [1] see below
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -57,9 +57,10 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - USB mode control
 
 [1] Note: my recommendation for those looking to buy an adapater for
-AP mode is to buy adapters based on the following chipsets:
-mt7612u, mt7610u, rtl8812au and rtl8811au. To ask questions, go to
-https://github.com/morrownr/USB-WiFi
+AP mode or Monitor mode is to buy adapters based on the following
+chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. To ask questions,
+go to [USB-WiFi](https://github.com/morrownr/USB-WiFi) and post in
+`Discussions` or `Issues`.
 
 ### Compatible CPUs
 
@@ -129,7 +130,7 @@ the Installation Steps can be improved.
 
 ### Compatible Devices
 
-Warning: Adapters listed here are not recommended for purchase as I do not recommend Linux users buy Realtek based USB WiFi adapters due to the lack of mac80211 technology drivers that are supported in-kernel. This repo is supported for the benefit of Linux users who already have adapters based on the supported chipsets. Click [here](https://github.com/morrownr/USB-WiFi) for information about and links to recommended adapters.
+Warning: Adapters listed here are not recommended for purchase as I do not recommend Linux users buy Realtek based USB WiFi adapters due to the lack of mac80211 technology drivers that are supported in-kernel as called for by Linux Wireless Standards. This repo is supported for the benefit of Linux users who already have adapters based on the supported chipsets. If you are looking for information about what adapter to buy, click [here](https://github.com/morrownr/USB-WiFi) for information about and links to recommended adapters.
 
 * [ALFA AWUS036ACU](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acu-802-11ac-ac1200-dual-band-wifi-usb-dongle-rp-sma-antennas)
 * ASUS AC1300 USB-AC55 B1
