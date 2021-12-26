@@ -43,7 +43,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
   * IBSS
   * Managed
   * Monitor (see `Monitor_Mode.md` in the `docs` folder.)
-  * AP (see `Bridged_Wireless_Access_Point.md` in the `docs` folder.)
+  * AP [1] see below
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -55,6 +55,11 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - SU Beamformer control
 - AP mode DFS channel control
 - USB mode control
+
+[1] Note: my recommendation for those looking to buy an adapater for
+AP mode is to buy adapters based on the following chipsets:
+mt7612u, mt7610u, rtl8812au and rtl8811au. To ask questions, go to
+https://github.com/morrownr/USB-WiFi
 
 ### Compatible CPUs
 
