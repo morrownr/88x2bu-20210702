@@ -70,12 +70,13 @@ looking to buy an adapater for Monitor mode is to buy adapters based on
 the following chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. My
 specific recommendations for adapters in order of preference are:
 
-```
 ALFA AWUS036ACHM - long range - in-kernel driver
+
 ALFA AWUS036ACM - in-kernel driver
+
 ALFA AWUS036ACH - long range - [driver](https://github.com/morrownr/8812au-20210629)
+
 ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
-```
 
 To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
 and post in `Discussions` or `Issues`.
