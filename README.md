@@ -39,11 +39,11 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - Supported interface modes
   * IBSS
   * Managed
-  * AP [1] [2] see below
-  * Monitor [1] [2] see below
+  * AP [1] [3] see below
+  * Monitor [2] [3] see below
   * P2P-client
   * P2P-GO
-  * Concurrent [2] see below
+  * Concurrent [3] see below
 - Log level control
 - LED control
 - Power saving control
@@ -53,13 +53,32 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - AP mode DFS channel control
 - USB mode control
 
-[1] My recommendation for those looking to buy an adapater for AP mode
-or Monitor mode is to buy adapters based on the following chipsets:
-mt7612u, mt7610u, rtl8812au and rtl8811au. To ask questions, go to
-[USB-WiFi](https://github.com/morrownr/USB-WiFi) and post in
-`Discussions` or `Issues`.
+[1] Overall this driver does a good job with AP mode. During testing and
+work prior to making this driver available, the team working on this
+driver noticed some problems in AP mode if used with a Raspberry Pi 4B.
+We were unable to discover or fix the exact cause of the problem but
+the workaround is to keep the driver in USB2 mode. This workaround only
+applies to AP mode with Raspberry Pi 4B. No problems were noted with
+systems that use x86 or amd64 processors.
 
-[2] There are files that provide detailed information located in the
+
+[2] Work to improve monitor mode is ongoing with this driver. Your
+reports of success or failure are needed. If you have yet to buy an
+adapter to use with monitor mode, there are adapters available that are
+known to work very well with monitor mode. My recommendation for those
+looking to buy an adapater for Monitor mode is to buy adapters based on
+the following chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. My
+specific recommendations for adapters in order of preference are:
+
+ALFA AWUS036ACHM - long range - in-kernel driver
+ALFA AWUS036ACM - in-kernel driver
+ALFA AWUS036ACH - long range - [driver](https://github.com/morrownr/8812au-20210629)
+ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
+
+To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
+and post in `Discussions` or `Issues`.
+
+[3] There are files that provide detailed information located in the
 `docs` folder.
 
 ### Compatible CPUs
