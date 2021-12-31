@@ -33,20 +33,17 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
   * Supports site survey scan and manual connect
   * Supports WPA/WPA2 TLS client
 - Power saving modes
-- Wireshark compatible
-- Aircrack-ng compatible
-- Packet injection
 - hostapd compatible
 - AP mode DFS channel support
 - Miracast
 - Supported interface modes
   * IBSS
   * Managed
-  * AP [1] see below
-  * Monitor [1] see below
+  * AP [1] [2] see below
+  * Monitor [1] [2] see below
   * P2P-client
   * P2P-GO
-  * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
+  * Concurrent [2] see below
 - Log level control
 - LED control
 - Power saving control
@@ -56,11 +53,14 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - AP mode DFS channel control
 - USB mode control
 
-[1] Note: my recommendation for those looking to buy an adapater for
-AP mode or Monitor mode is to buy adapters based on the following
-chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. To ask questions,
-go to [USB-WiFi](https://github.com/morrownr/USB-WiFi) and post in
+[1] My recommendation for those looking to buy an adapater for AP mode
+or Monitor mode is to buy adapters based on the following chipsets:
+mt7612u, mt7610u, rtl8812au and rtl8811au. To ask questions, go to
+[USB-WiFi](https://github.com/morrownr/USB-WiFi) and post in
 `Discussions` or `Issues`.
+
+[2] There are files that provide detailed information located in the
+`docs` folder.
 
 ### Compatible CPUs
 
@@ -214,7 +214,7 @@ sudo zypper update
 Note: If you do not regularly maintain your system by installing updated
 packages, please do so now and then reboot. The rest of the installation
 will appreciate having a fully up to date system to work with. The
-installation can then be continued with Step 3.
+installation can then be continued with the next step.
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
 
@@ -343,6 +343,8 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
+-----
+
 ### Driver Options ( edit-options.sh )
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by
@@ -361,6 +363,8 @@ sudo ./edit-options.sh
 ```
 
 Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
+
+-----
 
 ### Removal of the Driver ( remove-driver.sh )
 
@@ -390,6 +394,8 @@ cd ~/src/88x2bu-20210702
 sudo ./remove-driver.sh
 ```
 
+-----
+
 ### Recommended WiFi Router/ Access Point Settings
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
@@ -412,6 +418,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 After making and saving changes, reboot the router.
 
+-----
 
 ### Check and set regulatory domain
 
@@ -445,6 +452,8 @@ Change the last line to read:
 REGDOMAIN=US
 ```
 
+-----
+
 ### Recommendations regarding USB
 
 - Moving your USB WiFi adapter to a different USB port has been known to fix a variety of problems.
@@ -461,6 +470,7 @@ REGDOMAIN=US
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
 
+-----
 
 ### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
 
@@ -469,6 +479,8 @@ Add the following line to /boot/config.txt
 ```
 dtoverlay=disable-wifi
 ```
+
+-----
 
 ### How to forget a saved WiFi network on a Raspberry Pi
 
@@ -520,5 +532,10 @@ Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
 Question: I am having problems with my adapter and I use Virtualbox?
 
 Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
+
+-----
+
+Credits:
+
 
 -----
