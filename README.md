@@ -66,7 +66,7 @@ systems that use x86 or amd64 processors.
 reports of success or failure are needed. If you have yet to buy an
 adapter to use with monitor mode, there are adapters available that are
 known to work very well with monitor mode. My recommendation for those
-looking to buy an adapater for Monitor mode is to buy adapters based on
+looking to buy an adapter for Monitor mode is to buy adapters based on
 the following chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. My
 specific recommendations for adapters in order of preference are:
 
@@ -212,11 +212,11 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 #### Step 2: Update the system package information (select the option for the OS you are using)
 
-- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
-
 Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to update your system package
 information.
+
+- Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
 ```
 sudo apt update
