@@ -21,7 +21,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ### Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
 
 - v5.13.1 (Realtek) (20210702) plus updates from the Linux community
-- 1,132 clones over the 2 weeks ended on 20211218
+- 1,179 downloads over the 2 weeks ended on 20211231
 
 ### Features
 
@@ -128,6 +128,8 @@ the Installation Steps can be improved.
 
 - RHEL 8.4 (kernel 4.18.0)
 
+- Solus
+
 - Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.13)
 
 ### Download Locations for Tested Linux Distributions
@@ -141,6 +143,7 @@ the Installation Steps can be improved.
 - [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
 - [RHEL](https://www.redhat.com)
+- [Solus](https://getsol.us/home/)
 - [Ubuntu](https://www.ubuntu.com)
 
 ### Tested Hardware
@@ -184,7 +187,7 @@ good idea as to whether you need to remove a previously installed
 driver by running the following command:
 
 ```
-dkms status
+sudo dkms status
 ```
 
 The installation instructions are for the novice user. Experienced users are welcome to alter the installation to meet their needs.
@@ -211,6 +214,10 @@ There is no need to disable Secure Mode to install this driver. If Secure Mode i
 
 - Option for Debian based distributions such as Ubuntu, Linux Mint, Kali and Raspberry Pi OS
 
+Note: If your Linux distro does not fall into one of options listed
+below, you will need to research how to update your system package
+information.
+
 ```
 sudo apt update
 ```
@@ -236,7 +243,7 @@ sudo zypper update
 Note: If you do not regularly maintain your system by installing updated
 packages, please do so now and then reboot. The rest of the installation
 will appreciate having a fully up to date system to work with. The
-installation can then be continued with the next step.
+installation can then be continued with Step 3.
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
 
@@ -268,6 +275,12 @@ sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 
 ```
 sudo zypper install -t pattern devel_kernel dkms
+```
+
+- Option for Solus
+
+```
+sudo eopkg install gcc linux-current-headers make git
 ```
 
 - Options for Arch and Manjaro
@@ -357,9 +370,26 @@ to be included here.
 
 Note: For automated builds, use _NoPrompt_ as an option.
 
+Note: Solus Linux does not support dkms and will require a manual build.
+See `Manual build instructions` below.
+
 ```
 sudo ./install-driver.sh
 ```
+
+Manual build instructions: The script `install-driver.sh` automates the
+installation process, however, it may be necessary to build and install
+the driver manually with some Linux distros:
+
+```
+make clean
+make
+sudo make install
+sudo reboot
+```
+
+Note: If you use the manual build instructions, you will need to repeat
+the process each time a new kernel is installed in your distro.
 
 Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
