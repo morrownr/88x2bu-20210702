@@ -280,7 +280,7 @@ sudo zypper install -t pattern devel_kernel dkms
 - Option for Solus
 
 ```
-sudo eopkg install gcc linux-current-headers make git
+sudo eopkg install gcc linux-current-headers make git binutils
 ```
 
 - Options for Arch and Manjaro
@@ -370,12 +370,12 @@ to be included here.
 
 Note: For automated builds, use _NoPrompt_ as an option.
 
-Note: Solus Linux does not support dkms and will require a manual build.
-See `Manual build instructions` below.
-
 ```
 sudo ./install-driver.sh
 ```
+
+Note: Solus Linux does not support dkms and will require a manual build.
+See `Manual build instructions` below.
 
 Manual build instructions: The script `install-driver.sh` automates the
 installation process, however, it may be necessary to build and install

@@ -10,6 +10,8 @@
 #
 # $ ./raspiOS-32.sh
 
+# getconf LONG_BIT (need to work on this)
+
 sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
 RESULT=$?
 

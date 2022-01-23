@@ -57,6 +57,7 @@ hostnamectl | grep 'Operating System' | sed 's/  Operating System: //'
 uname -r
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
 uname -m
+# getconf LONG_BIT (need to work on this)
 
 echo "Starting installation..."
 # the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}

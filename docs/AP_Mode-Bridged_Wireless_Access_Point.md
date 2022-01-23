@@ -1,21 +1,33 @@
-2021-12-15
+2022-01-20
 
 ## Bridged Wireless Access Point
 
 A bridged wireless access point (aka Dumb AP) works within an existing
 ethernet network to add WiFi capability where it does not exist or to
 extend the network to WiFi capable computers and devices in areas where
-the WiFi signal is weak or otherwise does not meet expectations.
+the WiFi signal is weak or otherwise does not meet expectations. One big
+advantage of this setup is that it can cost far less than many of the
+Mesh kits that are available. Another advantage this setup has over Mesh
+kits is that the Raspberry Pi is a general purpose computer so it can be
+used for additional tasks while performing as a Bridged Wireless Access
+Point.
 
 ```
-INTERNET >>> modem/router >>> RasPi ))) ((( laptop
-            (cable)       ╱            ╲
-            (fiber)   CAT 5e, 6         ((( phone
-            (dsl)
+INTERNET >>>>>>> modem/router >>>>>>> RasPi ))))) ((((( laptop
+                (cable)         ╱                ╲
+                (fiber)      CAT 5e+              ((((( phone
+                (dsl)
 ```
 
-Note: The connection from the router to the RasPi is begging for alternative
-solutions to meet different needs. Please feel free to make suggestions.
+Note: The connection from the router to the RasPi is best served by 
+a CAT 5e or greater ethernet cable but good alternatives exist. One
+alternative is to use your existing electrical wiring by using
+Powerline AV2 adapters. These adapters are also called Homeplug AV2
+adapters and come in a variety of speeds and prices. I have had success
+with Powerline AV2 adapters but success depends on the quality and setup
+of the electrical wiring to be used. Anyone considering Powerline AV2
+should research the issue and be prepared to the return the product if
+it does not work well. I am exploring additional alternatives.
 
 #### Single Band or Dual Band - Your Choice
 
@@ -52,11 +64,11 @@ Netplan.
 
 [Raspberry Pi OS (2021-10-30) (32 bit) (kernel 5.10)](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit)
 
-Ethernet connection providing internet
+Ethernet and Powerline AV2 connections providing internet (both tested)
 
 [USB WiFi Adapter(s)](https://github.com/morrownr/USB-WiFi)
 
-[Case](https://www.amazon.com/dp/B07X8RL8SL)
+[Case](https://www.amazon.com/dp/B07T2CPC2H)
 
 [Right Angle USB Extender](https://www.amazon.com/dp/B07S6B5X76)
 
@@ -64,8 +76,9 @@ Ethernet connection providing internet
 
 [SD Card](https://www.amazon.com/Samsung-Endurance-32GB-Micro-Adapter/dp/B07B98GXQT)
 
-Note: I use the case upside down. There are several little things that
-work better with the case upside down and no negatives that I can find.
+Note: I use the case upside down with little stick on rubber feet. There
+are several little things that work better with the case upside down and
+no negatives that I can find.
 
 Note: Very few Powered USB 3 Hubs will work well with Raspberry Pi hardware. The
 primary problem has to do with the backfeeding of current into the Raspberry Pi.
@@ -149,21 +162,14 @@ The follow site provides links to adapters that support WPA3-SAE: [USB-WIFI](htt
 
 -----
 
-Update system.
+Update, upgrade and clean up the operating system.
 ```
-sudo apt update
-```
-
------
-
-Upgrade system.
-
-```
-sudo apt full-upgrade
+sudo apt update && sudo apt full-upgrade && sudo apt autoremove
 ```
 
-Note: Upgrading system is not mandatory for this installation but since some
-users forget to upgrade their system on a regular basis, maybe it is a good idea.
+Note: Upgrading the operating system is not mandatory for this
+installation but since some users forget to upgrade their system on a
+regular basis, maybe it is a good idea.
 
 -----
 
@@ -211,6 +217,7 @@ dtoverlay=disable-bt
 dtoverlay=disable-wifi
 
 # overclock CPU
+# (may not be required on current versions of the RasPiOS with a RasPi4B)
 over_voltage=1
 arm_freq=1600
 ```
