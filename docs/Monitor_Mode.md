@@ -1,6 +1,6 @@
 -----
 
-2021-12-18
+2022-01-25
 
 ## Monitor Mode
 
@@ -10,12 +10,14 @@ mode with the following Realtek drivers:
 ```
 https://github.com/morrownr/8812au-20210629
 https://github.com/morrownr/8821au-20210708
+https://github.com/morrownr/8821cu-20210118
 https://github.com/morrownr/88x2bu-20210702
+https://github.com/morrownr/8814au
 ```
-
-For adapters that use in-kernel drivers, use any of the many guides that
-are available as the in-kernel drivers work in the textbook, standards
-compliant manner.
+Note: This document and the `start-mon.sh` script will work with
+adapters that use in-kernel drivers but it is not necessary as the use
+of any of the many guides that are available should work fine as the
+in-kernel drivers work in the textbook, standards compliant manner.
 
 Please submit corrections or additions via Issues.
 
@@ -30,7 +32,7 @@ adapters can operate in: Master (acting as an access point), Managed
 (client, also known as station), Ad hoc, Repeater, Mesh, Wi-Fi Direct,
 TDLS and Monitor mode.
 
-Note: This document and the `test-mon.sh` script have been tested on the
+Note: This document and the `start-mon.sh` script have been tested on the
 following:
 
 ```
@@ -41,7 +43,7 @@ Ubuntu
 ```
 -----
 
-## Steps to test monitor mode
+## Steps to start/test monitor mode
 
 #### Install USB WiFi adapter and driver per instructions.
 
@@ -63,9 +65,9 @@ sudo rfkill unblock wlan
 
 -----
 
-#### Install the aircrack-ng and wireshark packages
+#### Install aircrack-ng (optional)
 ```
-sudo apt install -y aircrack-ng wireshark
+sudo apt install -y aircrack-ng
 ```
 
 -----
@@ -87,25 +89,48 @@ document.
 
 #### Enter and check monitor mode
 
-A script called `test-mon.sh` is available in the driver directory.
-It will automate much of the following. It is a work in progress so 
-please feel free to make and submit improvements. It is written in Bash.
+A script called `start-mon.sh` is available in the driver directory.
+It will automate much of the following.
 
 Usage:
 
 ```
-sudo ./test-mon.sh [interface:wlan0]
+sudo ./start-mon.sh [interface:wlan0]
 ```
 
 Note: If you want to do things manually, continue below.
 
 -----
 
-#### Disable interfering processes
+#### Disable interfering processes (see note about `start-mon.sh` below)
 
 ```
 sudo airmon-ng check kill
 ```
+
+Note: `start-mon.sh` is capable of disabling interfering processes. It
+uses a different method than airmon-ng. Airmon-ng kills the processes
+whereas `start-mon.sh` simply stops the processes and restarts them
+when the script terminates. Stopping the processes seems to have some
+advantages over killing them.
+
+Advantage 1: When killing the very clever interfering processes, you may
+find that interfering processes are able to spawn new processes that will
+continue to interfer. Stopping the interfering processes does not seem to
+trigger the spawning of new processes.
+
+Advantage 2: If you use more than one wifi adapter/card in the system,
+and if you need one of the adapter/cards to stay connected to the
+internet, killing the processes may cause your internet connection to
+drop. Stopping the processes does not cause your internet connection to
+drop.
+
+Advantage 3: Stopping the processes allows the processes to be restarted.
+The `start-mon.sh` script can put your interface in monitor mode,
+properly configured, and then return your system, including stopped
+processes and interface to original settings. This can reduce reboots
+that sometimes might have been needed to reset things to normal operation.
+
 
 #### Change to monitor mode 
 
@@ -113,7 +138,7 @@ Option 1 (the airmon-ng way)
 
 Note: This option may not work with some driver/adapter combinations
 (I'm looking at you Realtek). If this option does not work, you can
-use Option 2 or the `test-mon.sh` script that was previously mentioned.
+use Option 2 or the `start-mon.sh` script that was previously mentioned.
 ```
 sudo airmon-ng start <wlan0>
 ```
