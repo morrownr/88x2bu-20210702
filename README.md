@@ -92,7 +92,7 @@ and post in `Discussions` or `Issues`.
 ### Compatible Kernels
 
 - Kernels: 3.8 - 5.11  (Realtek)
-- Kernels: 5.12 - 5.16 (community support)
+- Kernels: 5.12 - 5.17 (community support)
 
 ### Tested Linux Distributions
 
