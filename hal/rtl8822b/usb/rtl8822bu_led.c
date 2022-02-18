@@ -57,11 +57,19 @@ static void swledon(PADAPTER padapter, PLED_USB led)
 	case LED_PIN_LED1:
 	case LED_PIN_LED2:
 	default:
-		rtw_halmac_led_switch(adapter_to_dvobj(padapter), 1);
+		if (padapter->registrypriv.led_ctrl == 0) {
+			rtw_halmac_led_switch(adapter_to_dvobj(padapter), 0);
+		} else {
+			rtw_halmac_led_switch(adapter_to_dvobj(padapter), 1);
+		}
 		break;
 	}
 
-	led->bLedOn = _TRUE;
+	if (padapter->registrypriv.led_ctrl == 0) {
+		led->bLedOn = _FALSE;
+	} else {
+		led->bLedOn = _TRUE;
+	}
 }
 
 
@@ -83,11 +91,19 @@ static void swledoff(PADAPTER padapter, PLED_USB led)
 	case LED_PIN_LED1:
 	case LED_PIN_LED2:
 	default:
-		rtw_halmac_led_switch(adapter_to_dvobj(padapter), 0);
+		if (padapter->registrypriv.led_ctrl <= 1) {
+			rtw_halmac_led_switch(adapter_to_dvobj(padapter), 0);
+		} else {
+			rtw_halmac_led_switch(adapter_to_dvobj(padapter), 1);
+		}
 		break;
 	}
 
-	led->bLedOn = _FALSE;
+	if (padapter->registrypriv.led_ctrl <= 1) {
+		led->bLedOn = _FALSE;
+	} else {
+		led->bLedOn = _TRUE;
+	}
 }
 
 /*
