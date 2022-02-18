@@ -57,10 +57,7 @@ CONFIG_USB_HCI = y
 CONFIG_PCI_HCI = n
 CONFIG_SDIO_HCI = n
 CONFIG_GSPI_HCI = n
-######################### LED #################################
-CONFIG_LED_CONTROL = y
-CONFIG_LED_ENABLE = y
-######################### Features ############################
+########################## Features ###########################
 CONFIG_AP_MODE = y
 CONFIG_P2P = y
 CONFIG_MP_INCLUDED = n
@@ -1304,16 +1301,6 @@ endif
 
 ifeq ($(CONFIG_IP_R_MONITOR), y)
 EXTRA_CFLAGS += -DCONFIG_IP_R_MONITOR
-endif
-
-ifeq ($(CONFIG_LED_CONTROL), y)
-EXTRA_CFLAGS += -DCONFIG_LED_CONTROL
-ifeq ($(CONFIG_RTL8822B), y)
-EXTRA_CFLAGS += -DCONFIG_SW_LED -DCONFIG_RTW_SW_LED
-endif
-ifeq ($(CONFIG_LED_ENABLE), y)
-EXTRA_CFLAGS += -DCONFIG_LED_ENABLE
-endif
 endif
 
 ifeq ($(CONFIG_MP_VHT_HW_TX_MODE), y)
