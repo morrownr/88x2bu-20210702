@@ -1,14 +1,15 @@
 #!/bin/bash
 #
-# Purpose: Change settings in the Makefile to support compiling for Raspberry Pi OS (64 bit).
+# Purpose: Change settings in the Makefile to support compiling 64 bit
+# operating systems for Raspberry Pi Hardware.
 #
 # To make this file executable:
 #
-# $ chmod +x raspiOS-64.sh
+# $ chmod +x ARM64_RPI.sh
 #
 # To execute this file:
 #
-# $ ./raspiOS-64.sh
+# $ ./ARM64_RPI.sh
 
 sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
 RESULT=$?

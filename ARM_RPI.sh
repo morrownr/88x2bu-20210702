@@ -1,14 +1,15 @@
 #!/bin/bash
 #
-# Purpose: Change settings in the Makefile to support compiling for Raspberry Pi OS (32 bit).
+# Purpose: Change settings in the Makefile to support compiling 32 bit
+# operating systems for Raspberry Pi Hardware.
 #
 # To make this file executable (if necessary):
 #
-# $ chmod +x raspiOS-32.sh
+# $ chmod +x ARM_RPI.sh
 #
 # To execute this file:
 #
-# $ ./raspiOS-32.sh
+# $ ./ARM_RPI.sh
 
 # getconf LONG_BIT (need to work on this)
 
