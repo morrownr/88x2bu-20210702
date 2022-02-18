@@ -21,7 +21,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ### Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
 
 - v5.13.1 (Realtek) (20210702) plus updates from the Linux community
-- 1,179 downloads over the 2 weeks ended on 20211231
+- 4,200 visitors over the 2 weeks ended on 20220206 (Thank you!)
 
 ### Features
 
