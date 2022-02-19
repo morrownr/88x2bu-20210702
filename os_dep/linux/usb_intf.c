@@ -247,6 +247,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xC822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xD822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xE822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
+	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xF822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x13b1, 0x0043, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Alpha - Alpha */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x012D, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-Link Archer T3U v1 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0138, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-Link Archer T3U Plus v1 */
