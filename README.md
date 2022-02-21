@@ -33,6 +33,9 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
   * Supports site survey scan and manual connect
   * Supports WPA/WPA2 TLS client
 - Power saving modes
+- Wireshark compatible
+- Aircrack-ng compatible
+- Packet injection
 - hostapd compatible
 - AP mode DFS channel support
 - Miracast
@@ -394,6 +397,9 @@ to be included here.
 
 #### Step 10: Run the installation script ( install-driver.sh )
 
+Note: Solus Linux does not support dkms and will require a manual build.
+See `Manual build instructions` below.
+
 Note: For automated builds, use _NoPrompt_ as an option.
 
 ```
@@ -403,9 +409,6 @@ sudo ./install-driver.sh
 Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
-
-Note: Solus Linux does not support dkms and will require a manual build.
-See `Manual build instructions` below.
 
 Manual build instructions: The script `install-driver.sh` automates the
 installation process, however, it may be necessary to build and install
@@ -596,6 +599,8 @@ Network Manager and connect using wpa_supplicant.
 WPA3-SAE is working well in AP mode using hostapd with current versions of the
 Raspberry Pi OS. 
 
+-----
+
 Question: I bought two rtl8812bu based adapters and am planning to use both in
 the same computer. How do I set that up?
 
@@ -604,6 +609,7 @@ support more than one adapter with the same chipset in the same computer. You
 can have multiple Realtek based adapters in the same computer as long as the
 adapters are based on different chipsets.
 
+-----
 
 Question: Why do you recommend Mediatek based adapters when you maintain this
 repo for a Realtek driver?
@@ -615,15 +621,58 @@ Mediatek,
 
 https://github.com/morrownr/USB-WiFi
 
+-----
 
 Question: Will you put volunteers to work?
 
 Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
 
+-----
 
 Question: I am having problems with my adapter and I use Virtualbox?
 
 Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
+
+-----
+
+Question: The driver installation script completed successfully and the
+driver is installed but does not seem to be working. What is wrong?
+
+Answer: Turn secure boot off to see if that allows the driver to work.
+This driver is primarily tested on Debian based distros such as Linux
+Mint, Ubuntu, Raspberry Pi OS and Kali. In an attempt to make this
+driver work well on many Linux distros, other distros, including the Arch
+based Manjaro is used for testing. Currently I do not have installations
+of Fedora or OpenSUSE available for testing and reply on user reports of
+success or failure. I have two test systems with secure boot on so as to
+test secure boot. I have not seen any secure boot problems with Debian
+based systems and I don't remember problems with Manjaro.
+
+dkms is used in the installation script. It helps with a lot of issues that
+will come up if a simple manual installation is used. dkms has the
+capability to handle the needs of secure boot. dkms was written by and is
+maintained by Dell. Dell has been offering some Ubuntu pre-loaded systems
+for years so their devs likely test on Ubuntu. I suspect Fedora and
+OpenSUSE may be handing their secure boot support differently than Debian
+based systems and this is leading to problems. This and the other repos
+I have are VERY heavily used and I am sure there are plenty of non-Debian
+users that use this driver. Are they all turning off secure boot and not
+reporting the problem? I don't know. What I do know is that reports like
+this are rare.
+
+For the driver to compile and install correctly but not be available
+tells me there is likely a key issue. Here is an interesting link
+regarding Debian systems and secure boot:
+
+https://wiki.debian.org/SecureBoot
+
+That document contains a lot of information that can help an investigation
+into what the real problem is and I invite you and other Fedora, OpemSUSE
+and users of other distros that show this problem to investigate and
+present what you know to the devs of your distro via their problem
+reporting system. Turning off secure boot is NOT a fix. A real fix needs
+to happen.
+
 
 -----
 
