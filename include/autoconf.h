@@ -186,7 +186,7 @@
 #define USB_INTERFERENCE_ISSUE /* this should be checked in all usb interface */
 #define CONFIG_GLOBAL_UI_PID
 
-/*#define CONFIG_RTW_80211K*/
+#define CONFIG_RTW_80211K
 
 /*#define CONFIG_ADAPTOR_INFO_CACHING_FILE */ /* now just applied on 8192cu only, should make it general... */
 /*#define CONFIG_RESUME_IN_WORKQUEUE */
