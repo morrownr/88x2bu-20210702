@@ -1,60 +1,63 @@
-2022-01-20
+2022-02-16
 
 ## Bridged Wireless Access Point
 
-A bridged wireless access point (aka Dumb AP) works within an existing
+A `Bridged Wireless Access Point` (aka Dumb AP) works within an existing
 ethernet network to add WiFi capability where it does not exist or to
 extend the network to WiFi capable computers and devices in areas where
 the WiFi signal is weak or otherwise does not meet expectations. One big
 advantage of this setup is that it can cost far less than many of the
-Mesh kits that are available. Another advantage this setup has over Mesh
-kits is that the Raspberry Pi is a general purpose computer so it can be
-used for additional tasks while performing as a Bridged Wireless Access
-Point.
+Mesh kits that are available. Another advantage this setup has is that
+the Raspberry Pi is a general purpose computer so it can be used for
+additional tasks while performing as a `Bridged Wireless Access Point`.
 
 ```
+                                                  ((((( tablet    
+                                                 ╱
 INTERNET >>>>>>> modem/router >>>>>>> RasPi ))))) ((((( laptop
                 (cable)         ╱                ╲
                 (fiber)      CAT 5e+              ((((( phone
-                (dsl)
+                (dsl)        Powerline AV2
+                             Ethernet Over Coax
 ```
 
-Note: The connection from the router to the RasPi is best served by 
-a CAT 5e or greater ethernet cable but good alternatives exist. One
+Note: The connection from the router to the RasPi is best served by a
+CAT 5e or greater ethernet cable but alternatives exist. One
 alternative is to use your existing electrical wiring by using
-Powerline AV2 adapters. These adapters are also called Homeplug AV2
+`Powerline AV2` adapters. These adapters are also called `Homeplug AV2`
 adapters and come in a variety of speeds and prices. I have had success
-with Powerline AV2 adapters but success depends on the quality and setup
-of the electrical wiring to be used. Anyone considering Powerline AV2
-should research the issue and be prepared to the return the product if
-it does not work well. I am exploring additional alternatives.
+with `Powerline AV2` adapters but success depends on the quality and setup
+of the electrical wiring to be used.  Another option is `Ethernet Over
+Coax (MoCa)`. Anyone considering `Powerline AV2` or `Ethernet Over
+Coax (MoCa)` should research the products and be prepared to return
+the products if expectations are not met. 
 
 #### Single Band or Dual Band - Your Choice
 
-This document outlines single band and dual band WiFi setups using a Raspberry
-Pi 3B, 3B+ or 4B with an AC600 USB2 or AC1200 USB3 WiFi adapter for 5 GHz
-band and either an additional external WiFi adapter or internal WiFi for 2.4 GHz
-band. There is a lot of flexibility and capability available with this type of
-setup.
+This document outlines single band and dual band WiFi setups using a
+Raspberry Pi 3B, 3B+ or 4B with an AC600 USB2 or AC1200 USB3 WiFi
+adapter for 5 GHz band and either an additional external WiFi adapter or
+internal WiFi for 2.4 GHz band. There is a lot of flexibility and
+capability available with this type of setup.
 
 #### Information
 
 This setup supports WPA3-SAE. It is disabled by default.
 
-WPA3-SAE will not work with some Realtek 88xx drivers. Let's just say that this
-issue is in progress.
+WPA3-SAE will not work with some Realtek 88xx drivers. Let's just say
+that this issue is in progress.
 
-WPA3-SAE works with Mediatek 761x chipset based USB WiFI adapters and, as far as
-I can tell, with all usb wifi adapters that use Linux in-kernel drivers and I
-have tested many.
+WPA3-SAE works with Mediatek 761x chipset based USB WiFI adapters and,
+as far as I can tell, with all usb wifi adapters that use Linux
+in-kernel drivers and I have tested many.
 
-Note: This guide uses systemd-networkd for network management. If your Linux
-distro uses Network Manager or Netplan, they must be disabled. Sections that
-explain how to do this are located near the end of this document. Please go
-to and follow the appropriate section now, if required, before continuing with
-this setup guide. If you are using the Raspberry Pi OS, you may continue with
-this setup guide now as the Raspberry Pi OS does not use Network Manager or
-Netplan.
+Note: This guide uses `systemd-networkd` for network management. If your
+Linux distro uses Network Manager or Netplan, they must be disabled.
+Sections that explain how to do this are located near the end of this
+document. Please go to and follow the appropriate section now, if
+required, before continuing with this setup guide. If you are using the
+Raspberry Pi OS, you may continue with this setup guide now as the
+Raspberry Pi OS does not use Network Manager or Netplan.
 
 -----
 
@@ -76,7 +79,7 @@ Ethernet and Powerline AV2 connections providing internet (both tested)
 
 [SD Card](https://www.amazon.com/Samsung-Endurance-32GB-Micro-Adapter/dp/B07B98GXQT)
 
-Note: I use the case upside down with little stick on rubber feet. There
+Note: I use the case upside down with little stick-on rubber feet. There
 are several little things that work better with the case upside down and
 no negatives that I can find.
 
@@ -104,59 +107,67 @@ which is an AC600 class adapter that has very impressive range.
 
 #### Setup Steps
 
-USB WiFi adapter driver installation, if required, should be performed and tested
-prior to continuing.
+USB WiFi adapter driver installation, if required, should be performed
+and tested prior to continuing.
 
-Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and rtl8814au
-chipsets, the following module parameters may be needed for best performance
-when the adapter is set to support 5 GHz band: (if using a rtl8812bu based
-adapter with a Raspberry Pi 4B or 400, you may need to limit USB mode to USB2
-due to a bug, probably in the Raspberry Pi 4B, that causes dropped connections--
-rtw_switch_usb_mode=2)
+Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and
+rtl8814au chipsets, the following module parameters may be needed for
+best performance when the adapter is set to support 5 GHz band: (if
+using a rtl8812bu based adapter with a Raspberry Pi 4B or 400, you may
+need to limit USB mode to USB2 due to a bug, probably in the Raspberry
+Pi 4B, that causes dropped connections-- rtw_switch_usb_mode=2)
 
 ```
 rtw_vht_enable=2 rtw_switch_usb_mode=1
 ```
 
-Note: For USB2 adapters based on the Realtek rtl8811au chipset, the following
-module parameters may be needed for best performance when the adapter is set to
-support 5 GHz band:
+Note: For USB2 adapters based on the Realtek rtl8811au and rtl8821cu
+chipset, the following module parameters may be needed for best
+performance when the adapter is set to support 5 GHz band:
 
 ```
 rtw_vht_enable=2
 ```
 
-Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and rtl8814au
-chipsets, the following module parameters may be needed for best performance
-when the adapter is set to support 2.4 GHz band:
+Note: For USB3 adapters based on the Realtek rtl8812au, rtl8812bu and
+rtl8814au chipsets, the following module parameters may be needed for
+best performance when the adapter is set to support 2.4 GHz band:
 
 ```
 rtw_vht_enable=1 rtw_switch_usb_mode=2
 ```
 
-Note: For USB2 adapters based on the Realtek rtl8811au chipset, the following
-module parameters may be needed for best performance when the adapter is set to
-support 2.4 GHz band:
+Note: For USB2 adapters based on the Realtek rtl8811au and rtl8821cu
+chipset, the following module parameters may be needed for best
+performance when the adapter is set to support 2.4 GHz band:
 
 ```
 rtw_vht_enable=1
 ```
 
-Note: For USB3 or USB2 adapters based on Mediatek mt7612u or mt7610u chipsets,
-the following module parameter may be needed for best performance:
+Note: For USB3 adapters based on Mediatek mt7612u chipsets, the
+following module parameter may be needed for best performance:
 
 ```
 disable_usb_sg=1
+```
+
+Note: Here is a quick way to set the `disable_usb_sg` paramter:
+
+```
+sudo -i
+echo "options mt76_usb disable_usb_sg=1" > /etc/modprobe.d/mt76_usb.conf
+exit
 ```
 
 Note: More information is available at the following site:
 
 https://github.com/morrownr/7612u
 
-Note: For this access point setup to support WPA3-SAE in a dual band setup, two
-USB WiFi adapters with Mediatek or Atheros chipsets are required as the Realtek
-and internal Raspberry Pi WiFi drivers do not support WPA3-SAE as of the date
-of this document.
+Note: For this access point setup to support WPA3-SAE in a dual band
+setup, two USB WiFi adapters with Mediatek or Atheros chipsets are
+required as the Realtek and internal Raspberry Pi WiFi drivers do not
+support WPA3-SAE as of the date of this document.
 
 The follow site provides links to adapters that support WPA3-SAE: [USB-WIFI](https://github.com/morrownr/USB-WiFi)
 
@@ -164,7 +175,7 @@ The follow site provides links to adapters that support WPA3-SAE: [USB-WIFI](htt
 
 Update, upgrade and clean up the operating system.
 ```
-sudo apt update && sudo apt full-upgrade && sudo apt autoremove
+sudo apt update && sudo apt upgrade && sudo apt autoremove
 ```
 
 Note: Upgrading the operating system is not mandatory for this
@@ -226,9 +237,9 @@ arm_freq=1600
 
 Enable predictable network interface names
 
-Note: While this step is optional, problems can arise without it on dual band
-setups. Some Linux distros have this capability enabled by default but not the
-Raspberry Pi OS.
+Note: While this step is optional, problems can arise without it on dual
+band setups. Some Linux distros have this capability enabled by default
+but not the Raspberry Pi OS.
 
 ```
 sudo raspi-config
@@ -288,8 +299,8 @@ sudo systemctl enable hostapd
 
 -----
 
-Note: The below steps include creating two hostapd configurations files but
-only one is needed if using a single band setup.
+Note: The below steps include creating two hostapd configurations files
+but only one is needed if using a single band setup.
 
 Create hostapd configuration file for 5 GHz band.
 
@@ -302,7 +313,7 @@ File contents
 ```
 # /etc/hostapd/hostapd-5g.conf
 # Documentation: https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-# 2021-11-15
+# 2022-02-11
 
 # SSID
 ssid=myPI-5g
@@ -403,8 +414,10 @@ vht_capab=[SHORT-GI-80]
 #vht_capab=[MAX-MPDU-11454][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 # rtl8814au
 #vht_capab=[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
-# rtl8811au - rtl8811cu
+# rtl8811au
 #vht_capab=[MAX-MPDU-11454][SHORT-GI-80][RX-STBC-1][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
+# rtl8811cu
+#vht_capab=[MAX-MPDU-11454][SHORT-GI-80][HTC-VHT][MAX-A-MPDU-LEN-EXP7]
 #
 # Note: [TX-STBC-2BY1] may cause problems with some Realtek drivers
 
