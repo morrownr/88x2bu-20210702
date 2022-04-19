@@ -1,16 +1,12 @@
 #!/bin/bash
 
+# Purpose: Install Realtek USB WiFi adapter drivers.
+#
+# This version of the installation script does not use dkms.
+
 SCRIPT_NAME="install-driver-no-dkms.sh"
-SCRIPT_VERSION="20220222"
-
-DRV_NAME="rtl88x2bu"
-DRV_VERSION="5.13.1"
+SCRIPT_VERSION="20220419"
 OPTIONS_FILE="88x2bu.conf"
-
-DRV_DIR="$(pwd)"
-KRNL_VERSION="$(uname -r)"
-
-clear
 
 # support for NoPrompt allows non-interactive use of this script
 NO_PROMPT=0
@@ -39,15 +35,6 @@ then
 	exit 1
 fi
 
-# check for previous installation
-#if [[ -d "/usr/src/${DRV_NAME}-${DRV_VERSION}" ]]
-#then
-#	echo "It appears that this driver may already be installed."
-#	echo "You will need to run the following before reattempting installation."
-#	echo "$ sudo ./remove-driver.sh"
-#	exit 1
-#fi
-
 # information that helps with bug reports
 # displays script name and version
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
@@ -60,9 +47,6 @@ uname -m
 # getconf LONG_BIT (need to work on this)
 
 echo "Starting installation..."
-# the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
-#echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-#cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 

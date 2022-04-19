@@ -1,16 +1,13 @@
 #!/bin/bash
 
-SCRIPT_NAME="remove-driver-no-dkms.sh"
-SCRIPT_VERSION="20220222"
+# Purpose: Remove Realtek USB WiFi adapter drivers.
+#
+# This version of the removal script does not use dkms.
 
-DRV_NAME="rtl88x2bu"
-DRV_VERSION="5.13.1"
+SCRIPT_NAME="remove-driver-no-dkms.sh"
+SCRIPT_VERSION="20220419"
 OPTIONS_FILE="88x2bu.conf"
 
-DRV_DIR="$(pwd)"
-KRNL_VERSION="$(uname -r)"
-
-clear
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
 # support for NoPrompt allows non-interactive use of this script
