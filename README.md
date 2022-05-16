@@ -96,7 +96,7 @@ and post in `Discussions` or `Issues`.
 ### Compatible Kernels
 
 - Kernels: 3.8 - 5.11  (Realtek)
-- Kernels: 5.12 - 5.17 (community support)
+- Kernels: 5.12 - 5.18 (community support)
 
 ### Tested Linux Distributions
 
@@ -125,7 +125,7 @@ the Installation Steps can be improved.
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
-- Raspberry Pi OS (2021-10-30) (ARM 32 bit) (kernel 5.10)
+- Raspberry Pi OS (2022-04-04) (ARM 32 bit and 64 bit) (kernel 5.15)
 
 - Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
 
@@ -133,7 +133,7 @@ the Installation Steps can be improved.
 
 - Solus
 
-- Ubuntu 20.xx (kernels 5.4 and 5.8) and 21.xx (kernels 5.11 and 5.13)
+- Ubuntu 20.xx (kernels 5.4 and 5.8) and 22.04 (kernel 5.15)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -396,24 +396,29 @@ discover the settings and make a new script that works with your ARM or
 ARM64 based system, you are welcome to submit the script and information
 to be included here.
 
-#### Step 10: Run the installation script ( install-driver.sh )
+#### Step 10: Run the installation script ( install-driver.sh or install-driver-no-dkms.sh )
 
-Note: Solus Linux does not support dkms and will require a manual build.
-See `Manual build instructions` below.
+Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
 
-Note: For automated builds, use _NoPrompt_ as an option.
+Option for distros that support `dkms` (almost all)
 
 ```
 sudo ./install-driver.sh
+```
+
+Option for distros that do not support `dkms`
+
+```
+sudo ./install-driver-no-dkms.sh
 ```
 
 Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Manual build instructions: The script `install-driver.sh` automates the
-installation process, however, it may be necessary to build and install
-the driver manually with some Linux distros:
+Manual build instructions: The scripts automate the installation process,
+however, if you want to or need to do a command line installation, use
+the following:
 
 ```
 make clean
@@ -422,17 +427,18 @@ sudo make install
 sudo reboot
 ```
 
-Note: If you use the manual build instructions, you will need to repeat
-the process each time a new kernel is installed in your distro.
+Note: If you use the manual build instructions or the `install-driver-no-dkms.sh`
+script, you will need to repeat the process each time a new kernel is
+installed in your distro.
 
 -----
 
 ### Driver Options ( edit-options.sh )
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by
-default.
+default if you use one of the scripts for installation.
 
-Note: The installation script will prompt you to edit the options.
+Note: The installation scripts will prompt you to edit the options.
 
 Location: `/etc/modprobe.d/88x2bu.conf`
 
@@ -448,16 +454,16 @@ Note: Documentation for Driver Options is included in the file `88x2bu.conf`.
 
 -----
 
-### Removal of the Driver ( remove-driver.sh )
+### Removal of the Driver ( remove-driver.sh or remove-driver-no-dkms.sh )
 
-Note: This script should be used in the following situations:
+Note: Removing the driver is advised in the following situations:
 
 - if driver installation fails
 - if the driver is no longer needed
 - if a new or updated version of the driver needs to be installed
 - if a distro version upgrade is going to be installed
 
-Note: This script removes everything that has been installed, with the
+Note: The following removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
 The driver directory can be deleted after running this script.
 
@@ -471,8 +477,18 @@ cd ~/src/88x2bu-20210702
 
 #### Step 3: Run the removal script
 
+Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
+
+Option for distros that support `dkms` (almost all)
+
 ```
 sudo ./remove-driver.sh
+```
+
+Option for distros that do not support `dkms`
+
+```
+sudo ./remove-driver-no-dkms.sh
 ```
 
 -----
@@ -481,7 +497,7 @@ sudo ./remove-driver.sh
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
-- Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
+- Security: Set WPA2-AES or WPA3/WPA2 mixed mode. Do not set WPA2 mixed mode or WPA or TKIP.
 
 - Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
@@ -598,7 +614,7 @@ compatible with this driver. If that is the case, you may need to STOP or KILL
 Network Manager and connect using wpa_supplicant.
 
 WPA3-SAE is working well in AP mode using hostapd with current versions of the
-Raspberry Pi OS. 
+Raspberry Pi OS.
 
 -----
 
