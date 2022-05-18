@@ -15,8 +15,6 @@
 #define CONFIG_SINGLE_IMG
 /* #define CONFIG_DISABLE_ODM */
 
-#define CONFIG_REGD_SRC_FROM_OS /* set default regd source from OS */
-
 /*
  * Public  General Config
  */
