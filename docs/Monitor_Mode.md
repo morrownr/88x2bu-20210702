@@ -1,6 +1,6 @@
 -----
 
-2022-01-25
+2022-02-16
 
 ## Monitor Mode
 
@@ -53,7 +53,7 @@ Ubuntu
 sudo apt update
 ```
 ```
-sudo apt full-upgrade
+sudo apt upgrade
 ```
 
 -----
@@ -188,7 +188,7 @@ sudo airodump-ng <wlan0> --band g
 ```
 Set the channel of your choice
 ```
-sudo iw dev <wlan0> set channel <channel> [NOHT|HT20]
+sudo iw dev <wlan0> set channel <channel> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]
 ```
 ```
 sudo aireplay-ng --test <wlan0>
@@ -295,76 +295,3 @@ sudo iw dev <wlan0> set txpower fixed 1600
 Note:  1600 = 16 dBm
 
 -----
-
-### Information
-
-airodump-ng can receive and interpret key strokes while running.
-
-```
-
-The following list describes the currently assigned keys and supported
-actions:
-
-
-a
-
-Select active areas by cycling through these display options:
- AP+STA; AP+STA+ACK; AP only; STA only
-
-
-d
-
-Reset sorting to defaults (Power)
-
-
-i
-
-Invert sorting algorithm
-
-
-m
-
-Mark the selected AP or cycle through different colors if the selected AP is
-already marked
-
-
-o
-
-Enable colored display of APs and their stations.
-
-
-p
-
-Disable colored display.
-
-
-q
-
-Quit program.
-
-
-r
-
-(De-)Activate realtime sorting -
- applies sorting algorithm every time the display will be redrawn
-
-
-s
-
-Change column to sort by, which currently includes:
-
- BSSID;
- PWR level;
- Beacons;
- Data packets;
- Packet rate;
- Channel;
- Max. data rate;
- Encryption;
- Strongest Ciphersuite;
- Strongest Authentication;
- ESSID
-```
-
------
-

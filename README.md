@@ -21,7 +21,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
 
 - v5.13.1 (Realtek) (20210702) plus updates from the Linux community
-- 5,386 Views over the 2 weeks ended on 20220221 (Thank you!)
+- 5,000+ Views over the 2 weeks ended on 20220522 (Thank you!)
 
 ### Features
 
@@ -32,7 +32,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
   * Supports WPA/WPA2 TLS client
-- IEEE 802.11k support
 - Power saving modes
 - Wireshark compatible
 - Aircrack-ng compatible
@@ -43,11 +42,11 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - Supported interface modes
   * IBSS
   * Managed
-  * AP [1] [3] see below
-  * Monitor [2] [3] see below
+  * AP [1] see below
+  * Monitor [2] see below
   * P2P-client
   * P2P-GO
-  * Concurrent [3] see below
+  * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
 - Log level control
 - LED control
 - Power saving control
@@ -84,9 +83,6 @@ ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
 
 To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
 and post in `Discussions` or `Issues`.
-
-[3] There are files that provide detailed information located in the
-`docs` folder.
 
 ### Compatible CPUs
 
@@ -133,7 +129,11 @@ the Installation Steps can be improved.
 
 - Solus
 
-- Ubuntu 20.xx (kernels 5.4 and 5.8) and 22.04 (kernel 5.15)
+- Ubuntu 20.xx (kernels 5.4 and 5.8)
+
+- Ubuntu 21.xx (kernels 5.11 and 5.13)
+
+- Ubuntu 22.04 (kernel 5.15)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -438,7 +438,7 @@ installed in your distro.
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by
 default if you use one of the scripts for installation.
 
-Note: The installation scripts will prompt you to edit the options.
+Note: The installation script will prompt you to edit the options.
 
 Location: `/etc/modprobe.d/88x2bu.conf`
 
@@ -461,7 +461,7 @@ Note: Removing the driver is advised in the following situations:
 - if driver installation fails
 - if the driver is no longer needed
 - if a new or updated version of the driver needs to be installed
-- if a distro version upgrade is going to be installed
+- if a distro version upgrade is going to be installed (going from kernel 5.10 to kernel 5.15)
 
 Note: The following removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
@@ -497,7 +497,7 @@ sudo ./remove-driver-no-dkms.sh
 
 Note: These are general recommendations, some of which may not apply to your specific situation.
 
-- Security: Set WPA2-AES or WPA3/WPA2 mixed mode. Do not set WPA2 mixed mode or WPA or TKIP.
+- Security: Set WPA2-AES. Do not set WPA2 mixed mode or WPA or TKIP.
 
 - Channel width for 2.4 GHz: Set 20 MHz fixed width. Do not use 40 MHz or 20/40 automatic.
 
@@ -514,40 +514,6 @@ Note: These are general recommendations, some of which may not apply to your spe
 - Check congestion: There are apps available for smart phones that allow you to check the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
 
 After making and saving changes, reboot the router.
-
------
-
-### Check and set regulatory domain
-
-Check the current setting
-
-```
-sudo iw reg get
-```
-
-If you get 00, that is the default and may not provide optimal performance.
-
-Find the correct setting here: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
-Set it temporarily
-
-```
-sudo iw reg set US
-```
-
-Note: Substitute your country code if you are not in the United States.
-
-Set it permanently
-
-```
-sudo nano /etc/default/crda
-```
-
-Change the last line to read:
-
-```
-REGDOMAIN=US
-```
 
 -----
 
@@ -634,7 +600,7 @@ repo for a Realtek driver?
 Answer: Many new and existing Linux users already have adapters based on Realtek
 chipsets. This repo is for Linux users to support their existing adapters but my
 STRONG recommendation is for Linux users to seek out USB WiFi solutions based on
-Mediatek,
+Mediatek chipsets:
 
 https://github.com/morrownr/USB-WiFi
 
