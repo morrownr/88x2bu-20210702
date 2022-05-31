@@ -456,7 +456,7 @@ u8 rtw_cfg80211_ch_switch_notify(_adapter *adapter, u8 ch, u8 bw, u8 offset,
 	if (started) {
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 11, 0) || defined(RHEL8))
 
-		/* --- cfg80211_ch_switch_started_notfiy() ---
+		/* --- cfg80211_ch_switch_started_notify() ---
 		 *  A new parameter, bool quiet, is added from Linux kernel v5.11,
 		 *  to see if block-tx was requested by the AP. since currently,
 		 *  the API is used for station before connected in rtw_chk_start_clnt_join()
