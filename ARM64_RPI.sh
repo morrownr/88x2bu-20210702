@@ -12,14 +12,8 @@
 # $ ./ARM64_RPI.sh
 
 sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' Makefile
-RESULT=$?
 
-if [[ "$RESULT" != "0" ]]; then
-	echo "An error occurred and I386 support was not turned off in Makefile."
-	exit 1
-else
-	echo "I386 support was turned off in Makefile as planned."
-fi
+sed -i 's/CONFIG_PLATFORM_ARM_RPI = y/CONFIG_PLATFORM_ARM_RPI = n/g' Makefile
 
 sed -i 's/CONFIG_PLATFORM_ARM64_RPI = n/CONFIG_PLATFORM_ARM64_RPI = y/g' Makefile
 RESULT=$?

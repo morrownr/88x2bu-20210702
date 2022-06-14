@@ -51,8 +51,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 - LED control
 - Power saving control
 - VHT control (allows 80 MHz channel width in AP mode)
-- SU Beamformee and MU Beamformee control
-- SU Beamformer control
 - AP mode DFS channel control
 - USB mode control
 
@@ -91,7 +89,7 @@ and post in `Discussions` or `Issues`.
 
 ### Compatible Kernels
 
-- Kernels: 3.8 - 5.11  (Realtek)
+- Kernels: 4.19 - 5.11  (Realtek)
 - Kernels: 5.12 - 5.18 (community support)
 
 ### Tested Linux Distributions
@@ -461,7 +459,7 @@ Note: Removing the driver is advised in the following situations:
 - if driver installation fails
 - if the driver is no longer needed
 - if a new or updated version of the driver needs to be installed
-- if a distro version upgrade is going to be installed (going from kernel 5.10 to kernel 5.15)
+- if a distro version upgrade is going to be installed (i.e. going from kernel 5.10 to kernel 5.15)
 
 Note: The following removes everything that has been installed, with the
 exception of the packages installed in Step 3 and the driver directory.
