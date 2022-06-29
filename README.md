@@ -16,7 +16,7 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 
 -----
 
-####Important: Starting with Linux kernel 5.18, some distributions have added experimental RTW88 USB support. It is not yet stable but if it works well on your system, then you will no longer need this driver. However if it doesn't work or is unstable, you need to manually blacklist it due to the fact that it has a higher loading priority than this external driver we are loading.
+#### Important: Starting with Linux kernel 5.18, some distributions have added experimental RTW88 USB support. It is not yet stable but if it works well on your system, then you will no longer need this driver. However if it doesn't work or is unstable, you need to manually blacklist it due to the fact that it has a higher loading priority than this external driver we are loading.
 
 The following executed in a terminal followed by a reboot will shut down the in-kernel driver if you determine that is what you want:
 
