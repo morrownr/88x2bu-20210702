@@ -52,8 +52,8 @@ echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
 - Supported interface modes
   * IBSS
   * Managed
-  * AP [1] see below
-  * Monitor [2] see below
+  * Monitor
+  * AP
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -64,7 +64,7 @@ echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
 - AP mode DFS channel control
 - USB mode control
 
-[1] Overall this driver does a good job with AP mode. During testing and
+Overall this driver does a good job with AP mode. During testing and
 work prior to making this driver available, the team working on this
 driver noticed some problems in AP mode if used with a Raspberry Pi 4B.
 We were unable to discover or fix the exact cause of the problem but
@@ -73,7 +73,7 @@ applies to AP mode with Raspberry Pi 4B. No problems were noted with
 systems that use x86 or amd64 processors.
 
 
-[2] Work to improve monitor mode is ongoing with this driver. Your
+Work to improve monitor mode is ongoing with this driver. Your
 reports of success or failure are needed. If you have yet to buy an
 adapter to use with monitor mode, there are adapters available that are
 known to work very well with monitor mode. My recommendation for those
@@ -100,7 +100,7 @@ and post in `Discussions` or `Issues`.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11  (Realtek)
-- Kernels: 5.12 - 5.18 (community support)
+- Kernels: 5.12 - 5.19 (community support)
 
 ### Tested Linux Distributions
 
@@ -121,10 +121,6 @@ the Installation Steps can be improved.
 
 - Kali Linux (kernel 5.10)
 
-- Linux Mint 20.2 (Linux Mint based on Ubuntu) (kernels 5.4 and 5.13)
-
-- LMDE 4 (Linux Mint based on Debian) (kernel 4.19)
-
 - Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
@@ -137,10 +133,6 @@ the Installation Steps can be improved.
 
 - Solus
 
-- Ubuntu 20.xx (kernels 5.4 and 5.8)
-
-- Ubuntu 21.xx (kernels 5.11 and 5.13)
-
 - Ubuntu 22.04 (kernel 5.15)
 
 ### Download Locations for Tested Linux Distributions
@@ -149,7 +141,6 @@ the Installation Steps can be improved.
 - [Debian](https://www.debian.org/)
 - [Fedora](https://getfedora.org)
 - [Kali Linux](https://www.kali.org/)
-- [Linux Mint](https://www.linuxmint.com)
 - [Manjaro](https://manjaro.org)
 - [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
@@ -284,22 +275,22 @@ sudo reboot
 
 #### Step 3: Install the required packages (select the option for the OS you are using)
 
-- Option for Raspberry Pi OS (ARM/ARM64), for Raspberry Pi Desktop (x86) see below
+- Option for Raspberry Pi OS (ARM/ARM64)
 
 ```
-sudo apt install -y raspberrypi-kernel-headers bc build-essential dkms git
+sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 ```
 
-- Option for Debian, Kali, Linux Mint Debian Edition (LMDE) and Raspberry Pi Desktop (x86)
+- Option for Debian, Kali, and Raspberry Pi Desktop (x86)
 
 ```
-sudo apt install -y linux-headers-$(uname -r) build-essential dkms git libelf-dev
+sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev
 ```
 
-- Option for Ubuntu (all flavors) and Linux Mint
+- Option for Ubuntu (all flavors)
 
 ```
-sudo apt install -y dkms git build-essential
+sudo apt install -y build-essential dkms git 
 ```
 
 - Option for Fedora
