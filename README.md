@@ -52,8 +52,8 @@ echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
 - Supported interface modes
   * IBSS
   * Managed
-  * Monitor
-  * AP
+  * Monitor (see FAQ)
+  * AP (see FAQ)
   * P2P-client
   * P2P-GO
   * Concurrent (see `Concurrent_Mode.md` in the `docs` folder.)
@@ -63,34 +63,6 @@ echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
 - VHT control (allows 80 MHz channel width in AP mode)
 - AP mode DFS channel control
 - USB mode control
-
-Overall this driver does a good job with AP mode. During testing and
-work prior to making this driver available, the team working on this
-driver noticed some problems in AP mode if used with a Raspberry Pi 4B.
-We were unable to discover or fix the exact cause of the problem but
-the workaround is to keep the driver in USB2 mode. This workaround only
-applies to AP mode with Raspberry Pi 4B. No problems were noted with
-systems that use x86 or amd64 processors.
-
-
-Work to improve monitor mode is ongoing with this driver. Your
-reports of success or failure are needed. If you have yet to buy an
-adapter to use with monitor mode, there are adapters available that are
-known to work very well with monitor mode. My recommendation for those
-looking to buy an adapter for Monitor mode is to buy adapters based on
-the following chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. My
-specific recommendations for adapters in order of preference are:
-
-ALFA AWUS036ACHM - long range - in-kernel driver
-
-ALFA AWUS036ACM - in-kernel driver
-
-ALFA AWUS036ACH - long range - [driver](https://github.com/morrownr/8812au-20210629)
-
-ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
-
-To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
-and post in `Discussions` or `Issues`.
 
 ### Compatible CPUs
 
@@ -666,7 +638,43 @@ to happen.
 
 -----
 
-Credits:
+Question: Are there any known problems with AP mode?
+
+Answer: Overall this driver does a good job with AP mode. During testing and
+work prior to making this driver available, the team working on this
+driver noticed some problems in AP mode if used with a Raspberry Pi 4B.
+We were unable to discover or fix the exact cause of the problem but
+the workaround is to keep the driver in USB2 mode. This workaround only
+applies to AP mode with Raspberry Pi 4B. No problems were noted with
+systems that use x86 or amd64 processors.
+
+-----
+
+Question: Can you provide additional information about monitor mode?
+
+Answer: I have a repo that is setup to help with monitor mode:
+
+https://github.com/morrownr/Monitor_Mode
+
+Work to improve monitor mode is ongoing with this driver. Your
+reports of success or failure are needed. If you have yet to buy an
+adapter to use with monitor mode, there are adapters available that are
+known to work very well with monitor mode. My recommendation for those
+looking to buy an adapter for monitor mode is to buy adapters based on
+the following chipsets: mt7612u, mt7610u, rtl8812au and rtl8811au. My
+specific recommendations for adapters in order of preference are:
+
+ALFA AWUS036ACHM - long range - in-kernel driver
+
+ALFA AWUS036ACM - in-kernel driver
+
+ALFA AWUS036ACH - long range - [driver](https://github.com/morrownr/8812au-20210629)
+
+ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
+
+To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
+and post in `Discussions` or `Issues`.
+
 
 
 -----
