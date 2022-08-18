@@ -72,7 +72,7 @@ echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11  (Realtek)
-- Kernels: 5.12 - 5.19 (community support)
+- Kernels: 5.12 - 6.0   (community support)
 
 ### Tested Linux Distributions
 
