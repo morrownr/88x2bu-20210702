@@ -16,16 +16,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 
 -----
 
-#### Important: Work is in progress to upstream in-kernel support for the rtl8812bu and rtl8822bu chipsets. Starting with Linux kernel 5.18, some distributions have added this RTW88 USB support. It is not yet stable but if it works well on your system, then you will no longer need this driver. However if this new in-kernel driver doesn't work or is unstable, you need to manually blacklist it due to the fact that it will conflict with this external driver.
-
-The following executed in a terminal followed by a reboot will shut down the in-kernel driver if you determine that is what you want:
-
-```
-echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
-```
-
------
-
 ## 88x2bu ( 88x2bu.ko ) :rocket:
 
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
