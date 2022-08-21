@@ -71,8 +71,8 @@ echo "blacklist rtw88_8822bu" > /etc/modprobe.d/rtw8822bu.conf
 
 ### Compatible Kernels
 
-- Kernels: 4.19 - 5.11  (Realtek)
-- Kernels: 5.12 - 6.0   (community support)
+- Kernels: 4.19 - 5.11 (Realtek)
+- Kernels: 5.12 - 6.0  (community support)
 
 ### Tested Linux Distributions
 
@@ -87,13 +87,13 @@ the Installation Steps can be improved.
 
 - Arch Linux (kernels 5.4 and 5.11)
 
-- Fedora (kernel 5.11)
-
 - Debian 11 (kernels 5.10 and 5.15)
+
+- Fedora (kernel 5.11)
 
 - Kali Linux (kernel 5.10)
 
-- Manjaro 20.1 (kernel 5.9) and 21.1 (kernel 5.13)
+- Manjaro 21.1 (kernel 5.13)
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
@@ -103,9 +103,9 @@ the Installation Steps can be improved.
 
 - RHEL 8.4 (kernel 4.18.0)
 
-- Solus
-
 - Ubuntu 22.04 (kernel 5.15)
+
+- Void Linux (kernel 5.18)
 
 ### Download Locations for Tested Linux Distributions
 
@@ -117,8 +117,8 @@ the Installation Steps can be improved.
 - [openSUSE](https://www.opensuse.org/)
 - [Raspberry Pi OS](https://www.raspberrypi.org)
 - [RHEL](https://www.redhat.com)
-- [Solus](https://getsol.us/home/)
 - [Ubuntu](https://www.ubuntu.com)
+- [Void Linux](https://voidlinux.org/)
 
 ### Tested Hardware
 
@@ -194,12 +194,12 @@ as the directory contains information and scripts that you may need in the futur
 
 Secure mode: The primary installation script, `install-driver.sh`, will support
 secure mode... if your distro supports the method in use. I regularly test the installation
-script on systems with secure mode on. It works very well on Ubuntu and Linux Mint. Some
+script on systems with secure mode on. It works very well on Ubuntu based distros. Some
 distros, such as Raspberry Pi OS, do not support secure mode because the hardware they
 support does not support secure mode making it unnecessary. There are distros that do not
 work with the support currently in use with this driver. If you install this driver and,
 after a reboot, the driver is not working, you can go into the BIOS and tempoarily turn
-secure mode off to see if secure mode is the problem. I am currently investigatimg alternative
+secure mode off to see if secure mode is the problem. I am currently investigating alternative
 ways to support secure mode that will work on most or all distros that support secure mode.
 If you are interested in helping, please post a message in `Issues`.
 
@@ -237,6 +237,12 @@ sudo dnf upgrade
 sudo zypper update
 ```
 
+- Option for Void Linux
+
+```
+sudo xbps-install -Syu
+```
+
 Note: It is recommended that you reboot your system at this point. The
 rest of the installation will appreciate having a fully up to date
 system to work with. The installation can then be continued with Step 3.
@@ -259,7 +265,7 @@ sudo apt install -y raspberrypi-kernel-headers build-essential bc dkms git
 sudo apt install -y linux-headers-$(uname -r) build-essential bc dkms git libelf-dev
 ```
 
-- Option for Ubuntu (all flavors)
+- Option for Ubuntu (all official flavors) and the numerous Ubuntu based distros
 
 ```
 sudo apt install -y build-essential dkms git 
@@ -277,10 +283,10 @@ sudo dnf -y install git dkms kernel-devel kernel-debug-devel
 sudo zypper install -t pattern devel_kernel dkms
 ```
 
-- Option for Solus
+- Option for Void Linux
 
 ```
-sudo eopkg install gcc linux-current-headers make git binutils
+sudo xbps-install linux-headers dkms git make
 ```
 
 - Options for Arch and Manjaro
@@ -395,9 +401,9 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Manual build instructions: The scripts automate the installation process,
-however, if you want to or need to do a command line installation, use
-the following:
+Manual build instructions: The above scripts automate the installation
+process, however, if you want to or need to do a command line
+installation, use the following:
 
 ```
 make clean
@@ -601,14 +607,14 @@ Question: The driver installation script completed successfully and the
 driver is installed but does not seem to be working. What is wrong?
 
 Answer: Turn secure boot off to see if that allows the driver to work.
-This driver is primarily tested on Debian based distros such as Linux
-Mint, Ubuntu, Raspberry Pi OS and Kali. In an attempt to make this
-driver work well on many Linux distros, other distros, including the Arch
-based Manjaro is used for testing. Currently I do not have installations
-of Fedora or OpenSUSE available for testing and reply on user reports of
-success or failure. I have two test systems with secure boot on so as to
-test secure boot. I have not seen any secure boot problems with Debian
-based systems and I don't remember problems with Manjaro.
+This driver is primarily tested on Debian based distros such as Ubuntu,
+Raspberry Pi OS and Kali. In an attempt to make this driver work well on
+many Linux distros, other distros, including the Arch based Manjaro is
+used for testing. Currently I do not have installations of Fedora or
+OpenSUSE available for testing and reply on user reports of success or
+failure. I have two test systems with secure boot on so as to test secure
+boot. I have not seen any secure boot problems with Debian based systems
+and I don't remember problems with Manjaro.
 
 dkms is used in the installation script. It helps with a lot of issues that
 will come up if a simple manual installation is used. dkms has the

@@ -1,11 +1,16 @@
 #!/bin/bash
 
+# Purpose: Install Realtek USB WiFi adapter drivers.
+#
+# This version of the installation script uses dkms.
+
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20220705"
+SCRIPT_VERSION="20220821"
+OPTIONS_FILE="88x2bu.conf"
+BLACKLIST_FILE="rtw88_8822bu.conf"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
-OPTIONS_FILE="88x2bu.conf"
 
 DRV_DIR="$(pwd)"
 KRNL_VERSION="$(uname -r)"
@@ -60,11 +65,18 @@ uname -m
 #getconf LONG_BIT (need to work on this)
 
 echo "Starting installation..."
+
 # the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
 cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
+
+# sets module parameters (driver options)
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
+
+# blacklist the in-kernel module (driver) so that there is no conflict
+echo "Copying ${BLACKLIST_FILE} to: /etc/modprobe.d"
+cp -f ${BLACKLIST_FILE} /etc/modprobe.d
 
 dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 RESULT=$?

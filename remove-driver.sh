@@ -1,11 +1,16 @@
 #!/bin/bash
 
+# Purpose: Remove Realtek USB WiFi adapter drivers.
+#
+# This version of the removal script uses dkms.
+
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20211212"
+SCRIPT_VERSION="20220821"
+OPTIONS_FILE="88x2bu.conf"
+BLACKLIST_FILE="rtw88_8822bu.conf"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
-OPTIONS_FILE="88x2bu.conf"
 
 DRV_DIR="$(pwd)"
 KRNL_VERSION="$(uname -r)"
@@ -52,6 +57,8 @@ if [[ ("$RESULT" = "0")||("$RESULT" = "3") ]]
 then
 	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	echo "Deleting ${BLACKLIST_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
 	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "The driver was removed successfully."

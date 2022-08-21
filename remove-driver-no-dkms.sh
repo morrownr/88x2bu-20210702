@@ -5,8 +5,9 @@
 # This version of the removal script does not use dkms.
 
 SCRIPT_NAME="remove-driver-no-dkms.sh"
-SCRIPT_VERSION="20220419"
+SCRIPT_VERSION="20220821"
 OPTIONS_FILE="88x2bu.conf"
+BLACKLIST_FILE="rtw88_8822bu.conf"
 
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
@@ -46,7 +47,10 @@ if [[ ("$RESULT" = "0")]]
 then
 	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	echo "Deleting ${BLACKLIST_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
 	echo "The driver was removed successfully."
+	echo "You may now delete the driver directory if desired."
 else
 	echo "An error occurred. Error = ${RESULT}"
 	echo "Please report this error."
