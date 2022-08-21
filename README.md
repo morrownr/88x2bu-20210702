@@ -183,15 +183,13 @@ It is recommended that you do not delete the driver directory after installation
 as the directory contains information and scripts that you may need in the future.
 
 Secure mode: The primary installation script, `install-driver.sh`, will support
-secure mode... if your distro supports the method in use. I regularly test the installation
+secure mode... if your distro supports the method dkms uses. I regularly test the installation
 script on systems with secure mode on. It works very well on Ubuntu based distros. Some
 distros, such as Raspberry Pi OS, do not support secure mode because the hardware they
 support does not support secure mode making it unnecessary. There are distros that do not
-work with the support currently in use with this driver. If you install this driver and,
+work with the support currently in use. If you install this driver and,
 after a reboot, the driver is not working, you can go into the BIOS and tempoarily turn
-secure mode off to see if secure mode is the problem. I am currently investigating alternative
-ways to support secure mode that will work on most or all distros that support secure mode.
-If you are interested in helping, please post a message in `Issues`.
+secure mode off to see if secure mode is the problem.
 
 ### Installation Steps
 
