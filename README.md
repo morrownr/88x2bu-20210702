@@ -21,7 +21,6 @@ sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
 ## Linux Driver for USB WiFi Adapters that are based on the RTL8812BU and RTL8822BU Chipsets
 
 - v5.13.1 (Realtek) (20210702) plus updates from the Linux community
-- 5,000+ Views over the 2 weeks ended on 20220522 (Thank you!)
 
 ### Features
 
@@ -188,7 +187,7 @@ script on systems with secure mode on. It works very well on Ubuntu based distro
 distros, such as Raspberry Pi OS, do not support secure mode because the hardware they
 support does not support secure mode making it unnecessary. There are distros that do not
 work with the support currently in use. If you install this driver and,
-after a reboot, the driver is not working, you can go into the BIOS and tempoarily turn
+after a reboot, the driver is not working, you can go into the BIOS and temporarily turn
 secure mode off to see if secure mode is the problem.
 
 ### Installation Steps

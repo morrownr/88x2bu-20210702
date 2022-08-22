@@ -54,15 +54,15 @@ then
 fi
 
 # information that helps with bug reports
+
 # displays script name and version
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
-# distro (need to work on this)
-#hostnamectl | grep 'Operating System' | sed 's/  Operating System: //'
+
 # kernel
 uname -r
+
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
 uname -m
-#getconf LONG_BIT (need to work on this)
 
 echo "Starting installation..."
 
@@ -85,6 +85,7 @@ if [[ "$RESULT" != "0" ]]
 then
 	echo "An error occurred. dkms add error = ${RESULT}"
 	echo "Please report this error."
+	echo "Please copy all screen output and paste it into the report."
 	echo "You will need to run the following before reattempting installation."
 	echo "$ sudo ./remove-driver.sh"
 	exit $RESULT
@@ -97,6 +98,7 @@ if [[ "$RESULT" != "0" ]]
 then
 	echo "An error occurred. dkms build error = ${RESULT}"
 	echo "Please report this error."
+	echo "Please copy all screen output and paste it into the report."
 	echo "You will need to run the following before reattempting installation."
 	echo "$ sudo ./remove-driver.sh"
 	exit $RESULT
