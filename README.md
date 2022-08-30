@@ -11,7 +11,7 @@
 #### Problem reports go in `Issues`. Include the information obtained with:
 
 ```
-sudo uname -a; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev
+sudo uname -mr; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev; iw reg get
 ```
 
 -----
