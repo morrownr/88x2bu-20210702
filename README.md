@@ -153,8 +153,15 @@ driver by running the following command:
 sudo dkms status
 ```
 
-The installation instructions are for the novice user. Experienced users are
-welcome to alter the installation to meet their needs.
+Warning: If you decide to upgrade to a new level of kernel such as 5.18 to 5.19, you
+need to remove the driver you have installed and install the newest available before
+installing the new kernel. Use the following commands in the driver directory:
+
+```
+$ sudo ./remove-driver.sh
+$ git pull
+$ sudo ./install-driver.sh
+```
 
 Temporary internet access is required for installation. There are numerous ways
 to enable temporary internet access depending on your hardware and situation.
@@ -191,6 +198,10 @@ after a reboot, the driver is not working, you can go into the BIOS and temporar
 secure mode off to see if secure mode is the problem.
 
 ### Installation Steps
+
+Note: The installation instructions are for the novice user. Experienced users are
+welcome to alter the installation to meet their needs. Support will be provided based
+on the steps below.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
