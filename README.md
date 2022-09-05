@@ -153,7 +153,7 @@ driver by running the following command:
 sudo dkms status
 ```
 
-Warning: If you decide to upgrade to a new level of kernel such as 5.18 to 5.19, you
+Warning: If you decide to upgrade to a new version of kernel such as 5.18 to 5.19, you
 need to remove the driver you have installed and install the newest available before
 installing the new kernel. Use the following commands in the driver directory:
 
@@ -189,13 +189,13 @@ It is recommended that you do not delete the driver directory after installation
 as the directory contains information and scripts that you may need in the future.
 
 Secure mode: The primary installation script, `install-driver.sh`, will support
-secure mode... if your distro supports the method dkms uses. I regularly test the installation
-script on systems with secure mode on. It works very well on Ubuntu based distros. Some
-distros, such as Raspberry Pi OS, do not support secure mode because the hardware they
-support does not support secure mode making it unnecessary. There are distros that do not
-work with the support currently in use. If you install this driver and,
-after a reboot, the driver is not working, you can go into the BIOS and temporarily turn
-secure mode off to see if secure mode is the problem.
+secure mode... if your distro supports the method dkms uses. I regularly test the
+installation script on systems with secure mode on. It works very well on Ubuntu based
+distros. Some distros, such as Raspberry Pi OS, do not support secure mode because the
+hardware they support does not support secure mode making it unnecessary. There are
+distros that do not work with the support currently in use. If you install this driver
+and, after a reboot, the driver is not working, you can go into the BIOS and temporarily
+turn secure mode off to see if secure mode is the problem.
 
 ### Installation Steps
 
@@ -510,7 +510,7 @@ After making and saving changes, reboot the router.
 
 - Avoid USB 3.1 Gen 2 ports if possible as almost all currently available adapters have been tested with USB 3.1 Gen 1 (aka USB 3) and not with USB 3.1 Gen 2.
 
-- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will at best be limited to USB 2 speeds).
+- If you use an extension cable and your adapter is USB 3 capable, the cable needs to be USB 3 capable (if not, you will be limited to USB 2 speeds).
 
 - Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
