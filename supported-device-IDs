@@ -14,39 +14,58 @@ We can search the list of driver supported IDs shown below.
 
 Realtek default IDs
 
-ID 0BDA:B82C - Default ID for USB multi-function (such as WiFi plus bluetooth)
 ID 0BDA:B812 - Default ID for USB Single-function, WiFi only
 ID 0BDA:B81A - Default ID
+ID 0BDA:B82C - Default ID for USB multi-function (such as WiFi plus bluetooth)
 
 Seller specific IDs
 
-ID 7392:B822
+Lite-On
+ID 04CA:8602
+
+NetGear
+ID 0846:9055
+
+ASUSTek
+ID 0B05:1841
+ID 0B05:184C
+ID 0B05:1870
+ID 0B05:1874
+ID 0B05:19AA
+
+Realtek
+ID 0BDA:2102
+
+Hawking Technologies
+ID 0E66:0025
+
+Linksys
+ID 13B1:0043
+ID 13B1:0045
+
+D-Link
+ID 2001:331C
+ID 2001:331E
+ID 2001:331F
+
+TRENDnet
+ID 20F4:808A
+
+TP-Link
+ID 2357:0115 - Archer T4U (v3)
+ID 2357:0116
+ID 2357:0117
+ID 2357:0126 - TL-WN8200ND (v2)
+ID 2357:012D - Archer T3U
+ID 2357:012E
+ID 2357:0138
+
+Edimax
+ID 7392:B822 - Edimax EW-7822ULC 802.11ac Wireless Adapter
 ID 7392:C822
 ID 7392:D822
 ID 7392:E822
 ID 7392:F822
-ID 13b1:0043
-ID 2357:012D
-ID 2357:0138
-ID 2357:0115
-ID 2357:012E
-ID 2357:0116
-ID 2357:0117
-ID 0846:9055
-ID 0b05:1841
-ID 0B05:184C
-ID 0B05:19AA
-ID 0B05:1870
-ID 0B05:1874
-ID 2001:331E
-ID 2001:331C
-ID 2001:331F
-ID 20F4:808A
-ID 13B1:0045
-ID 04CA:8602
-ID 0E66:0025
-ID 13B1:0043
-ID 0BDA:2102
 
 If your adapter matches one of the default or seller specific
 IDs then this is the driver to use.
