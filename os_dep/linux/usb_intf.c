@@ -107,12 +107,12 @@ static void rtw_dev_shutdown(struct device *dev)
 
 #define USB_DEVICE_AND_INTERFACE_INFO(vend, prod, cl, sc, pr) \
 	.match_flags = USB_DEVICE_ID_MATCH_INT_INFO \
-		       | USB_DEVICE_ID_MATCH_DEVICE, \
-		       .idVendor = (vend), \
-				   .idProduct = (prod), \
-						.bInterfaceClass = (cl), \
-						.bInterfaceSubClass = (sc), \
-						.bInterfaceProtocol = (pr)
+	             | USB_DEVICE_ID_MATCH_DEVICE, \
+	.idVendor = (vend), \
+	.idProduct = (prod), \
+	.bInterfaceClass = (cl), \
+	.bInterfaceSubClass = (sc), \
+	.bInterfaceProtocol = (pr)
 
 /**
  * USB_VENDOR_AND_INTERFACE_INFO - describe a specific usb vendor with a class of usb interfaces
@@ -129,11 +129,11 @@ static void rtw_dev_shutdown(struct device *dev)
  */
 #define USB_VENDOR_AND_INTERFACE_INFO(vend, cl, sc, pr) \
 	.match_flags = USB_DEVICE_ID_MATCH_INT_INFO \
-		       | USB_DEVICE_ID_MATCH_VENDOR, \
-		       .idVendor = (vend), \
-				   .bInterfaceClass = (cl), \
-						   .bInterfaceSubClass = (sc), \
-						   .bInterfaceProtocol = (pr)
+	             | USB_DEVICE_ID_MATCH_VENDOR, \
+	.idVendor = (vend), \
+	.bInterfaceClass = (cl), \
+	.bInterfaceSubClass = (sc), \
+	.bInterfaceProtocol = (pr)
 
 /* ----------------------------------------------------------------------- */
 #endif
@@ -185,7 +185,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x0811), .driver_info = RTL8821}, /* Default ID */
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x0821), .driver_info = RTL8821}, /* Default ID */
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x8822), .driver_info = RTL8821}, /* Default ID */
-	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0xA811) , .driver_info = RTL8821},/* Default ID */
+	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0xA811), .driver_info = RTL8821},/* Default ID */
 	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0x0820, 0xff, 0xff, 0xff), .driver_info = RTL8821}, /* 8821AU */
 	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0x0823, 0xff, 0xff, 0xff), .driver_info = RTL8821}, /* 8821AU */
 	/*=== Customer ID ===*/
@@ -194,8 +194,8 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE(0x2001, 0x3314), .driver_info = RTL8821}, /* D-Link - Cameo */
 	{USB_DEVICE(0x2001, 0x3318), .driver_info = RTL8821}, /* D-Link - Cameo */
 	{USB_DEVICE(0x0E66, 0x0023), .driver_info = RTL8821}, /* HAWKING - Edimax */
-	{USB_DEVICE(0x056E, 0x400E) , .driver_info = RTL8821}, /* ELECOM -  ELECOM */
-	{USB_DEVICE(0x056E, 0x400F) , .driver_info = RTL8821}, /* ELECOM -  ELECOM */
+	{USB_DEVICE(0x056E, 0x400E), .driver_info = RTL8821}, /* ELECOM -  ELECOM */
+	{USB_DEVICE(0x056E, 0x400F), .driver_info = RTL8821}, /* ELECOM -  ELECOM */
 	{USB_DEVICE(0x20f4, 0x804b), .driver_info = RTL8821}, /* TRENDnet  */
 #endif
 
@@ -263,7 +263,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0B05, 0x1874, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* ASUS */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331E, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-181 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331C, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-182 - D1 */
-	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331F, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-183 - D */		
+	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331F, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-183 - D */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x20F4, 0x808A, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TRENDnet TEW-808UBM */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x13B1, 0x0045, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Linksys WUSB3600 v2 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x04CA, 0x8602, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* LiteOn */
@@ -321,7 +321,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 #endif /* CONFIG_RTL8814B */
 #ifdef CONFIG_RTL8723F
 	/*=== Realtek IC ===*/
-	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0xB733, 0xff, 0xff, 0xff), .driver_info = RTL8723F}, 
+	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0xB733, 0xff, 0xff, 0xff), .driver_info = RTL8723F},
 #endif
 
 	{}	/* Terminating entry */
@@ -901,7 +901,7 @@ int rtw_hw_suspend(_adapter *padapter)
 		RTW_INFO("padapter->bup=%d bDriverStopped=%s bSurpriseRemoved = %s\n"
 			 , padapter->bup
 			 , rtw_is_drv_stopped(padapter) ? "True" : "False"
-			, rtw_is_surprise_removed(padapter) ? "True" : "False");
+			 , rtw_is_surprise_removed(padapter) ? "True" : "False");
 		goto error_exit;
 	}
 
@@ -1104,7 +1104,7 @@ extern void rtd2885_wlan_netlink_sendMsg(char *action_string, char *name);
  *
  * notes: drv_init() is called when the bus driver has located a card for us to support.
  *        We accept the new device by returning 0.
-*/
+ */
 _adapter *rtw_usb_primary_adapter_init(struct dvobj_priv *dvobj,
 	struct usb_interface *pusb_intf)
 {
@@ -1372,7 +1372,7 @@ exit:
 
 /*
  * dev_remove() - our device is being removed
-*/
+ */
 /* rmmod module & unplug(SurpriseRemoved) will call r871xu_dev_remove() => how to recognize both */
 static void rtw_dev_remove(struct usb_interface *pusb_intf)
 {
