@@ -12,12 +12,11 @@
 #
 # $ ./cmode-on.sh
 
-sed -i 's/CONFIG_CONCURRENT_MODE = n/CONFIG_CONCURRENT_MODE = y/g' Makefile
-RESULT=$?
+sed -i '/^CONFIG_CONCURRENT_MODE *=/ s/ *=.*/ = y/' Makefile || {
+    status=$?
+    printf 'An error occurred and Concurrent Mode was not turned on in Makefile.\n'
+    exit "$status"
+}
 
-if [[ "$RESULT" != "0" ]]; then
-	echo "An error occurred and Concurrent Mode was not turned on in Makefile."
-	exit 1
-else
-	echo "Concurrent Mode was turned on in Makefile as planned."
-fi
+printf 'Concurrent Mode was turned on in Makefile as planned.\n'
+exit 0

@@ -4,67 +4,66 @@
 #
 # This version of the removal script does not use dkms.
 
-SCRIPT_NAME="remove-driver-no-dkms.sh"
-SCRIPT_VERSION="20220821"
-OPTIONS_FILE="88x2bu.conf"
-BLACKLIST_FILE="rtw88_8822bu.conf"
+SCRIPT_VERSION=20220923
 
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
-
-# support for NoPrompt allows non-interactive use of this script
-NO_PROMPT=0
-
-# get the options
-while [ $# -gt 0 ]
-do
-	case $1 in
-		NoPrompt)
-			NO_PROMPT=1 ;;
-		*h|*help|*)
-			echo "Syntax $0 <NoPrompt>"
-			echo "       NoPrompt - noninteractive mode"
-			echo "       -h|--help - Show help"
-			exit 1
-			;;
-	esac
-	shift
-done
+options_file=88x2bu.conf
+blacklist_file=rtw88_8822bu.conf
 
 # check to ensure sudo was used
-if [[ $EUID -ne 0 ]]
+if (( EUID != 0 ))
 then
-	echo "You must run this script with superuser (root) privileges."
-	echo "Try: \"sudo ./${SCRIPT_NAME}\""
+	printf 'You must run this script with superuser (root) privileges.\n'
+	printf 'Try: "sudo %s"\n' "${*:0}"
 	exit 1
 fi
 
-echo "Starting removal..."
+printf 'Running %s version %s\n' "${0##*/}" "$SCRIPT_VERSION"
 
-make uninstall
-RESULT=$?
+# support for NoPrompt allows non-interactive use of this script
+no_prompt=0
 
-if [[ ("$RESULT" = "0")]]
+# get the options
+for ((;$#;)) do
+    case $1 in
+      NoPrompt)
+        no_prompt=1 ;;
+      -h|--help|*)
+        cat <<- EndOfHelp
+		Usage: $0 [NoPrompt]
+		       $0 --help
+		    NoPrompt - noninteractive mode
+		    -h|--help - Show help
+		EndOfHelp
+        [[ $1 = -h || $1 = --help ]] # don't use non-zero exit status when help requested
+        exit
+        ;;
+    esac
+    shift
+done
+
+printf 'Starting removal...\n'
+
+make uninstall || {
+    status=$?
+    printf 'An error occurred. Error = %u\n' "$status"
+    printf 'Please report this error.\n'
+    exit "$status"
+}
+
+printf 'Deleting options and blacklist files from /etc/modprobe.d'
+rm -fv "/etc/modprobe.d/$options_file" "/etc/modprobe.d/$blacklist_file"
+
+printf 'The driver was removed successfully.\n'
+printf 'You may now delete the driver directory if desired.\n'
+
+if (( ! no_prompt ))
 then
-	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Deleting ${BLACKLIST_FILE} from /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
-	echo "The driver was removed successfully."
-	echo "You may now delete the driver directory if desired."
-else
-	echo "An error occurred. Error = ${RESULT}"
-	echo "Please report this error."
-	exit $RESULT
-fi
-
-if [ $NO_PROMPT -ne 1 ]
-then
-	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
-	echo
-	if [[ $REPLY =~ ^[Yy]$ ]]
-	then
-		reboot
-	fi
+    read -p 'Do you want to reboot now? (recommended) [y/N] ' -n 1 -r || exit
+    printf '\n'
+    if [[ $REPLY = [Yy] ]]
+    then
+        reboot
+    fi
 fi
 
 exit 0

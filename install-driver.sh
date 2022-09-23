@@ -4,59 +4,61 @@
 #
 # This version of the installation script uses dkms.
 
-SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20220821"
-OPTIONS_FILE="88x2bu.conf"
-BLACKLIST_FILE="rtw88_8822bu.conf"
+SCRIPT_VERSION=20220923
 
-DRV_NAME="rtl88x2bu"
-DRV_VERSION="5.13.1"
+options_file=88x2bu.conf
+blacklist_file=rtw88_8822bu.conf
 
-DRV_DIR="$(pwd)"
-KRNL_VERSION="$(uname -r)"
+drv_name=rtl88x2bu
+drv_version=5.13.1
+
+drv_dir=$PWD
 
 clear
 
 # support for NoPrompt allows non-interactive use of this script
-NO_PROMPT=0
+no_prompt=0
 
 # get the options
-while [ $# -gt 0 ]
-do
-	case $1 in
-		NoPrompt)
-			NO_PROMPT=1 ;;
-		*h|*help|*)
-			echo "Syntax $0 <NoPrompt>"
-			echo "       NoPrompt - noninteractive mode"
-			echo "       -h|--help - Show help"
-			exit 1
-			;;
-	esac
-	shift
+for ((;$#;)) do
+    case $1 in
+      NoPrompt)
+        no_prompt=1 ;;
+      *h|*help|*)
+        cat <<- EndOfHelp
+		Usage: $0 [NoPrompt]
+		       $0 --help
+		    NoPrompt - noninteractive mode
+		    -h|--help - Show help
+		EndOfHelp
+        [[ $1 = -h || $1 = --help ]] # don't use non-zero exit status when help requested
+        exit
+        ;;
+    esac
+    shift
 done
 
 # check to ensure sudo was used
-if [[ $EUID -ne 0 ]]
+if (( EUID != 0 ))
 then
-	echo "You must run this script with superuser (root) privileges."
-	echo "Try: \"sudo ./${SCRIPT_NAME}\""
-	exit 1
+    printf 'You must run this script with superuser (root) privileges.\n'
+    printf 'Try: "sudo %s"\n' "$0"
+    exit 1
 fi
 
 # check for previous installation
-if [[ -d "/usr/src/${DRV_NAME}-${DRV_VERSION}" ]]
+if [[ -d "/usr/src/$drv_name-$drv_version" ]]
 then
-	echo "It appears that this driver may already be installed."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit 1
+    printf 'It appears that this driver may already be installed.\n'
+    printf 'You will need to run the following before reattempting installation.\n'
+    printf '$ sudo ./remove-driver.sh\n'
+    exit 1
 fi
 
 # information that helps with bug reports
 
 # displays script name and version
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+printf 'Running %s version %s\n' "${0##*/}" "$SCRIPT_VERSION"
 
 # kernel
 uname -r
@@ -64,80 +66,68 @@ uname -r
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
 uname -m
 
-echo "Starting installation..."
+printf 'Starting installation...\n'
 
-# the add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
-echo "Copying source files to: /usr/src/${DRV_NAME}-${DRV_VERSION}"
-cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
+# the add command requires source in "/usr/src/$drv_name-$drv_version"
+printf 'Copying source files to: %s\n' "/usr/src/$drv_name-$drv_version"
+cp -rf "$drv_dir" "/usr/src/$drv_name-$drv_version"
 
 # sets module parameters (driver options)
-echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
-cp -f ${OPTIONS_FILE} /etc/modprobe.d
-
 # blacklist the in-kernel module (driver) so that there is no conflict
-echo "Copying ${BLACKLIST_FILE} to: /etc/modprobe.d"
-cp -f ${BLACKLIST_FILE} /etc/modprobe.d
+printf 'Copying options and blacklist files into: %s\n' "/etc/modprobe.d"
+cp -fv "$options_file" "$blacklist_file" /etc/modprobe.d
 
-dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
-RESULT=$?
+dkms add -m "$drv_name" -v "$drv_version" || {
+    status=$?
+    printf 'An error occurred. dkms add error = %d\n' "$status"
+    printf 'Please report this error.\n'
+    printf 'Please copy all screen output and paste it into the report.\n'
+    printf 'You will need to run the following before reattempting installation.\n'
+    printf '$ sudo ./remove-driver.sh\n'
+    exit "$status"
+}
 
-if [[ "$RESULT" != "0" ]]
-then
-	echo "An error occurred. dkms add error = ${RESULT}"
-	echo "Please report this error."
-	echo "Please copy all screen output and paste it into the report."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit $RESULT
-fi
+dkms build -m "$drv_name" -v "$drv_version" || {
+    status=$?
+    printf 'An error occurred. dkms build error = %d\n' "$status"
+    printf 'Please report this error.\n'
+    printf 'Please copy all screen output and paste it into the report.\n'
+    printf 'You will need to run the following before reattempting installation.\n'
+    printf '$ sudo ./remove-driver.sh\n'
+    exit "$status"
+}
 
-dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
-RESULT=$?
+dkms install -m "$drv_name" -v "$drv_version" || {
+    status=$?
+    printf 'An error occurred. dkms install error = %d\n' "$status"
+    printf 'Please report this error.\n'
+    printf 'Please copy all screen output and paste it into the report.\n'
+    printf 'You will need to run the following before reattempting installation.\n'
+    printf '$ sudo ./remove-driver.sh\n'
+    exit "$status"
+}
 
-if [[ "$RESULT" != "0" ]]
-then
-	echo "An error occurred. dkms build error = ${RESULT}"
-	echo "Please report this error."
-	echo "Please copy all screen output and paste it into the report."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit $RESULT
-fi
-
-dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
-RESULT=$?
-
-if [[ "$RESULT" != "0" ]]
-then
-	echo "An error occurred. dkms install error = ${RESULT}"
-	echo "Please report this error."
-	echo "Please copy all screen output and paste it into the report."
-	echo "You will need to run the following before reattempting installation."
-	echo "$ sudo ./remove-driver.sh"
-	exit $RESULT
-fi
-
-echo "The driver was installed successfully."
+printf 'The driver was installed successfully.\n'
 
 # unblock wifi
 rfkill unblock wlan
 
 # if NoPrompt is not used, ask user some questions to complete installation
-if [ $NO_PROMPT -ne 1 ]
+if (( ! no_prompt ))
 then
-	read -p "Do you want to edit the driver options file now? [y/N] " -n 1 -r
-	echo
-	if [[ $REPLY =~ ^[Yy]$ ]]
-	then
-		nano /etc/modprobe.d/${OPTIONS_FILE}
-	fi
+    read -p 'Do you want to edit the driver options file now? [y/N] ' -n 1 -r || exit 1
+    printf '\n'
+    if [[ $REPLY = [Yy] ]]
+    then
+        ${EDITOR:-nano} "/etc/modprobe.d/$options_file"
+    fi
 
-	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
-	echo
-	if [[ $REPLY =~ ^[Yy]$ ]]
-	then
-		reboot
-	fi
+    read -p 'Do you want to reboot now? (recommended) [y/N] ' -n 1 -r || exit 1
+    printf '\n'
+    if [[ $REPLY = [Yy] ]]
+    then
+        reboot
+    fi
 fi
 
 exit 0

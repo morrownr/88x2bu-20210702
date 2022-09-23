@@ -1,7 +1,5 @@
 #!/bin/bash
 #
-OPTIONS_FILE="88x2bu.conf"
-SCRIPT_NAME="edit-options.sh"
 #
 # Purpose: Make it easier to edit the driver options file.
 #
@@ -13,18 +11,21 @@ SCRIPT_NAME="edit-options.sh"
 #
 # $ sudo ./edit-options.sh
 #
-if [[ $EUID -ne 0 ]]
+
+options_file=88x2bu.conf
+
+if (( EUID != 0 ))
 then
-	echo "You must run this script with superuser (root) privileges."
-	echo "Try: \"sudo ./${SCRIPT_NAME}\""
-	exit 1
+    printf 'You must run this script with superuser (root) privileges.\n'
+    printf 'Try: "sudo %s"\n' "$0"
+    exit 1
 fi
 
-nano /etc/modprobe.d/${OPTIONS_FILE}
+${EDITOR:-nano} "/etc/modprobe.d/$options_file"
 
-read -p "Do you want to apply the new options by rebooting now? [y/N] " -n 1 -r
-echo    # move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
+read -p 'Do you want to apply the new options by rebooting now? [y/N] ' -n 1 -r || exit 1
+printf '\n'    # move to a next line
+if [[ $REPLY = [Yy] ]]
 then
     reboot
 fi
