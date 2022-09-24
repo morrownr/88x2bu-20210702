@@ -2460,12 +2460,12 @@ void dump_chplan_test(void *sel)
 {
 	int i, j;
 
-	/* check redundent */
+	/* check redundant */
 	for (i = 0; i < RTW_CHD_2G_MAX; i++) {
 		for (j = 0; j < i; j++) {
 			if (CH_LIST_LEN(rtw_channel_def_2g[i]) == CH_LIST_LEN(rtw_channel_def_2g[j])
 				&& _rtw_memcmp(&CH_LIST_CH(rtw_channel_def_2g[i], 0), &CH_LIST_CH(rtw_channel_def_2g[j], 0), CH_LIST_LEN(rtw_channel_def_2g[i]) + 1) == _TRUE)
-				RTW_PRINT_SEL(sel, "2G chd:%u and %u is the same\n", i, j);
+				RTW_PRINT_SEL(sel, "2G chd:%u and %u are the same\n", i, j);
 		}
 	}
 
@@ -2478,12 +2478,12 @@ void dump_chplan_test(void *sel)
 	}
 
 #if CONFIG_IEEE80211_BAND_5GHZ
-	/* check redundent */
+	/* check redundant */
 	for (i = 0; i < RTW_CHD_5G_MAX; i++) {
 		for (j = 0; j < i; j++) {
 			if (CH_LIST_LEN(rtw_channel_def_5g[i]) == CH_LIST_LEN(rtw_channel_def_5g[j])
 				&& _rtw_memcmp(&CH_LIST_CH(rtw_channel_def_5g[i], 0), &CH_LIST_CH(rtw_channel_def_5g[j], 0), CH_LIST_LEN(rtw_channel_def_5g[i]) + 1) == _TRUE)
-				RTW_PRINT_SEL(sel, "5G chd:%u and %u is the same\n", i, j);
+				RTW_PRINT_SEL(sel, "5G chd:%u and %u are the same\n", i, j);
 		}
 	}
 
@@ -2496,7 +2496,7 @@ void dump_chplan_test(void *sel)
 	}
 #endif
 
-	/* check redundent */
+	/* check redundant */
 	for (i = 0; i < RTW_ChannelPlanMap_size; i++) {
 		if (!rtw_is_channel_plan_valid(i))
 			continue;
@@ -2504,7 +2504,7 @@ void dump_chplan_test(void *sel)
 			if (!rtw_is_channel_plan_valid(j))
 				continue;
 			if (_rtw_memcmp(&RTW_ChannelPlanMap[i], &RTW_ChannelPlanMap[j], sizeof(RTW_ChannelPlanMap[i])) == _TRUE)
-				RTW_PRINT_SEL(sel, "channel plan 0x%02x and 0x%02x is the same\n", i, j);
+				RTW_PRINT_SEL(sel, "channel plans 0x%02x and 0x%02x are the same\n", i, j);
 		}
 	}
 }

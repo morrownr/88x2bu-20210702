@@ -14,7 +14,7 @@
  *****************************************************************************/
 
 #error "You have defined CONFIG_CUSTOMIZED_COUNTRY_CHPLAN_MAP to use a customized map of your own instead of the default one"
-#error "Before removing these error notifications, please make sure regulatory certification requirements of your target markets"
+#error "Before removing these error notifications, please make sure regulatory certification requirements are met in your target markets"
 
 static const struct country_chplan CUSTOMIZED_country_chplan_map[] = {
 	COUNTRY_CHPLAN_ENT("TW", 0x76, 1), /* Taiwan */
