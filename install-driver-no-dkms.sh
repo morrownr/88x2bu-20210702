@@ -19,20 +19,30 @@ fi
 
 # support for NoPrompt allows non-interactive use of this script
 no_prompt=0
+no_clean=0
+make_opts=()
+make_build_opts=()
 
 # get the options
 for ((;$#;)) do
     case $1 in
-      NoPrompt)
+      -y|--no-prompt|NoPrompt)
         no_prompt=1 ;;
+      -d|--dirty|--no-clean|NoClean)
+        no_clean=1 ;;
+      -j[0-9]*|--jobs|--jobs=*)
+        make_build_opts+=( "$1" ) ;;
+      -j)
+        make_build_opts+=( "${@:1:2}" ) ; shift ;;  # include second arg if present
       -h|--help|*)
         cat <<- EndOfHelp
-		Usage: $0 [NoPrompt]
-		       $0 --help
-		    NoPrompt - noninteractive mode
-		    -h|--help - Show help
+		Usage: $0 [--no-prompt|-y] [--no-clean|-d] [--jobs[=N]|-jN]
+		       $0 --help|-h
+		    --no-prompt  non-interactive mode
+		    --no-clean   use existing built objects
+		    --help       show this message
 		EndOfHelp
-        [[ $1 = -h || $1 = --help ]] # don't use non-zero exit status when help requested
+        [[ $1 = -h || $1 = --help ]] # use zero exit status when help requested
         exit
         ;;
     esac
@@ -57,9 +67,10 @@ printf 'Starting installation...\n'
 printf 'Copying options and blacklist files into /etc/modprobe.d\n'
 cp -fv "$options_file" "$blacklist_file" /etc/modprobe.d
 
-make clean
+(( no_clean )) ||
+make "${make_opts[@]}" clean
 
-make || {
+make "${make_opts[@]}" "${make_build_opts[@]}" || {
     status=$?
     printf 'An error occurred. Error = %d\n' "$status"
     printf 'Please report this error.\n'
@@ -69,7 +80,7 @@ make || {
     exit "$status"
 }
 
-make install || {
+make "${make_opts[@]}" install || {
     status=$?
     printf 'An error occurred. Error = %d\n' "$status"
     printf 'Please report this error.\n'

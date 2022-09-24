@@ -14,24 +14,28 @@ drv_version=5.13.1
 
 drv_dir=$PWD
 
-clear
-
 # support for NoPrompt allows non-interactive use of this script
 no_prompt=0
+no_clean=0
 
 # get the options
 for ((;$#;)) do
     case $1 in
-      NoPrompt)
+      -y|--no-prompt|NoPrompt)
         no_prompt=1 ;;
-      *h|*help|*)
+      -d|--dirty|--no-clean|NoClean)
+        no_clean=1 ;;
+      -j*)
+        printf '(dkms build ignores "%s" option)\n' "$1" ;;
+      -h|--help|*)
         cat <<- EndOfHelp
-		Usage: $0 [NoPrompt]
-		       $0 --help
-		    NoPrompt - noninteractive mode
-		    -h|--help - Show help
+		Usage: $0 [--no-prompt|-y] [--no-clean|-d]
+		       $0 --help|-h
+		    --no-prompt  non-interactive mode
+		    --no-clean   use existing built objects
+		    --help       show this message
 		EndOfHelp
-        [[ $1 = -h || $1 = --help ]] # don't use non-zero exit status when help requested
+        [[ $1 = -h || $1 = --help ]] # use zero exit status when help requested
         exit
         ;;
     esac
@@ -57,6 +61,8 @@ fi
 
 # information that helps with bug reports
 
+clear
+
 # displays script name and version
 printf 'Running %s version %s\n' "${0##*/}" "$SCRIPT_VERSION"
 
@@ -71,6 +77,9 @@ printf 'Starting installation...\n'
 # the add command requires source in "/usr/src/$drv_name-$drv_version"
 printf 'Copying source files to: %s\n' "/usr/src/$drv_name-$drv_version"
 cp -rf "$drv_dir" "/usr/src/$drv_name-$drv_version"
+
+(( no_clean )) ||
+find "/usr/src/$drv_name-$drv_version" '(' -name '*.o' -o -name '*.ko' -o -name '*.o.cmd' ')' -delete
 
 # sets module parameters (driver options)
 # blacklist the in-kernel module (driver) so that there is no conflict
