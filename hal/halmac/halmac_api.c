@@ -75,6 +75,16 @@ enum chip_id_hw_def {
 	CHIP_ID_HW_DEF_PS = 0xEA,
 };
 
+static enum halmac_chip_id halmac_to_cid[256] = {
+	[0 ... 255]            = HALMAC_CHIP_ID_UNDEFINE,
+	[CHIP_ID_HW_DEF_8822B] = HALMAC_CHIP_ID_8822B,
+	[CHIP_ID_HW_DEF_8821C] = HALMAC_CHIP_ID_8821C,
+	[CHIP_ID_HW_DEF_8814B] = HALMAC_CHIP_ID_8814B,
+	[CHIP_ID_HW_DEF_8197F] = HALMAC_CHIP_ID_8197F,
+	[CHIP_ID_HW_DEF_8822C] = HALMAC_CHIP_ID_8822C,
+	[CHIP_ID_HW_DEF_8812F] = HALMAC_CHIP_ID_8812F,
+};
+
 static enum halmac_ret_status
 chk_pltfm_api(void *drv_adapter, enum halmac_interface intf,
 	      struct halmac_platform_api *pltfm_api);
@@ -488,6 +498,8 @@ halmac_get_version(struct halmac_ver *version)
 	return HALMAC_RET_SUCCESS;
 }
 
+#define array_length(A) (sizeof (A) / sizeof *(A))
+
 static enum halmac_ret_status
 get_chip_info(void *drv_adapter, struct halmac_platform_api *pltfm_api,
 	      enum halmac_interface intf, struct halmac_adapter *adapter)
@@ -495,6 +507,7 @@ get_chip_info(void *drv_adapter, struct halmac_platform_api *pltfm_api,
 	u8 chip_id;
 	u8 chip_ver;
 	u32 cnt;
+	enum halmac_chip_id hmcid;
 
 	if (adapter->intf == HALMAC_INTERFACE_SDIO) {
 		pltfm_reg_w8_sdio(drv_adapter, pltfm_api, REG_SDIO_HSUS_CTRL,
@@ -521,21 +534,13 @@ get_chip_info(void *drv_adapter, struct halmac_platform_api *pltfm_api,
 	}
 
 	adapter->chip_ver = (enum halmac_chip_ver)chip_ver;
+	adapter->chip_id =
+		hmcid = chip_id >= 0 && chip_id < array_length(halmac_to_cid)
+			? halmac_to_cid[chip_id]
+			: HALMAC_CHIP_ID_UNDEFINE;
+	PLTFM_MSG_TRACE("chip_id=0x%02x, chip_ver=0x%02x, halmac_chip_id=0x%02x\n", chip_id, chip_ver, hmcid);
 
-	if (chip_id == CHIP_ID_HW_DEF_8822B) {
-		adapter->chip_id = HALMAC_CHIP_ID_8822B;
-	} else if (chip_id == CHIP_ID_HW_DEF_8821C) {
-		adapter->chip_id = HALMAC_CHIP_ID_8821C;
-	} else if (chip_id == CHIP_ID_HW_DEF_8814B) {
-		adapter->chip_id = HALMAC_CHIP_ID_8814B;
-	} else if (chip_id == CHIP_ID_HW_DEF_8197F) {
-		adapter->chip_id = HALMAC_CHIP_ID_8197F;
-	} else if (chip_id == CHIP_ID_HW_DEF_8822C) {
-		adapter->chip_id = HALMAC_CHIP_ID_8822C;
-	} else if (chip_id == CHIP_ID_HW_DEF_8812F) {
-		adapter->chip_id = HALMAC_CHIP_ID_8812F;
-	} else {
-		adapter->chip_id = HALMAC_CHIP_ID_UNDEFINE;
+	if (hmcid == HALMAC_CHIP_ID_UNDEFINE) {
 		PLTFM_MSG_ERR("[ERR]Chip id is undefined\n");
 		return HALMAC_RET_CHIP_NOT_SUPPORT;
 	}
