@@ -9,8 +9,6 @@ SCRIPT_VERSION=20220923
 # There is no filename globbing in this script, so disable it to stop accidents
 set -f
 
-clear
-
 # Check that sudo was used to start the script
 if (( EUID != 0 ))
 then
@@ -59,7 +57,6 @@ get_if_info() {
 print_if_info() {
     local iface=$1 m n
 
-    clear
     printf '\n --------------------------------\n'
     printf '    %-20s %s\n' "${0##*/}" "$SCRIPT_VERSION"
     printf ' --------------------------------\n'
@@ -84,7 +81,6 @@ str_join() { local IFS="$2" ; printf -v "$1" %s "${*:3}" ; }
 
 # Set $iface0 down
 ip link set dev "$iface0" down || {
-    clear
     printf '\n ERROR: Please provide an existing interface as parameter!\n'
     printf ' Usage: $ sudo %s [interface:wlan0]\n' "$0"
     printf ' Tip:   $ iw dev\n\n'
@@ -128,7 +124,6 @@ then
 
     kill -STOP "${pids[@]}"
 
-    clear
     printf '\n The following processes have been stopped:\n\n'
 
     # ps -p takes a comma-separated list
@@ -142,7 +137,6 @@ then
     printf ' to a normal state at the end of this script.\n\n'
 
 else
-    clear
     printf '\n There are no processes that need stopping.\n\n'
 fi
 

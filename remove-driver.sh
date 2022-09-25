@@ -19,7 +19,6 @@ then
     exit 1
 fi
 
-clear
 printf 'Running %s version %s\n' "${0##*/}" "$SCRIPT_VERSION"
 
 # support for NoPrompt allows non-interactive use of this script

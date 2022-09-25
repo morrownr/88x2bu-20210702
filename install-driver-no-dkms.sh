@@ -120,8 +120,6 @@ managed_file_installation() {
 
 # information that helps with bug reports
 
-clear
-
 # displays script name and version
 printf 'Running %s version %s\n' "${0##*/}" "$SCRIPT_VERSION"
 
