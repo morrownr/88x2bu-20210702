@@ -1,19 +1,31 @@
 #!/bin/bash
 
-# Purpose: Install Realtek USB WiFi adapter drivers.
+# Purpose: Build and Install Realtek USB WiFi adapter drivers.
 #
-# This version of the installation script does not use dkms.
+# Only use this version if you don't have DKMS available.
+# Build and install the driver on an LSB-compliant system.
 
-SCRIPT_VERSION=20220923
+SCRIPT_VERSION=20220925
 
 options_file=88x2bu.conf
 blacklist_file=rtw88_8822bu.conf
 
+installed_blacklist_file=/etc/modprobe.d/$blacklist_file
+installed_options_file=/etc/modprobe.d/$options_file
+
+#      Start               End
+Tmks=$'\e[42;37;1m' Tmke=$'\e[22;39;49m'    # Menu-Key
+Twas=$'\e[33m'      Twae=$'\e[39m'          # WArning
+Tins=$'\e[1m'       Tine=$'\e[22m'          # INstruction
+
+Tdr=$'\e[47m\e[K\e[49m'                     # Diff-Ruler
+Tcl=$'\r\e[K'                               # Clear-Line
+
 # check to ensure sudo was used
 if (( EUID != 0 ))
 then
-    printf 'You must run this script with superuser (root) privileges.\n'
-    printf 'Try: "sudo %s"\n' "$0"
+    printf '%sYou must run this script with superuser (root) privileges.%s\n' "$Twas" "$Twae"
+    printf 'Try: "%ssudo %s%s"\n' "$Tins" "$0" "$Tine"
     exit 1
 fi
 
@@ -22,6 +34,7 @@ no_prompt=0
 no_clean=0
 make_opts=()
 make_build_opts=()
+no_build=0
 
 # get the options
 for ((;$#;)) do
@@ -34,6 +47,9 @@ for ((;$#;)) do
         make_build_opts+=( "$1" ) ;;
       -j)
         make_build_opts+=( "${@:1:2}" ) ; shift ;;  # include second arg if present
+      -n|--dry-run|\
+      --nb|--no-build)
+        no_build=1 ;;
       -h|--help|*)
         cat <<- EndOfHelp
 		Usage: $0 [--no-prompt|-y] [--no-clean|-d] [--jobs[=N]|-jN]
@@ -49,7 +65,62 @@ for ((;$#;)) do
     shift
 done
 
+# Install a config file, using a similar method to dpkg -i
+managed_file_installation() {
+    local src=$1 installed=$2 desc=$3 old
+    if [[ -e $installed ]]
+    then
+        old=
+    else
+        old=/tmp/$$-$src
+        trap 'rm -f "$old"' EXIT
+        cp -Tf "$installed" "$old"
+    fi
+    while :
+    do
+        Kcont=XX Kdiff=XX Kedit=XX Krevt=XX Kinst=XX Kvimd=XX   # any value that can't match a single byte
+        if [[ ! -e $installed ]]
+        then
+            menu=( 'Install new' Quit )
+            Kinst=i
+        else
+            menu=( Diff Edit Vimdiff Quit )
+            Kcont=c Kedit=e Kvimd=v
+            if [[ $old && -s $old ]] && ! cmp "$src" "$old"
+            then
+                menu=( 'Revert to old' "${menu[@]}" )
+                Krevt=r
+            fi
+            if d=$( diff "$src" "$installed" )
+            then
+                menu=( 'Continue' "${menu[@]}" )
+            else
+                menu=( 'Continue with existing' 'Install new' "${menu[@]}" )
+                Kdiff=d Kinst=i
+                printf '\n%sExisting %s file differs from the package default%s\n' "$Twas" "$desc" "$Twae"
+            fi
+        fi
+        printf '\nChoose:'
+        for c in "${menu[@]}" ; do printf ' %s' "$Tmks${c:0:1}$Tmke${c:1}" ; done
+        printf '? '
+        read -rs -N1 key || exit
+        printf %s "$Tcl"
+        case ${key,,} in
+          [qx]) exit ;;
+          $Kcont) break ;;
+          $Kdiff) printf '%s\n%s\n%s' "$Tdr" "$d" "$Tdr" ;;
+          $Kedit) ${EDITOR:-nano} "$installed" ;;
+          $Kinst) cp -Tfv "$src" "$installed" ;;
+          $Krevt) cp -Tfv "$old" "$installed" ;;
+          $Kvimd) vimdiff "$installed" "$src" ;;
+        esac
+    done
+    rm -f "$old" ; trap - EXIT
+}
+
 # information that helps with bug reports
+
+clear
 
 # displays script name and version
 printf 'Running %s version %s\n' "${0##*/}" "$SCRIPT_VERSION"
@@ -62,54 +133,68 @@ uname -m
 
 printf 'Starting installation...\n'
 
-# sets module parameters (driver options)
-# blacklist the in-kernel module (driver) so that there is no conflict
-printf 'Copying options and blacklist files into /etc/modprobe.d\n'
-cp -fv "$options_file" "$blacklist_file" /etc/modprobe.d
+if (( no_build ))
+then
+    printf 'Build & install skipped.\n'
+else
+    (( no_clean )) ||
+    make "${make_opts[@]}" clean
 
-(( no_clean )) ||
-make "${make_opts[@]}" clean
+    make "${make_opts[@]}" "${make_build_opts[@]}" || {
+        status=$?
+        printf 'An error occurred. Error = %d\n' "$status"
+        printf 'Please report this error.\n'
+        printf 'Please copy all screen output and paste it into the report.\n'
+        printf 'You will need to run the following before reattempting installation.\n'
+        printf '$ %ssudo %s%s\n' "$Tins" "${0/install/remove}" "$Tine"
+        exit "$status"
+    }
 
-make "${make_opts[@]}" "${make_build_opts[@]}" || {
-    status=$?
-    printf 'An error occurred. Error = %d\n' "$status"
-    printf 'Please report this error.\n'
-    printf 'Please copy all screen output and paste it into the report.\n'
-    printf 'You will need to run the following before reattempting installation.\n'
-    printf '$ sudo ./remove-driver-no-dkms.sh\n'
-    exit "$status"
-}
+    make "${make_opts[@]}" install || {
+        status=$?
+        printf 'An error occurred. Error = %d\n' "$status"
+        printf 'Please report this error.\n'
+        printf 'Please copy all screen output and paste it into the report.\n'
+        printf 'You will need to run the following before reattempting installation.\n'
+        printf '$ %ssudo %s%s\n' "$Tins" "${0/install/remove}" "$Tine"
+        exit "$status"
+    }
 
-make "${make_opts[@]}" install || {
-    status=$?
-    printf 'An error occurred. Error = %d\n' "$status"
-    printf 'Please report this error.\n'
-    printf 'Please copy all screen output and paste it into the report.\n'
-    printf 'You will need to run the following before reattempting installation.\n'
-    printf '$ sudo %s\n' "${*:0}"
-    exit "$status"
-}
-
-printf 'The driver was installed successfully.\n'
+    printf 'The driver was installed successfully.\n'
+fi
 
 # unblock wifi
 rfkill unblock wlan
 
+# Blacklist the in-kernel module (driver) so that there is no conflict
+printf 'Installing module blacklist as %s\n' "$installed_blacklist_file"
+cp -Tfv "$blacklist_file" "$installed_blacklist_file"
+
+# Set module parameters (driver options)
+
+# Install default if config file doesn't already exist, or overwrite it if
+# non-interactive.
+if (( no_prompt )) || [[ ! -e $installed_options_file ]]
+then
+    printf 'Installing default options file as %s\n' "$installed_options_file"
+    cp -Tfv "$options_file" "$installed_options_file"
+fi
+
 # if NoPrompt is not used, ask user some questions to complete installation
 if (( ! no_prompt ))
 then
-    read -p 'Do you want to edit the driver options file now? [y/N] ' -n 1 -r || exit 1
-    printf '\n'
-    if [[ $REPLY = [Yy] ]]
-    then
-        ${EDITOR:-nano} "/etc/modprobe.d/$options_file"
-    fi
+    managed_file_installation "$options_file" "$installed_options_file" 'Driver options'
 
-    read -p 'Do you want to reboot now? (recommended) [y/N] ' -n 1 -r || exit 1
-    printf '\n'
-    if [[ $REPLY = [Yy] ]]
+    read -p 'Do you want to reboot now? (recommended) [r/N] ' -n 1 -r || exit 1
+    printf %s "$Tcl"
+    if [[ $REPLY = [Rr] ]]
     then
-        reboot
+        read -p 'Confirm reboot? [c/N] ' -n1 -r || exit 1
+        printf %s "$Tcl"
+        if [[ $REPLY = [Cc] ]]
+        then
+            reboot
+        fi
     fi
 fi
 
