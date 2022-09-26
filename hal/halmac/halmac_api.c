@@ -199,13 +199,11 @@ halmac_init_adapter(void *drv_adapter, struct halmac_platform_api *pltfm_api,
 	if (adapter->chip_id == HALMAC_CHIP_ID_8814B) {
 		init_adapter_param_88xx_v1(adapter);
 		status = mount_api_88xx_v1(adapter);
-	}
 #if defined(HALMAC_DATA_CPU_EN)
-	if (adapter->chip_id == HALMAC_CHIP_ID_8814B) {
 		init_adapter_param_88xxd_v1(adapter);
 		status = mount_api_88xxd_v1(adapter);
-	}
 #endif
+	}
 #endif
 
 #else
