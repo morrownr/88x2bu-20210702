@@ -541,7 +541,7 @@ get_chip_info(void *drv_adapter, struct halmac_platform_api *pltfm_api,
 	PLTFM_MSG_TRACE("chip_id=0x%02x, chip_ver=0x%02x, halmac_chip_id=0x%02x\n", chip_id, chip_ver, hmcid);
 
 	if (hmcid == HALMAC_CHIP_ID_UNDEFINE) {
-		PLTFM_MSG_ERR("[ERR]Chip id is undefined\n");
+		PLTFM_MSG_ERR("[ERR]Chip id 0x%02x is undefined\n", chip_id);
 		return HALMAC_RET_CHIP_NOT_SUPPORT;
 	}
 
