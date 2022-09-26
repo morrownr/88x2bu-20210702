@@ -15,7 +15,6 @@ DRV_VERSION="5.13.1"
 DRV_DIR="$(pwd)"
 KRNL_VERSION="$(uname -r)"
 
-clear
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
 # support for NoPrompt allows non-interactive use of this script
