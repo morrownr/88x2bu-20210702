@@ -83,6 +83,7 @@ static enum halmac_chip_id halmac_to_cid[256] = {
 	[CHIP_ID_HW_DEF_8197F] = HALMAC_CHIP_ID_8197F,
 	[CHIP_ID_HW_DEF_8822C] = HALMAC_CHIP_ID_8822C,
 	[CHIP_ID_HW_DEF_8812F] = HALMAC_CHIP_ID_8812F,
+	[CHIP_ID_HW_DEF_8192E] = HALMAC_CHIP_ID_8192E,
 };
 
 static enum halmac_ret_status
