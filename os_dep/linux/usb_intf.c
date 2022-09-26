@@ -248,7 +248,6 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xD822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xE822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x7392, 0xF822, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Edimax */
-	{USB_DEVICE_AND_INTERFACE_INFO(0x13b1, 0x0043, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Alpha - Alpha */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x012D, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-Link Archer T3U v1 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0138, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-Link Archer T3U Plus v1 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0115, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-Link Archer T4U V3 */
@@ -268,7 +267,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x13B1, 0x0045, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Linksys WUSB3600 v2 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x04CA, 0x8602, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* LiteOn */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0E66, 0x0025, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Hawking HW12ACU */
-	{USB_DEVICE_AND_INTERFACE_INFO(0x13B1, 0x0043, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Linksys */
+	{USB_DEVICE_AND_INTERFACE_INFO(0x13B1, 0x0043, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Alpha - Linksys */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0BDA, 0x2102, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* CCNC */
 #endif /* CONFIG_RTL8822B */
 

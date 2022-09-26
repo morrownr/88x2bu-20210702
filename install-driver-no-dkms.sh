@@ -5,8 +5,16 @@
 # This version of the installation script does not use dkms.
 
 SCRIPT_NAME="install-driver-no-dkms.sh"
-SCRIPT_VERSION="20220821"
+SCRIPT_VERSION="20220913"
 OPTIONS_FILE="88x2bu.conf"
+
+MODULE_NAME="88x2bu"
+KVER="$(uname -r)"
+KSRC="/lib/modules/${KVER}/build"
+MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
+
+# Some distros have a non-mainlined, patched-in kernel driver
+# that has to be deactivated.
 BLACKLIST_FILE="rtw88_8822bu.conf"
 
 # support for NoPrompt allows non-interactive use of this script
@@ -36,18 +44,18 @@ then
 	exit 1
 fi
 
-# information that helps with bug reports
-
 # displays script name and version
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
+# information that helps with bug reports
 # kernel
 uname -r
-
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
 uname -m
+#getconf LONG_BIT (need to work on this)
 
-echo "Starting installation..."
+echo "Installing the following driver..."
+echo "${MODDESTDIR}${MODULE_NAME}.ko"
 
 # sets module parameters (driver options)
 echo "Copying ${OPTIONS_FILE} to: /etc/modprobe.d"
@@ -72,11 +80,20 @@ then
 	exit $RESULT
 fi
 
+# As shown in Makefile
+# install:
+#	install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
+#	/sbin/depmod -a ${KVER}
+
 make install
 RESULT=$?
 
-if [[ "$RESULT" != "0" ]]
+if [[ ("$RESULT" = "0")]]
 then
+	echo "The driver was installed successfully."
+	# unblock wifi
+	rfkill unblock wlan
+else
 	echo "An error occurred. Error = ${RESULT}"
 	echo "Please report this error."
 	echo "Please copy all screen output and paste it into the report."
@@ -84,11 +101,6 @@ then
 	echo "$ sudo ./remove-driver-no-dkms.sh"
 	exit $RESULT
 fi
-
-echo "The driver was installed successfully."
-
-# unblock wifi
-rfkill unblock wlan
 
 # if NoPrompt is not used, ask user some questions to complete installation
 if [ $NO_PROMPT -ne 1 ]

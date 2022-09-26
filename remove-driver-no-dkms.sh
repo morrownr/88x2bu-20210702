@@ -5,11 +5,15 @@
 # This version of the removal script does not use dkms.
 
 SCRIPT_NAME="remove-driver-no-dkms.sh"
-SCRIPT_VERSION="20220821"
+SCRIPT_VERSION="20220913"
 OPTIONS_FILE="88x2bu.conf"
-BLACKLIST_FILE="rtw88_8822bu.conf"
 
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+MODULE_NAME="88x2bu"
+KVER="$(uname -r)"
+KSRC="/lib/modules/${KVER}/build"
+MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
+
+BLACKLIST_FILE="rtw88_8822bu.conf"
 
 # support for NoPrompt allows non-interactive use of this script
 NO_PROMPT=0
@@ -38,7 +42,8 @@ then
 	exit 1
 fi
 
-echo "Starting removal..."
+# displays script name and version
+echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
 make uninstall
 RESULT=$?
@@ -57,6 +62,7 @@ else
 	exit $RESULT
 fi
 
+# if NoPrompt is not used, ask user some questions to complete removal
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
