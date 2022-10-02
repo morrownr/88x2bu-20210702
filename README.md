@@ -92,7 +92,7 @@ the Installation Steps can be improved.
 
 - RHEL 8.4 (kernel 4.18.0)
 
-- Ubuntu 22.04 (kernel 5.15)
+- Ubuntu 22.04 (kernel 5.15 and 5.17.5)
 
 - Void Linux (kernel 5.18)
 
