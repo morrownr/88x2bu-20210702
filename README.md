@@ -379,27 +379,19 @@ discover the settings and make a new script that works with your ARM or
 ARM64 based system, you are welcome to submit the script and information
 to be included here.
 
-#### Step 10: Run the installation script ( install-driver.sh or install-driver-no-dkms.sh )
+#### Step 10: Run the installation script ( install-driver.sh )
 
 Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
 
-Option for distros that support `dkms` (almost all)
-
 ```
 sudo ./install-driver.sh
-```
-
-Option for distros that do not support `dkms`
-
-```
-sudo ./install-driver-no-dkms.sh
 ```
 
 Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Manual build instructions: The above scripts automate the installation
+Manual build instructions: The above script automates the installation
 process, however, if you want to or need to do a command line
 installation, use the following:
 
@@ -410,9 +402,8 @@ sudo make install
 sudo reboot
 ```
 
-Note: If you use the manual build instructions or the `install-driver-no-dkms.sh`
-script, you will need to repeat the process each time a new kernel is
-installed in your distro.
+Note: If you use the manual build instructions script, you will need
+to repeat the process each time a new kernel is installed in your distro.
 
 -----
 
@@ -629,19 +620,6 @@ present what you know to the devs of your distro via their problem
 reporting system. Turning off secure boot is NOT a fix. A real fix needs
 to happen.
 
-
------
-
-Question: Are there any known problems with AP mode?
-
-Answer: Overall this driver does a good job with AP mode. During testing
-and work prior to making this driver available, the team working on this
-driver noticed some problems in AP mode if used with a Raspberry Pi 4B.
-We were unable to discover or fix the exact cause of the problem but
-the workaround is to keep the driver in USB2 mode. This workaround only
-applies to AP mode with Raspberry Pi 4B. No problems were noted with
-systems that use x86 or amd64 processors.
-
 -----
 
 Question: Can you provide additional information about monitor mode?
@@ -670,6 +648,17 @@ ALFA AWUS036ACS - [driver](https://github.com/morrownr/8821au-20210708)
 To ask questions, go to [USB-WiFi](https://github.com/morrownr/USB-WiFi)
 and post in `Discussions` or `Issues`.
 
+-----
 
+Question: Are there any known problems with AP mode?
+
+Answer: Overall this driver does a good job with AP mode. During testing
+and work prior to making this driver available, the team working on this
+driver noticed some problems in AP mode if used with a Raspberry Pi 4B.
+We were unable to discover or fix the exact cause of the problem but
+the workaround is to keep the driver in USB2 mode. This workaround only
+applies to AP mode with Raspberry Pi 4B. No problems were noted with
+systems that use x86 or amd64 processors.
 
 -----
+

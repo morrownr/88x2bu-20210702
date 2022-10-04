@@ -2,20 +2,29 @@
 
 # Purpose: Remove Realtek USB WiFi adapter drivers.
 #
-# This version of the removal script uses dkms.
+# Supports dkms and non-dkms removals.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20220821"
+SCRIPT_VERSION="20220927"
 OPTIONS_FILE="88x2bu.conf"
 BLACKLIST_FILE="rtw88_8822bu.conf"
 
+MODULE_NAME="88x2bu"
+KVER="$(uname -r)"
+KSRC="/lib/modules/${KVER}/build"
+MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
+
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
-
 DRV_DIR="$(pwd)"
-KRNL_VERSION="$(uname -r)"
 
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+# check to ensure sudo was used
+if [[ $EUID -ne 0 ]]
+then
+	echo "You must run this script with superuser (root) privileges."
+	echo "Try: \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
 
 # support for NoPrompt allows non-interactive use of this script
 NO_PROMPT=0
@@ -36,14 +45,8 @@ do
 	shift
 done
 
-# check to ensure sudo was used
-if [[ $EUID -ne 0 ]]
-then
-	echo "You must run this script with superuser (root) privileges."
-	echo "Try: \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
+# displays script name and version
+echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 echo "Starting removal..."
 
 dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
@@ -60,6 +63,9 @@ then
 	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
 	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+	echo "Removing a non-dkms installation."
+	rm -f $(MODDESTDIR)$(MODULE_NAME).ko
+	/sbin/depmod -a ${KVER}
 	echo "The driver was removed successfully."
 	echo "You may now delete the driver directory if desired."
 else
@@ -68,6 +74,7 @@ else
 	exit $RESULT
 fi
 
+# if NoPrompt is not used, ask user some questions to complete removal
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
