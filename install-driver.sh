@@ -5,7 +5,7 @@
 # Supports dkms and non-dkms installations.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20220929"
+SCRIPT_VERSION="20221007"
 OPTIONS_FILE="88x2bu.conf"
 
 # Some distros have a non-mainlined, patched-in kernel driver

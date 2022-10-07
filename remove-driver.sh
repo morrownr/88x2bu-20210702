@@ -5,7 +5,7 @@
 # Supports dkms and non-dkms removals.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20220927"
+SCRIPT_VERSION="20221007"
 OPTIONS_FILE="88x2bu.conf"
 BLACKLIST_FILE="rtw88_8822bu.conf"
 
