@@ -54,7 +54,7 @@ echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation."
-	rm -f $(MODDESTDIR)$(MODULE_NAME).ko
+	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
 	/sbin/depmod -a ${KVER}
 fi
 

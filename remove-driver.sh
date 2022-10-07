@@ -53,8 +53,8 @@ dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
 RESULT=$?
 
 # RESULT will be 3 if there are no instances of module to remove
-# however we still need to remove the files or the install script
-# will complain.
+# however we still need to remove various files or the install script
+# may complain.
 if [[ ("$RESULT" = "0")||("$RESULT" = "3") ]]
 then
 	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
@@ -64,7 +64,7 @@ then
 	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "Removing a non-dkms installation."
-	rm -f $(MODDESTDIR)$(MODULE_NAME).ko
+	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
 	/sbin/depmod -a ${KVER}
 	echo "The driver was removed successfully."
 	echo "You may now delete the driver directory if desired."
