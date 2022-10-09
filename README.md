@@ -403,8 +403,8 @@ sudo make install
 sudo reboot
 ```
 
-Note: If you use the manual build instructions script, you will need
-to repeat the process each time a new kernel is installed in your distro.
+Note: If you use the manual build instructions, you will need to repeat
+the process each time a new kernel is installed in your distro.
 
 -----
 
