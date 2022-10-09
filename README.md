@@ -454,16 +454,8 @@ cd ~/src/88x2bu-20210702
 
 Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
 
-Option for distros that support `dkms` (almost all)
-
 ```
 sudo ./remove-driver.sh
-```
-
-Option for distros that do not support `dkms`
-
-```
-sudo ./remove-driver-no-dkms.sh
 ```
 
 -----
