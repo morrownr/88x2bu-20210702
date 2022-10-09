@@ -86,9 +86,9 @@ the Installation Steps can be improved.
 
 - openSUSE Tumbleweed (rolling) (kernel 5.15)
 
-- Raspberry Pi OS (2022-04-04) (ARM 32 bit and 64 bit) (kernel 5.15)
+- Raspberry Pi OS (2022-09-22) (ARM 32 bit and 64 bit) (kernel 5.15)
 
-- Raspberry Pi Desktop (x86 32 bit) (kernel 4.19)
+- Raspberry Pi Desktop (2022-07-01) (x86 32 bit) (kernel 5.10)
 
 - RHEL 8.4 (kernel 4.18.0)
 
@@ -158,8 +158,9 @@ need to remove the driver you have installed and install the newest available be
 installing the new kernel. Use the following commands in the driver directory:
 
 ```
-$ sudo ./remove-driver.sh
 $ git pull
+$ sudo ./remove-driver.sh
+(install the new kernel)
 $ sudo ./install-driver.sh
 ```
 
