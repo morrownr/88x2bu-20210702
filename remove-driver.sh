@@ -6,17 +6,18 @@
 
 SCRIPT_NAME="remove-driver.sh"
 SCRIPT_VERSION="20221007"
-OPTIONS_FILE="88x2bu.conf"
-BLACKLIST_FILE="rtw88_8822bu.conf"
-
 MODULE_NAME="88x2bu"
+DRV_VERSION="5.13.1"
+OPTIONS_FILE="${MODULE_NAME}.conf"
+
 KVER="$(uname -r)"
 KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
-DRV_NAME="rtl88x2bu"
-DRV_VERSION="5.13.1"
+DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
+
+BLACKLIST_FILE="rtw88_8822bu.conf"
 
 # check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
@@ -63,7 +64,7 @@ then
 	rm -f /etc/modprobe.d/${BLACKLIST_FILE}
 	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-	echo "Removing a non-dkms installation."
+#	echo "Removing a non-dkms installation."
 	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
 	/sbin/depmod -a ${KVER}
 	echo "The driver was removed successfully."

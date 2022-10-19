@@ -8,10 +8,6 @@ SCRIPT_NAME="install-driver.sh"
 SCRIPT_VERSION="20221007"
 OPTIONS_FILE="88x2bu.conf"
 
-# Some distros have a non-mainlined, patched-in kernel driver
-# that has to be deactivated.
-BLACKLIST_FILE="rtw88_8822bu.conf"
-
 MODULE_NAME="88x2bu"
 KVER="$(uname -r)"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
@@ -19,6 +15,10 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
 DRV_DIR="$(pwd)"
+
+# Some distros have non-mainlined, patched-in kernel drivers
+# that have to be deactivated.
+BLACKLIST_FILE="rtw88_8822bu.conf"
 
 # check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
@@ -63,6 +63,7 @@ fi
 uname -r
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
 uname -m
+#getconf LONG_BIT (may be handy in the future)
 
 echo "Starting installation..."
 
@@ -121,6 +122,10 @@ else
 	
 	dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 	RESULT=$?
+
+#	RESULT will be 3 if the DKMS tree already contains the same module/version
+#	combo. You cannot add the same module/version combo more than once.
+# I need to add logic to handle this.
 
 	if [[ "$RESULT" != "0" ]]
 	then

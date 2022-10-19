@@ -1,6 +1,6 @@
 -----
 
-#### Click [here](https://github.com/morrownr/USB-WiFi) for USB WiFi Adapter Information for Linux
+#### [Go to Main Menu](https://github.com/morrownr/USB-WiFi)
 
 -----
 
@@ -61,7 +61,7 @@ sudo uname -mr; mokutil --sb-state; lsusb; rfkill list all; dkms status; iw dev;
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.0  (community support)
+- Kernels: 5.12 - 6.1  (community support)
 
 ### Tested Linux Distributions
 
@@ -160,7 +160,6 @@ installing the new kernel. Use the following commands in the driver directory:
 ```
 $ git pull
 $ sudo ./remove-driver.sh
-(install the new kernel)
 $ sudo ./install-driver.sh
 ```
 
@@ -411,7 +410,7 @@ the process each time a new kernel is installed in your distro.
 ### Driver Options ( edit-options.sh )
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by
-default if you use one of the scripts for installation.
+default if you use the `./install-driver.sh` script.
 
 Note: The installation script will prompt you to edit the options.
 
