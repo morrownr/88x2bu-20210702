@@ -90,7 +90,7 @@ the Installation Steps can be improved.
 
 - Raspberry Pi Desktop (2022-07-01) (x86 32 bit) (kernel 5.10)
 
-- RHEL 8.4 (kernel 4.18.0)
+- RHEL 8.4 and 8.6 (kernel 4.18.0)
 
 - Ubuntu 22.04 (kernel 5.15 and 5.17.5)
 
@@ -565,6 +565,21 @@ https://github.com/morrownr/USB-WiFi
 Question: Will you put volunteers to work?
 
 Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
+
+-----
+
+Question: Were compromises made to make this work on EL8 (RHEL, CentOS,
+Rocky, etc) distributions?
+
+Answer: Yes. EL8 distribution kernels contain many backports of features
+and fixes from newer kernels, but sometimes in ways that break drivers
+that are not specifically tested against. For EL 8.6 specifically, the
+driver contains a significant hack that ignores the current link state
+of the adapter when transmitting or receiving frames. This matches the
+behavior of ancient drivers for other chipsets that do work on EL 8.6
+(as they do not check link status at all), but is really a kludge to
+work around a station accounting issue on these kernels. Only Ad-Hoc and 
+Station mode have been tested.
 
 -----
 

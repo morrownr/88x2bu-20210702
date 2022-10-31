@@ -5159,12 +5159,14 @@ s32 rtw_xmit(_adapter *padapter, _pkt **ppkt, u16 os_qid)
 	if (IS_CH_WAITING(adapter_to_rfctl(padapter)))
 		return -1;
 
+#if !defined(RHEL8)
 	if ((rtw_linked_check(padapter) == _FALSE)
 #ifdef CONFIG_LAYER2_ROAMING
 		&&(!padapter->mlmepriv.roam_network)
 #endif
 	   )
 		return -1;
+#endif
 
 	if (start == 0)
 		start = rtw_get_current_time();

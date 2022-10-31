@@ -4754,8 +4754,10 @@ u8 adapter_allow_bmc_data_rx(_adapter *adapter)
 	if (MLME_IS_AP(adapter))
 		return 0;
 
+#if !defined(RHEL8)
 	if (rtw_linked_check(adapter) == _FALSE)
 		return 0;
+#endif
 
 	return 1;
 }
