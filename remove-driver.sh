@@ -50,7 +50,12 @@ done
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 echo "Starting removal..."
 
-dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
+if ! command -v dkms >/dev/null 2>&1
+then
+	make uninstall
+else
+        dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
+fi
 RESULT=$?
 
 # RESULT will be 3 if there are no instances of module to remove
