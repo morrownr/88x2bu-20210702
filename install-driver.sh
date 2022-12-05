@@ -5,11 +5,9 @@
 # Supports dkms and non-dkms installations.
 
 SCRIPT_NAME="install-driver.sh"
-
-SCRIPT_VERSION="20221126"
+SCRIPT_VERSION="20221204"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
-
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
 KVER="$(uname -r)"
@@ -20,8 +18,8 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
 
-# Some distros have non-mainlined, patched-in kernel drivers
-# that have to be deactivated.
+# Some distros have a non-mainlined, patched-in kernel driver
+# that has to be deactivated.
 BLACKLIST_FILE="rtw88_8822bu.conf"
 
 # check to ensure sudo was used
@@ -29,6 +27,42 @@ if [[ $EUID -ne 0 ]]
 then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure mokutil is installed
+if ! command -v mokutil >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: mokutil"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure nano is installed
+if ! command -v nano >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: nano"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure rfkill is installed
+if ! command -v rfkill >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: rfkill"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure iw is installed
+if ! command -v iw >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: iw"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
 
@@ -54,7 +88,7 @@ done
 # displays script name and version
 echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
-# check for and remove previously installed non-dkms installation
+# check for and remove non-dkms installation
 if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation."
@@ -63,14 +97,22 @@ then
 fi
 
 # information that helps with bug reports
+
 # kernel
-echo "Kernel=${KVER}"
+echo "Linux Kernel=${KVER}"
+
 # architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
-echo "Architecture=${KARCH}"
-#getconf LONG_BIT (may be handy in the future)
+echo "CPU Architecture=${KARCH}"
+
+# gcc version
+gcc_ver=$(gcc --version | grep -i gcc)
+echo "gcc --version="${gcc_ver}
+
+# check for secure mode
+#
 
 # blacklist the in-kernel module (driver) so that there is no conflict
-echo "Copying ${BLACKLIST_FILE} to: /etc/modprobe.d"
+echo "Installing ${BLACKLIST_FILE} to: /etc/modprobe.d"
 cp -f ${BLACKLIST_FILE} /etc/modprobe.d
 
 # sets module parameters (driver options)
@@ -106,6 +148,7 @@ then
 
 	if [[ "$RESULT" = "0" ]]
 	then
+        make clean >/dev/null 2>&1
 		echo "The driver was installed successfully."
 	else
 		echo "An error occurred. Error = ${RESULT}"
@@ -178,20 +221,23 @@ else
 fi
 
 # unblock wifi
-rfkill unblock wlan
+if command -v rfkill >/dev/null 2>&1
+then
+	rfkill unblock wlan
+else
+	echo "Unable to run $ rfkill unblock wlan"	
+fi
 
 # if NoPrompt is not used, ask user some questions to complete installation
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to edit the driver options file now? [y/N] " -n 1 -r
-	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		nano /etc/modprobe.d/${OPTIONS_FILE}
 	fi
 
 	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
-	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		reboot
