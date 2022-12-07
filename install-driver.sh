@@ -5,7 +5,7 @@
 # Supports dkms and non-dkms installations.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20221204"
+SCRIPT_VERSION="20221205"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 OPTIONS_FILE="${MODULE_NAME}.conf"
@@ -19,7 +19,8 @@ DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
 
 # Some distros have a non-mainlined, patched-in kernel driver
-# that has to be deactivated.
+# that has to be deactivated. The filename may need to change
+# when the new in-kernel driver is mainlined.
 BLACKLIST_FILE="rtw88_8822bu.conf"
 
 # check to ensure sudo was used
@@ -27,6 +28,15 @@ if [[ $EUID -ne 0 ]]
 then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure iw is installed
+if ! command -v iw >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: iw"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
 
@@ -53,15 +63,6 @@ if ! command -v rfkill >/dev/null 2>&1
 then
 	echo "A required package appears to not be installed."
 	echo "Please install the following package: rfkill"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-# check to ensure iw is installed
-if ! command -v iw >/dev/null 2>&1
-then
-	echo "A required package appears to not be installed."
-	echo "Please install the following package: iw"
 	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
@@ -98,15 +99,20 @@ fi
 
 # information that helps with bug reports
 
-# kernel
+# display kernel version
 echo "Linux Kernel=${KVER}"
 
-# architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
+# display architecture
 echo "CPU Architecture=${KARCH}"
 
-# gcc version
+# display gcc version
 gcc_ver=$(gcc --version | grep -i gcc)
 echo "gcc --version="${gcc_ver}
+
+# display ISO 3166-1 alpha-2 Country Code
+# https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+a2_country_code=$(iw reg get | grep -i country)
+echo "Country Code=="${a2_country_code}
 
 # check for secure mode
 #
@@ -232,12 +238,14 @@ fi
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to edit the driver options file now? [y/N] " -n 1 -r
+	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		nano /etc/modprobe.d/${OPTIONS_FILE}
 	fi
 
 	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r
+	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
 		reboot
