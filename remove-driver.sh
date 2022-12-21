@@ -4,11 +4,21 @@
 #
 # Supports dkms and non-dkms removals.
 
+# Copyright(c) 2022 Nick Morrow
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of version 2 of the GNU General Public License as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20221204"
+SCRIPT_VERSION="20221218"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
-OPTIONS_FILE="${MODULE_NAME}.conf"
 
 KVER="$(uname -r)"
 KARCH="$(uname -m)"
@@ -17,10 +27,7 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
-
-# Some distros have a non-mainlined, patched-in kernel driver
-# that has to be deactivated.
-BLACKLIST_FILE="rtw88_8822bu.conf"
+OPTIONS_FILE="${MODULE_NAME}.conf"
 
 # check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
@@ -62,10 +69,10 @@ fi
 
 # information that helps with bug reports
 
-# kernel
+# display kernel version
 echo "Linux Kernel=${KVER}"
 
-# architecture - for ARM: aarch64 = 64 bit, armv7l = 32 bit
+# display architecture
 echo "CPU Architecture=${KARCH}"
 
 # determine if dkms is installed and run the appropriate routines
@@ -93,8 +100,6 @@ then
 	fi
 fi
 
-echo "Removing ${BLACKLIST_FILE} from /etc/modprobe.d"
-rm -f /etc/modprobe.d/${BLACKLIST_FILE}
 echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
 rm -f /etc/modprobe.d/${OPTIONS_FILE}
 echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"

@@ -4,11 +4,21 @@
 #
 # Supports dkms and non-dkms installations.
 
+# Copyright(c) 2022 Nick Morrow
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of version 2 of the GNU General Public License as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20221205"
+SCRIPT_VERSION="20221218"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
-OPTIONS_FILE="${MODULE_NAME}.conf"
 
 KVER="$(uname -r)"
 KARCH="$(uname -m)"
@@ -17,17 +27,44 @@ MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
 DRV_DIR="$(pwd)"
-
-# Some distros have a non-mainlined, patched-in kernel driver
-# that has to be deactivated. The filename may need to change
-# when the new in-kernel driver is mainlined.
-BLACKLIST_FILE="rtw88_8822bu.conf"
+OPTIONS_FILE="${MODULE_NAME}.conf"
 
 # check to ensure sudo was used
 if [[ $EUID -ne 0 ]]
 then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# ensure /usr/sbin is in the PATH so iw can be found
+if ! echo "$PATH" | grep -qw sbin; then
+        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+fi
+
+# check to ensure gcc is installed
+if ! command -v gcc >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: gcc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure make is installed
+if ! command -v make >/dev/null 2>&1
+then
+	echo "A required package appears to not be installed."
+	echo "Please install the following package: make"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to see if header files are installed
+if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
+	echo "Your kernel headers aren't properly installed."
+	echo "Please consult your distro documentation."
+	echo "Once the header files are installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
 
@@ -40,11 +77,11 @@ then
 	exit 1
 fi
 
-# check to ensure mokutil is installed
-if ! command -v mokutil >/dev/null 2>&1
+# check to ensure rfkill is installed
+if ! command -v rfkill >/dev/null 2>&1
 then
 	echo "A required package appears to not be installed."
-	echo "Please install the following package: mokutil"
+	echo "Please install the following package: rfkill"
 	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
@@ -54,15 +91,6 @@ if ! command -v nano >/dev/null 2>&1
 then
 	echo "A required package appears to not be installed."
 	echo "Please install the following package: nano"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-# check to ensure rfkill is installed
-if ! command -v rfkill >/dev/null 2>&1
-then
-	echo "A required package appears to not be installed."
-	echo "Please install the following package: rfkill"
 	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
@@ -97,6 +125,18 @@ then
 	/sbin/depmod -a ${KVER}
 fi
 
+# check for existing dkms installations of any version of this driver
+if command -v dkms >/dev/null 2>&1
+then
+	if dkms status | grep -i  ${DRV_NAME}; then
+		echo "The above driver needs to be removed before the installation can be successfull."
+		echo "Example: $ sudo dkms remove ${DRV_NAME}/X.X.X.X --all"
+		echo "Please replace X.X.X.X by the driver version number shown above."
+		echo "Once the driver is removed, please run \"sudo ./${SCRIPT_NAME}\""
+		exit 1
+	fi
+fi
+
 # information that helps with bug reports
 
 # display kernel version
@@ -110,18 +150,23 @@ gcc_ver=$(gcc --version | grep -i gcc)
 echo "gcc --version="${gcc_ver}
 
 # display ISO 3166-1 alpha-2 Country Code
-# https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 a2_country_code=$(iw reg get | grep -i country)
-echo "Country Code=="${a2_country_code}
+echo "Country Code="${a2_country_code}
+if [[ $a2_country_code == *"00"* ]];
+then
+    echo "The Country Code may not be properly set."
+    echo "File alpha-2_Country_Codes is located in the driver directory."
+    echo "Please read and follow the directions in the file."
+fi
 
-# check for secure mode
-#
+# display secure mode status
+# run if mokutil is installed
+if command -v mokutil >/dev/null 2>&1
+then
+	mokutil --sb-state
+fi
 
-# blacklist the in-kernel module (driver) so that there is no conflict
-echo "Installing ${BLACKLIST_FILE} to: /etc/modprobe.d"
-cp -f ${BLACKLIST_FILE} /etc/modprobe.d
-
-# sets module parameters (driver options)
+# sets module parameters (driver options) and blacklisted modules
 echo "Installing ${OPTIONS_FILE} to: /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 
@@ -154,7 +199,7 @@ then
 
 	if [[ "$RESULT" = "0" ]]
 	then
-        make clean >/dev/null 2>&1
+        	make clean >/dev/null 2>&1
 		echo "The driver was installed successfully."
 	else
 		echo "An error occurred. Error = ${RESULT}"
@@ -180,6 +225,7 @@ else
 	then
 		if [[ "$RESULT" = "3" ]]
 		then
+			echo "This driver may already be installed."
 			echo "Run the following and then reattempt installation."
 			echo "$ sudo ./remove-driver.sh"
 			exit $RESULT 
@@ -192,7 +238,7 @@ else
 			exit $RESULT
 		fi
 	else
-		echo "The driver was added successfully."
+		echo "The driver was added to dkms successfully."
 	fi
 
 	dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -207,7 +253,7 @@ else
 		echo "$ sudo ./remove-driver.sh"
 		exit $RESULT
 	else
-		echo "The driver was built successfully."
+		echo "The driver was built by dkms successfully."
 	fi
 
 	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -222,7 +268,7 @@ else
 		echo "$ sudo ./remove-driver.sh"
 		exit $RESULT
 	else
-		echo "The driver was installed successfully."
+		echo "The driver was installed by dkms successfully."
 	fi
 fi
 
