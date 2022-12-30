@@ -42,7 +42,8 @@
 #endif
 
 #ifdef CONFIG_80211AC_VHT
-	#define CONFIG_BEAMFORMING
+/* nrm - activates beamforming */
+	/* #define CONFIG_BEAMFORMING */
 #endif
 
 /* set CONFIG_IOCTL_CFG80211 from Makefile */

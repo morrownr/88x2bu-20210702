@@ -16,7 +16,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20221218"
+SCRIPT_VERSION="20221228"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
@@ -57,23 +57,44 @@ do
 done
 
 # displays script name and version
-echo "Running ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+echo "Script:  ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 
-# check for and remove non-dkms installation
+# check for and remove non-dkms installations
+# standard naming
 if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
-	echo "Removing a non-dkms installation."
+	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
+	/sbin/depmod -a ${KVER}
+fi
+
+# check for and remove non-dkms installations
+# with rtl added to module name (PClinuxOS)
+if [[ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]]
+then
+	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
+	rm -f ${MODDESTDIR}rtl${MODULE_NAME}.ko
+	/sbin/depmod -a ${KVER}
+fi
+
+# check for and remove non-dkms installations
+# with compressed module in a unique non-standard location (Armbian)
+# Example: /usr/lib/modules/5.15.80-rockchip64/kernel/drivers/net/wireless/rtl8821cu/8821cu.ko.xz
+# Dear Armbiam, this is a really bad idea.
+if [[ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]]
+then
+	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
+	rm -f /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a ${KVER}
 fi
 
 # information that helps with bug reports
 
 # display kernel version
-echo "Linux Kernel=${KVER}"
+echo "Kernel:  ${KVER}"
 
 # display architecture
-echo "CPU Architecture=${KARCH}"
+echo "Arch:  ${KARCH}"
 
 # determine if dkms is installed and run the appropriate routines
 if command -v dkms >/dev/null 2>&1
@@ -94,7 +115,7 @@ then
 			echo "${DRV_NAME}/${DRV_VERSION} has been removed"
 		fi
 	else
-		echo "An error occurred. dkms remove error = ${RESULT}"
+		echo "An error occurred. dkms remove error:  ${RESULT}"
 		echo "Please report this error."
 		exit $RESULT
 	fi
@@ -108,7 +129,7 @@ make clean >/dev/null 2>&1
 echo "The driver was removed successfully."
 echo "You may now delete the driver directory if desired."
 
-# if NoPrompt is not used, ask user some questions to complete removal
+# if NoPrompt is not used, ask user some questions
 if [ $NO_PROMPT -ne 1 ]
 then
 	read -p "Do you want to reboot now? (recommended) [y/N] " -n 1 -r

@@ -1,4 +1,4 @@
-2022-12-18
+2022-12-26
 
 Instructions for setting the ISO 3166-1 alpha-2 Country Code in your Linux
 distro. If it is not set, you may have problems using some channels, especially
@@ -23,30 +23,27 @@ iw reg get
 ```
 ISO 3166-1 alpha-2 Country Codes
 
-Name				Code
+Code	Name
 
-Afghanistan			AF
+AF		Afghanistan
 
-Aland
-Islands				AX
+AX		Aland Islands
 
-Albania				AL
+AL		Albania
 
-Algeria				DZ
+DZ		Algeria
 
-American
-Samoa				AS
+AS		American Samoa
 
-Andorra				AD
+AD		Andorra
 
-Angola				AO
+AO		Angola
 
-Anguilla			AI
+AI		Anguilla
 
-Antarctica			AQ
+AQ		Antarctica
 
-Antigua and
-Barbuda				AG
+AG		Antigua and Barbuda
 
 Argentina			AR
 
@@ -321,7 +318,7 @@ Liberia				LR
 
 Libya				LY
 
-Liechtenstein		LI
+LI		Liechtenstein
 
 Lithuania			LT
 
@@ -401,7 +398,7 @@ Nigeria				NG
 
 Niue				NU
 
-Norfolk Island		NF
+NF		Norfolk Island
 
 Northern
 Mariana
@@ -461,11 +458,9 @@ and Nevis			KN
 
 Saint Lucia			LC
 
-Saint Martin
-(French part)		MF
+MF		Saint Martin (French part)
 
-Saint Pierre
-and Miquelon		PM
+PM		Saint Pierre and Miquelon
 
 Saint Vincent
 and the
@@ -475,10 +470,9 @@ Samoa				WS
 
 San Marino			SM
 
-Sao Tome
-and Principe		ST
+ST		Sao Tome and Principe
 
-Saudi Arabia		SA
+SA		Saudi Arabia
 
 Senegal				SN
 
@@ -486,12 +480,11 @@ Serbia				RS
 
 Seychelles			SC
 
-Sierra Leone		SL
+SL		Sierra Leone
 
 Singapore			SG
 
-Sint Maarten
-(Dutch part)		SX
+SX		Sint Maarten (Dutch part)
 
 Slovakia			SK
 
@@ -502,7 +495,7 @@ Islands				SB
 
 Somalia				SO
 
-South Africa		ZA
+ZA		South Africa
 
 South
 Georgia and
@@ -557,7 +550,7 @@ Tunisia				TN
 
 Turkey				TR
 
-Turkmenistan		TM
+TM		Turkmenistan
 
 Turks and
 Caicos
@@ -572,9 +565,9 @@ Ukraine				UA
 United Arab
 Emirates			AE
 
-United Kingdom		GB
+GB		United Kingdom
 
-United States		US
+US		United States
 
 United States
 Minor
@@ -597,14 +590,14 @@ British				VG
 Virgin Islands,
 U.S.				VI
 
-Wallis and
-Futuna				WF
+WF		Wallis and Futuna
 
-Western Sahara		EH
+EH		Western Sahara
 
-Yemen				YE
+YE		Yemen
 
-Zambia				ZM
+ZM		Zambia
 
-Zimbabwe			ZW
+ZW		Zimbabwe
+
 ```

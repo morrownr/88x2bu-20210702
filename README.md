@@ -48,7 +48,7 @@ confirm that this is the correct driver for your adapter.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.1  (community support)
+- Kernels: 5.12 - 6.2  (community support)
 
 ### Tested Compilers
 
@@ -81,7 +81,7 @@ be provided via PR or message in Issues.
 
 - SkiffOS for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19)
+- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2 rc1)
 
 - Void Linux (kernel 5.18)
 
@@ -90,10 +90,10 @@ supported due to the way kernel patches are handled. I will support
 knowledgable RHEL developers if they want to merge the required
 support and keep it current.
 
-Note: Android is not supported but I will support knowledgable Android
-developers if they want to merge and keep current the required support
-(most likely just instructions about how to compile and maybe a modification
-or two to the Makefile). 
+Note: Android is supported in the driver according to Realtek. I will support
+knowledgable Android developers if they want to merge and keep current the
+required support (most likely just instructions about how to compile and maybe
+a modification or two to the Makefile).
 
 
 ### Download Locations for Tested Linux Distributions
@@ -120,7 +120,7 @@ or two to the Makefile).
 
 ### Compatible Devices
 
-Warning: If you are looking for information about what adapter to buy,
+Note: If you are looking for information about what adapter to buy,
 click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
 item 2 which will show information about and links to recommended adapters.
 
@@ -217,7 +217,7 @@ If it is not set, you will likely have problems accessing some channels, especia
 5 Ghz and 6 GHz channels. To set your Country Code:
 
 ```
-iw reg set US
+sudo iw reg set US
 ```
 
 If you are not in the US, please use the country code for your country. See:
