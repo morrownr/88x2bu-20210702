@@ -122,7 +122,7 @@ echo "Script:  ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
-	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
+	rm -f "${MODDESTDIR}${MODULE_NAME}".ko
 	/sbin/depmod -a "${KVER}"
 fi
 
@@ -131,8 +131,8 @@ fi
 if [[ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
-	rm -f ${MODDESTDIR}rtl${MODULE_NAME}.ko
-	/sbin/depmod -a ${KVER}
+	rm -f "${MODDESTDIR}rtl${MODULE_NAME}".ko
+	/sbin/depmod -a "${KVER}"
 fi
 
 # check for and remove non-dkms installations
@@ -142,8 +142,8 @@ fi
 if [[ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]]
 then
 	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
-	rm -f /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
-	/sbin/depmod -a ${KVER}
+	rm -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}".ko.xz
+	/sbin/depmod -a "${KVER}"
 fi
 
 # check for existing dkms installations of any version of this driver
@@ -168,11 +168,11 @@ echo "Arch:  ${KARCH}"
 
 # display gcc version
 gcc_ver=$(gcc --version | grep -i gcc)
-echo "gcc:  "${gcc_ver}
+echo "gcc: ${gcc_ver}"
 
 # display ISO 3166-1 alpha-2 Country Code
 a2_country_code=$(iw reg get | grep -i country)
-echo "Country:  "${a2_country_code}
+echo "Country: ${a2_country_code}"
 if [[ $a2_country_code == *"00"* ]];
 then
     echo "The Country Code may not be properly set."
@@ -198,7 +198,7 @@ then
 
 	make clean >/dev/null 2>&1
 
-	make -j$(nproc)
+	make -j "$(nproc)"
 	RESULT=$?
 
 	if [[ "$RESULT" != "0" ]]

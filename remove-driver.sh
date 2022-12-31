@@ -64,7 +64,7 @@ echo "Script:  ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
 if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
-	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
+	rm -f "${MODDESTDIR}${MODULE_NAME}".ko
 	/sbin/depmod -a "${KVER}"
 fi
 
@@ -73,8 +73,8 @@ fi
 if [[ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
-	rm -f ${MODDESTDIR}rtl${MODULE_NAME}.ko
-	/sbin/depmod -a ${KVER}
+	rm -f "${MODDESTDIR}rtl${MODULE_NAME}".ko
+	/sbin/depmod -a "${KVER}"
 fi
 
 # check for and remove non-dkms installations
@@ -84,8 +84,8 @@ fi
 if [[ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]]
 then
 	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
-	rm -f /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
-	/sbin/depmod -a ${KVER}
+	rm -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}".ko.xz
+	/sbin/depmod -a "${KVER}"
 fi
 
 # information that helps with bug reports
