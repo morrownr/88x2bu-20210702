@@ -123,7 +123,7 @@ if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
-	/sbin/depmod -a ${KVER}
+	/sbin/depmod -a "${KVER}"
 fi
 
 # check for and remove non-dkms installations
@@ -214,7 +214,7 @@ then
 # 	As shown in Makefile
 # 	install:
 #		install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
-#		/sbin/depmod -a ${KVER}
+#		/sbin/depmod -a "${KVER}"
 	make install
 	RESULT=$?
 
@@ -237,7 +237,7 @@ else
 	echo "Copying source files to /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 
-	dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
+	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}"
 	RESULT=$?
 
 #	RESULT will be 3 if the DKMS tree already contains the same module/version
@@ -266,7 +266,7 @@ else
 	then
 		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
 	else
-		dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}"
 	fi
 	RESULT=$?
 
@@ -282,7 +282,7 @@ else
 		echo "The driver was built by dkms successfully."
 	fi
 
-	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}"
 	RESULT=$?
 
 	if [[ "$RESULT" != "0" ]]

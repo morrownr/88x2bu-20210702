@@ -65,7 +65,7 @@ if [[ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]]
 then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
-	/sbin/depmod -a ${KVER}
+	/sbin/depmod -a "${KVER}"
 fi
 
 # check for and remove non-dkms installations
@@ -101,7 +101,7 @@ if command -v dkms >/dev/null 2>&1
 then
 	echo "Removing a dkms installation."
 	#  2>/dev/null suppresses the output of dkms
-	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
+	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" --all 2>/dev/null
 	RESULT=$?
 	#echo "Result=${RESULT}"
 
