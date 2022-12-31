@@ -20,8 +20,8 @@ SCRIPT_VERSION="20221228"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
-KVER="$(uname -r)"
-KARCH="$(uname -m)"
+[[ -z "$KVER" ]] && KVER="$(uname -r)"
+[[ -z "$KARCH" ]] && KARCH="$(uname -m)"
 KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
@@ -101,7 +101,7 @@ if command -v dkms >/dev/null 2>&1
 then
 	echo "Removing a dkms installation."
 	#  2>/dev/null suppresses the output of dkms
-	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" --all 2>/dev/null
+	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
 	RESULT=$?
 	#echo "Result=${RESULT}"
 

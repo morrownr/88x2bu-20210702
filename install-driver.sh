@@ -20,8 +20,8 @@ SCRIPT_VERSION="20221228"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
-KVER="$(uname -r)"
-KARCH="$(uname -m)"
+[[ -z "$KVER" ]] && KVER="$(uname -r)"
+[[ -z "$KARCH" ]] && KARCH="$(uname -m)"
 KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
