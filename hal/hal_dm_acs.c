@@ -291,7 +291,7 @@ void rtw_acs_info_dump(void *sel, _adapter *adapter)
 
 	_RTW_PRINT_SEL(sel, "========== ACS (VER-%d) ==========\n", RTK_ACS_VERSION);
 	_RTW_PRINT_SEL(sel, "Best 24G Channel:%d\n", hal_data->acs.best_chan_24g);
-	_RTW_PRINT_SEL(sel, "Best 5G Channel:%d\n\n", hal_data->acs.best_chan_5g);
+	_RTW_PRINT_SEL(sel, "Best 5G Channel:%d\n", hal_data->acs.best_chan_5g);
 
 	#ifdef CONFIG_RTW_ACS_DBG
 	_RTW_PRINT_SEL(sel, "Advanced setting - scan_type:%c, ch_ms:%d(ms), igi:0x%02x, bw:%d\n",
