@@ -4,7 +4,7 @@
 #
 # Supports dkms and non-dkms installations.
 
-# Copyright(c) 2022 Nick Morrow
+# Copyright(c) 2023 Nick Morrow
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of version 2 of the GNU General Public License as
@@ -16,7 +16,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20221228"
+SCRIPT_VERSION="20230109"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
@@ -115,7 +115,46 @@ do
 done
 
 # displays script name and version
-echo "Script:  ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+echo "Script: ${SCRIPT_NAME} v${SCRIPT_VERSION}"
+
+# information that helps with bug reports
+
+# display architecture
+echo "Arch:${KARCH}"
+
+# display total memory in system
+grep MemTotal /proc/meminfo
+
+# display kernel version
+echo "Kernel:  ${KVER}"
+
+# display gcc version
+gcc_ver=$(gcc --version | grep -i gcc)
+echo "gcc: "${gcc_ver}
+
+# display dkms version
+# run if dkms is installed
+if command -v dkms >/dev/null 2>&1
+then
+	dkms --version
+fi
+
+# display secure mode status
+# run if mokutil is installed
+if command -v mokutil >/dev/null 2>&1
+then
+	mokutil --sb-state
+fi
+
+# display ISO 3166-1 alpha-2 Country Code
+#a2_country_code=$(iw reg get | grep -i country)
+#echo "Country:  "${a2_country_code}
+#if [[ $a2_country_code == *"00"* ]];
+#then
+#    echo "The Country Code may not be properly set."
+#    echo "File alpha-2_Country_Codes is located in the driver directory."
+#    echo "Please read and follow the directions in the file after installation."
+#fi
 
 # check for and remove non-dkms installations
 # standard naming
@@ -124,6 +163,11 @@ then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f ${MODDESTDIR}${MODULE_NAME}.ko
 	/sbin/depmod -a ${KVER}
+	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+	make clean >/dev/null 2>&1
 fi
 
 # check for and remove non-dkms installations
@@ -133,6 +177,11 @@ then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
 	rm -f ${MODDESTDIR}rtl${MODULE_NAME}.ko
 	/sbin/depmod -a ${KVER}
+	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+	make clean >/dev/null 2>&1
 fi
 
 # check for and remove non-dkms installations
@@ -144,47 +193,25 @@ then
 	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
 	rm -f /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a ${KVER}
+	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+	make clean >/dev/null 2>&1
 fi
 
-# check for existing dkms installations of any version of this driver
+# check for and remove dkms installations
 if command -v dkms >/dev/null 2>&1
 then
-	if dkms status | grep -i  ${DRV_NAME}; then
-		echo "The above driver needs to be removed before the installation can be successfull."
-		echo "Example: $ sudo dkms remove ${DRV_NAME}/X.X.X.X --all"
-		echo "Please replace X.X.X.X by the driver version number shown above."
-		echo "Once the driver is removed, please run \"sudo ./${SCRIPT_NAME}\""
-		exit 1
+	if dkms status | grep -i  ${DRV_NAME}
+	then
+		echo "Removing a dkms installation: ${DRV_NAME}"
+		dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
+		echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+		rm -f /etc/modprobe.d/${OPTIONS_FILE}
+		echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+		rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	fi
-fi
-
-# information that helps with bug reports
-
-# display kernel version
-echo "Kernel:  ${KVER}"
-
-# display architecture
-echo "Arch:  ${KARCH}"
-
-# display gcc version
-gcc_ver=$(gcc --version | grep -i gcc)
-echo "gcc:  "${gcc_ver}
-
-# display ISO 3166-1 alpha-2 Country Code
-a2_country_code=$(iw reg get | grep -i country)
-echo "Country:  "${a2_country_code}
-if [[ $a2_country_code == *"00"* ]];
-then
-    echo "The Country Code may not be properly set."
-    echo "File alpha-2_Country_Codes is located in the driver directory."
-    echo "Please read and follow the directions in the file after installation."
-fi
-
-# display secure mode status
-# run if mokutil is installed
-if command -v mokutil >/dev/null 2>&1
-then
-	mokutil --sb-state
 fi
 
 # sets module parameters (driver options) and blacklisted modules
