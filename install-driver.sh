@@ -115,7 +115,7 @@ do
 done
 
 # displays script name and version
-echo "Script: ${SCRIPT_NAME} v${SCRIPT_VERSION}"
+echo "t: ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
 # information that helps with bug reports
 
