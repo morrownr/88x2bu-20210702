@@ -22,7 +22,7 @@ DRV_VERSION="5.13.1"
 
 KVER="$(uname -r)"
 KARCH="$(uname -m)"
-KSRC="/lib/modules/${KVER}/build"
+#KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
@@ -115,7 +115,7 @@ do
 done
 
 # displays script name and version
-echo "t: ${SCRIPT_NAME} v${SCRIPT_VERSION}"
+echo ": ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
 # information that helps with bug reports
 

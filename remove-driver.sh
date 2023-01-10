@@ -22,7 +22,7 @@ DRV_VERSION="5.13.1"
 
 KVER="$(uname -r)"
 KARCH="$(uname -m)"
-KSRC="/lib/modules/${KVER}/build"
+#KSRC="/lib/modules/${KVER}/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
