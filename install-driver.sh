@@ -120,30 +120,30 @@ echo "Script: ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 # information that helps with bug reports
 
 # display architecture
-echo "Arch:${KARCH}"
+echo ": ${KARCH}"
 
 # display total memory in system
-grep MemTotal /proc/meminfo
+#grep MemTotal /proc/meminfo
 
 # display kernel version
-echo "Kernel:  ${KVER}"
+echo ": ${KVER}"
 
 # display gcc version
 gcc_ver=$(gcc --version | grep -i gcc)
-echo "gcc: "${gcc_ver}
+echo ": "${gcc_ver}
 
-# display dkms version
-# run if dkms is installed
+# display dkms version if installed
 if command -v dkms >/dev/null 2>&1
 then
-	dkms --version
+	dkms_ver=$(dkms --version)
+	echo ": "${dkms_ver}
 fi
 
-# display secure mode status
-# run if mokutil is installed
+# display secure mode status if mokutil is installed
 if command -v mokutil >/dev/null 2>&1
 then
-	mokutil --sb-state
+	sb_state=$(mokutil --sb-state)
+	echo ": "${sb_state}
 fi
 
 # display ISO 3166-1 alpha-2 Country Code

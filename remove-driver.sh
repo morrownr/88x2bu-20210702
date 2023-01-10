@@ -91,10 +91,10 @@ fi
 # information that helps with bug reports
 
 # display kernel version
-echo "Kernel:  ${KVER}"
+echo ": ${KVER}"
 
 # display architecture
-echo "Arch  :  ${KARCH}"
+echo ": ${KARCH}"
 
 # determine if dkms is installed and run the appropriate routines
 if command -v dkms >/dev/null 2>&1
