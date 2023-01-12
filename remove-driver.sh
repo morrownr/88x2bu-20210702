@@ -4,7 +4,7 @@
 #
 # Supports dkms and non-dkms removals.
 
-# Copyright(c) 2022 Nick Morrow
+# Copyright(c) 2023 Nick Morrow
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of version 2 of the GNU General Public License as
@@ -16,7 +16,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20221228"
+SCRIPT_VERSION="20230109"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
@@ -57,7 +57,7 @@ do
 done
 
 # displays script name and version
-echo "Script:  ${SCRIPT_NAME} version ${SCRIPT_VERSION}"
+echo ": ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
 # check for and remove non-dkms installations
 # standard naming
@@ -91,10 +91,10 @@ fi
 # information that helps with bug reports
 
 # display kernel version
-echo "Kernel:  ${KVER}"
+echo ": ${KVER}"
 
 # display architecture
-echo "Arch:  ${KARCH}"
+echo ": ${KARCH}"
 
 # determine if dkms is installed and run the appropriate routines
 if command -v dkms >/dev/null 2>&1

@@ -353,7 +353,6 @@ _pkt *rtw_os_alloc_msdu_pkt(union recv_frame *prframe, const u8 *da, const u8 *s
 	{
 		sub_skb = rtw_skb_clone(prframe->u.hdr.pkt);
 		if (sub_skb) {
-			sub_skb->head = msdu;
 			sub_skb->data = msdu;
 			sub_skb->len = msdu_len;
 			skb_set_tail_pointer(sub_skb, msdu_len);
@@ -619,9 +618,8 @@ void rtw_hostapd_mlme_rx(_adapter *padapter, union recv_frame *precv_frame)
 	if (skb == NULL)
 		return;
 
-	skb->head = precv_frame->u.hdr.rx_head;
 	skb->data = precv_frame->u.hdr.rx_data;
-	skb_set_tail_pointer(skb, precv_frame->u.hdr.rx_tail - precv_frame->u.hdr.rx_data);
+	skb->tail = precv_frame->u.hdr.rx_tail;
 	skb->len = precv_frame->u.hdr.len;
 
 	/* pskb_copy = rtw_skb_copy(skb);
@@ -663,7 +661,6 @@ int rtw_recv_monitor(_adapter *padapter, union recv_frame *precv_frame)
 		goto _recv_drop;
 	}
 
-	skb->head = precv_frame->u.hdr.rx_head;
 	skb->data = precv_frame->u.hdr.rx_data;
 	skb_set_tail_pointer(skb, precv_frame->u.hdr.len);
 	skb->len = precv_frame->u.hdr.len;
@@ -688,7 +685,6 @@ inline void rtw_rframe_set_os_pkt(union recv_frame *rframe)
 {
 	_pkt *skb = rframe->u.hdr.pkt;
 
-	skb->head = rframe->u.hdr.rx_head;
 	skb->data = rframe->u.hdr.rx_data;
 	skb_set_tail_pointer(skb, rframe->u.hdr.len);
 	skb->len = rframe->u.hdr.len;

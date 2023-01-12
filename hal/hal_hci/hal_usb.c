@@ -26,7 +26,11 @@ int	usb_init_recv_priv(_adapter *padapter, u16 ini_in_buf_sz)
 
 #ifdef PLATFORM_LINUX
 	tasklet_init(&precvpriv->recv_tasklet,
-		     (void(*))usb_recv_tasklet,
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 17, 0))
+		     (void(*)(unsigned long))usb_recv_tasklet,
+#else
+		     (void *)usb_recv_tasklet,
+#endif
 		     (unsigned long)padapter);
 #endif /* PLATFORM_LINUX */
 

@@ -16320,6 +16320,12 @@ u8 rtw_set_chbw_hdl(_adapter *padapter, u8 *pbuf)
 	}
 	
 	LeaveAllPowerSaveModeDirect(padapter);
+
+#ifdef CONFIG_MONITOR_MODE_XMIT
+	pmlmeext->cur_channel = set_ch_parm->ch;
+	pmlmeext->cur_ch_offset = set_ch_parm->ch_offset;
+	pmlmeext->cur_bwmode = set_ch_parm->bw;
+#endif /* CONFIG_MONITOR_MODE_XMIT */
 	
 	set_channel_bwmode(padapter, set_ch_parm->ch, set_ch_parm->ch_offset, set_ch_parm->bw);
 

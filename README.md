@@ -11,18 +11,18 @@ confirm that this is the correct driver for your adapter.
 
 - IEEE 802.11 b/g/n/ac WiFi compliant
 - 802.1x, WEP, WPA TKIP and WPA2 AES/Mixed mode for PSK and TLS (Radius)
-- WPA3 (see FAQ)
+- WPA3-SAE (Personal) (see FAQ)
 - IEEE 802.11b/g/n/ac Client mode
   * Supports wireless security for WEP, WPA TKIP and WPA2 AES PSK
   * Supports site survey scan and manual connect
   * Supports WPA/WPA2 TLS client
 - Power saving modes
+- Miracast
 - Wireshark compatible
 - Aircrack-ng compatible
 - Packet injection
 - hostapd compatible
 - AP mode DFS channel support
-- Miracast
 - Supported interface modes
   * Managed
   * Monitor (see FAQ)
@@ -37,6 +37,8 @@ confirm that this is the correct driver for your adapter.
 - USB mode control
 
 ### A FAQ is available at the end of this document.
+
+### Additional documentation is in the file `88x2bu.conf`.
 
 ### Compatible CPU Architectures
 
@@ -81,7 +83,7 @@ be provided via PR or message in Issues.
 
 - SkiffOS for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2 rc1)
+- Ubuntu 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
 
 - Void Linux (kernel 5.18)
 
@@ -141,9 +143,15 @@ item 2 which will show information about and links to recommended adapters.
 
 ### Installation Information
 
-Warning: Installing multiple drivers for the same hardware usually does
-not end well. If a previous attempt to install this driver failed or if
-you have previously installed another driver for chipsets supported by
+Note: As of Linux kernel 6.2, an in-kernel driver for the chipsets supported by
+this driver has been included in the Linux kernel. The installation and removal
+scripts for the driver in this repo automatically deactivate the in-kernel
+driver on installation and reactivate the in-kernel driver on removal. No
+special action needs to be taken by users.
+
+Warning: Installing multiple out-of-kernel drivers for the same hardware
+usually does not end well. If a previous attempt to install this driver failed
+or if you have previously installed another driver for chipsets supported by
 this driver, you MUST remove anything that the previous attempt
 installed BEFORE attempting to install this driver. This driver can be
 removed with the script called `./remove-driver.sh`. Information is
@@ -169,7 +177,7 @@ $ sudo ./install-driver.sh
 Temporary internet access is required for installation. There are numerous ways
 to enable temporary internet access depending on your hardware and situation.
 [One method is to use tethering from a phone.](https://www.makeuseof.com/tag/how-to-tether-your-smartphone-in-linux).
-Another method is to keep a [WiFi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi) in your toolkit.
+Another method is to keep a [WiFi adapter that uses an in-kernel driver](https://github.com/morrownr/USB-WiFi/blob/main/home/USB_WiFi_Adapters_that_are_supported_with_Linux_in-kernel_drivers.md) in your toolkit.
 
 You will need to use the terminal interface. The quick way to open a terminal:
 Ctrl+Alt+T (hold down on the Ctrl and Alt keys then press the T key).
@@ -184,7 +192,7 @@ can be executed as the `root` user. (If the command `sudo echo Yes` returns
 "Yes", with or without having to enter your password, you do have sufficient
 access rights.)
 
-DKMS is used for the installation if available. DKMS is a system utility
+DKMS is used for the installation, if available. DKMS is a system utility
 which will automatically recompile and reinstall this driver when a new
 kernel is installed. DKMS is provided by and maintained by Dell.
 
@@ -212,24 +220,6 @@ install this driver and, after a reboot, the driver is not working, you
 can go into the BIOS and temporarily turn secure boot off to see if
 secure boot is the problem.
 
-Please ensure the ISO 3166-1 alpha-2 Country Code is set in your Linux distro.
-If it is not set, you will likely have problems accessing some channels, especially
-5 Ghz and 6 GHz channels. To set your Country Code:
-
-```
-sudo iw reg set US
-```
-
-If you are not in the US, please use the country code for your country. See:
-
-ISO 3166-1 alpha-2 codes: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
-To check if your country code is properly set:
-
-```
-iw reg get
-```
-
 ### Installation Steps
 
 Note: The installation instructions are for the novice user. Experienced users are
@@ -238,7 +228,7 @@ on a best effort basis, based on the steps below.
 
 #### Step 1: Open a terminal (e.g. Ctrl+Alt+T)
 
-#### Step 2: Update and upgrade system packages (select the option for the OS you are using)
+#### Step 2: Update and upgrade system packages (select the option for the distro you are using)
 
 Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to update and upgrade your system
@@ -574,17 +564,16 @@ sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 Question: Is WPA3 supported?
 
-Answer: WPA3-SAE support is in this driver according to Realtek and it
-works well on some Linux distros but not all. Generally the reason for
-WPA3 not working on Linux distros is that the distro has an old version
-of wpa_supplicant or Network Manager. Your options are to upgrade to a
-more modern distro (most distros released after mid 2022) or compile and
-install new versions of the wpa_supplicant and Network Manager utilities.
+Answer: WPA3-SAE is supported. It works well on most modern Linux distros but
+not all. Generally the reason for WPA3 not working on Linux distros is that the
+distro has an old version of wpa_supplicant or Network Manager. Your options
+are to upgrade to a more modern distro (distros released after mid 2022) or
+compile and install new versions of wpa_supplicant and/or Network Manager.
 
 -----
 
-Question: I bought two rtl8812bu based adapters and am planning to use
-both in the same computer. How do I set that up?
+Question: I bought two usb wifi adapters based on this chipset and am planning
+to use both in the same computer. How do I set that up?
 
 Answer: Realtek drivers do not support more than one adapter with the
 same chipset in the same computer. You can have multiple Realtek based

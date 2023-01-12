@@ -4899,10 +4899,12 @@ s32 rtw_monitor_xmit_entry(struct sk_buff *skb, struct net_device *ndev)
 	if (unlikely(skb->len < rtap_len))
 		goto fail;
 
+#ifndef CONFIG_MONITOR_MODE_XMIT
 	if (rtap_len != 12) {
 		RTW_INFO("radiotap len (should be 14): %d\n", rtap_len);
 		goto fail;
 	}
+#endif /* CONFIG_MONITOR_MODE_XMIT */
 	_rtw_pktfile_read(&pktfile, dummybuf, rtap_len-sizeof(struct ieee80211_radiotap_header));
 	len = len - rtap_len;
 #endif
