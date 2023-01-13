@@ -67,7 +67,7 @@ be provided via PR or message in Issues.
 
 - Debian 11 (kernels 5.10 and 5.15)
 
-- Fedora (kernel 5.11)
+- Fedora (kernel 5.11) and Fedora 37 (kernel 6.0)
 
 - Kali Linux (kernel 5.10)
 
