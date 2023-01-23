@@ -320,7 +320,7 @@ else
 
 	if command -v /usr/bin/time >/dev/null 2>&1
 	then
-		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}"
 	else
 		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}"
 	fi
