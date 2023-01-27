@@ -18,6 +18,10 @@ confirm that this is the correct driver for your adapter.
   * Supports WPA/WPA2 TLS client
 - Power saving modes
 - Miracast
+- WiFi-Direct
+- MU-MIMO
+- Mesh
+- Wake on WLAN
 - Wireshark compatible
 - Aircrack-ng compatible
 - Packet injection
@@ -44,7 +48,7 @@ confirm that this is the correct driver for your adapter.
 
 - x86, i686
 - x86-64, amd64
-- armv7l, armv6l (arm)
+- armv6l, armv7l (arm)
 - aarch64 (arm64)
 
 ### Compatible Kernels
@@ -54,7 +58,7 @@ confirm that this is the correct driver for your adapter.
 
 ### Tested Compilers
 
-- gcc 9, 10, 11 and 12
+- gcc 10, 11 and 12
 
 ### Tested Linux Distributions
 
@@ -67,7 +71,7 @@ be provided via PR or message in Issues.
 
 - Debian 11 (kernels 5.10 and 5.15)
 
-- Fedora (kernel 5.11) and Fedora 37 (kernel 6.0)
+- Fedora 37 (kernel 6.0)
 
 - Kali Linux (kernel 5.10)
 
@@ -122,10 +126,6 @@ a modification or two to the Makefile).
 
 ### Compatible Devices
 
-Note: If you are looking for information about what adapter to buy,
-click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
-item 2 which will show information about and links to recommended adapters.
-
 * [ALFA AWUS036ACU](https://store.rokland.com/collections/wi-fi-usb-adapters/products/alfa-awus036acu-802-11ac-ac1200-dual-band-wifi-usb-dongle-rp-sma-antennas)
 * ASUS AC1300 USB-AC55 B1
 * ASUS AC53 Nano
@@ -141,6 +141,17 @@ item 2 which will show information about and links to recommended adapters.
 * TRENDnet TEW-808UBM
 * Numerous additional products that are based on the supported chipsets
 
+Note: If you are looking for information about what adapter to buy,
+click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
+item 2 which will show information about and links to recommended adapters.
+
+Note: If you decide to buy an adapter that is supported by this driver, I
+recommend you search for an adapter that is `single-state and single-function`.
+Multi-function adapters, wifi and bluetooth, can be problematic. The rtl8822bu
+chipset is multi-fuction. The rtl8812bu chipset is single-function. For advice
+about single-state and multi-state adapters. click
+[here](https://github.com/morrownr/USB-WiFi) and look for Main Menu item 1.
+
 ### Installation Information
 
 Note: As of Linux kernel 6.2, an in-kernel driver for the chipsets supported by
@@ -155,7 +166,7 @@ or if you have previously installed another driver for chipsets supported by
 this driver, you MUST remove anything that the previous attempt
 installed BEFORE attempting to install this driver. This driver can be
 removed with the script called `./remove-driver.sh`. Information is
-available in the section called `Removal of the Driver.` You can get a
+available in the section called `Removal of the Driver`. You can get a
 good idea as to whether you need to remove a previously installed
 driver by running the following command:
 
@@ -164,14 +175,20 @@ sudo dkms status
 ```
 
 Warning: If you decide to upgrade to a new version of kernel such as
-5.15 to 5.19, you need to remove the driver you have installed and
-install the newest available before installing the new kernel. Use the
+5.15 to 5.19, you need to upgrade the driver you have installed with
+the newest available before installing the new kernel. Use the
 following commands in the driver directory:
 
 ```
-$ sudo ./remove-driver.sh
-$ git pull
-$ sudo ./install-driver.sh
+sudo ./remove-driver.sh
+```
+
+```
+git pull
+```
+
+```
+sudo ./install-driver.sh
 ```
 
 Temporary internet access is required for installation. There are numerous ways
@@ -272,7 +289,7 @@ system to work with. The installation can then be continued with Step 3.
 sudo reboot
 ```
 
-#### Step 3: Install the required packages (select the option for the OS you are using)
+#### Step 3: Install the required packages (select the option for the distro you are using)
 
 Note: If your Linux distro does not fall into one of options listed
 below, you will need to research how to properly setup up the development
@@ -375,12 +392,21 @@ git clone https://github.com/morrownr/88x2bu-20210702.git
 cd ~/src/88x2bu-20210702
 ```
 
-#### Step 8: Run the installation script ( install-driver.sh )
+#### Step 8: Run the installation script (`install-driver.sh`)
 
-Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
+Note: It is recommended that you terminate running apps so as to provide the
+maximum amount of RAM to the compilation process.
+
+Note: For automated builds (non-interactive), use `NoPrompt` as an option.
 
 ```
 sudo ./install-driver.sh
+```
+
+or
+
+```
+sudo sh install-driver.sh
 ```
 
 Note: If you elect to skip the reboot at the end of the installation
@@ -390,28 +416,49 @@ not be applied. Rebooting is strongly recommended.
 Note: Fedora users that have secure boot turned on should run the following to
 enroll the key:
 
-$ sudo mokutil --import /var/lib/dkms/mok.pub
+```
+sudo mokutil --import /var/lib/dkms/mok.pub
+```
 
-Manual build instructions: The above script automates the installation
-process, however, if you want to or need to do a command line
-installation, use the following:
+Manual build and installation instructions: The above installation steps
+automate the installation process, however, if you want to or need to do a
+command line installation, use the following:
 
 ```
 make clean
+```
+
+```
 make
+```
+
+```
 sudo make install
+```
+
+```
 sudo reboot
 ```
 
-Note: If you use the manual build instructions, you will need to repeat
+To remove the driver if installed by the manual installation instructions:
+
+```
+sudo make uninstall
+```
+
+```
+sudo reboot
+```
+
+Note: If you use the manual installation instructions, you will need to repeat
 the process each time a new kernel is installed in your distro.
 
 -----
 
-### Driver Options ( edit-options.sh )
+### Driver Options (`edit-options.sh`)
 
 A file called `88x2bu.conf` will be installed in `/etc/modprobe.d` by
-default if you use the `./install-driver.sh` script.
+default if you use the `install-driver.sh` script.
 
 Note: The installation script will prompt you to edit the options.
 
@@ -463,7 +510,7 @@ sudo ./install-driver.sh
 ```
 
 -----
-### Removal of the Driver ( remove-driver.sh  )
+### Removal of the Driver (`remove-driver.sh`)
 
 Note: Removing the driver is advised in the following situations:
 
@@ -484,7 +531,7 @@ cd ~/src/88x2bu-20210702
 
 #### Step 3: Run the removal script
 
-Note: For automated builds (non-interactive), use _NoPrompt_ as an option.
+Note: For automated builds (non-interactive), use `NoPrompt` as an option.
 
 ```
 sudo ./remove-driver.sh
@@ -510,7 +557,7 @@ Note: These are general recommendations, some of which may not apply to your spe
 
 - Best location for the WiFi router/access point: Near center of apartment or house, at least a couple of feet away from walls, in an elevated location. You may have to test to see what the best location is in your environment.
 
-- Check congestion: There are apps available for smart phones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of ```WiFi Analyzer``` or something similar.
+- Check congestion: There are apps available for smart phones that allow you to get an idea of the congestion levels on WiFi channels. The apps generally go by the name of `WiFi Analyzer` or something similar.
 
 After making and saving changes, reboot the router.
 
@@ -536,7 +583,7 @@ After making and saving changes, reboot the router.
 
 ### How to disable onboard WiFi on Raspberry Pi 3B, 3B+, 3A+, 4B and Zero W
 
-Add the following line to /boot/config.txt
+Add the following line to `/boot/config.txt`
 
 ```
 dtoverlay=disable-wifi
@@ -546,21 +593,23 @@ dtoverlay=disable-wifi
 
 ### How to forget a saved WiFi network on a Raspberry Pi
 
-#### Step 1: Edit wpa_supplicant.conf
+#### Step 1: Edit `wpa_supplicant.conf`
 
 ```
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+sudo ${EDITOR} /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
-#### Step 2: Delete the relevant WiFi network block (including the 'network=' and opening/closing braces.
+Note: Replace ${EDITOR} with the name of the text editor you wish to use.
 
-#### Step 3: Press ctrl-x followed by 'y' and enter to save the file.
+#### Step 2: Delete the relevant WiFi network block (including the '`network=`' and opening/closing braces).
+
+#### Step 3: Press ctrl-x followed by '`y`' and enter to save the file.
 
 #### Step 4: Reboot
 
 -----
 
-### FAQ:
+### FAQ
 
 Question: Is WPA3 supported?
 
@@ -672,7 +721,7 @@ reports of success or failure are needed. If you have yet to buy an
 adapter to use with monitor mode, there are adapters available that are
 known to work very well with monitor mode. My recommendation for those
 looking to buy an adapter for monitor mode is to buy adapters based on
-the following chipsets: mt7921au, mt7612u, mt7610u, rtl8812au and
+the following chipsets: mt7921au, mt7612u, mt7610u, rtl8812au, rtl8821cu and
 rtl8811au. My specific recommendations for adapters in order of
 preference are:
 
