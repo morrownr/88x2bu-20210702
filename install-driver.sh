@@ -28,8 +28,8 @@ SCRIPT_VERSION="20230126"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
-KVER="$(uname -r)"
 KARCH="$(uname -m)"
+KVER="$(uname -r)"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
@@ -70,6 +70,14 @@ fi
 if ! command -v gcc >/dev/null 2>&1; then
 	echo "A required package is not installed."
 	echo "Please install the following package: gcc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+# check to ensure bc is installed
+if ! command -v bc >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: bc"
 	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
