@@ -238,35 +238,6 @@ if command -v dkms >/dev/null 2>&1; then
 	fi
 fi
 
-# information that helps with bug reports
-
-# display kernel version
-echo "Kernel:  ${KVER}"
-
-# display architecture
-echo "Arch:  ${KARCH}"
-
-# display gcc version
-gcc_ver=$(gcc --version | grep -i gcc)
-echo "gcc: ${gcc_ver}"
-
-# display ISO 3166-1 alpha-2 Country Code
-a2_country_code=$(iw reg get | grep -i country)
-echo "Country: ${a2_country_code}"
-if [[ $a2_country_code == *"00"* ]];
-then
-    echo "The Country Code may not be properly set."
-    echo "File alpha-2_Country_Codes is located in the driver directory."
-    echo "Please read and follow the directions in the file after installation."
-fi
-
-# display secure mode status
-# run if mokutil is installed
-if command -v mokutil >/dev/null 2>&1
-then
-	mokutil --sb-state
-fi
-
 # sets module parameters (driver options) and blacklisted modules
 echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
