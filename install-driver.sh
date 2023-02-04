@@ -74,6 +74,14 @@ if ! command -v gcc >/dev/null 2>&1; then
 	exit 1
 fi
 
+# check to ensure bc is installed
+if ! command -v bc >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: bc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
 # check to ensure make is installed
 if ! command -v make >/dev/null 2>&1; then
 	echo "A required package is not installed."
