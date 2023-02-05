@@ -32,8 +32,12 @@ SCRIPT_VERSION="20230628"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
-KARCH="$(uname -m)"
-KVER="$(uname -r)"
+if [ -z "${KARCH+1}" ]; then
+	KARCH="$(uname -m)"
+fi
+if [ -z "${KVER+1}" ]; then
+	KVER="$(uname -r)"
+fi
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
