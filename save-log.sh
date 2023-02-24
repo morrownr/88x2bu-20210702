@@ -8,7 +8,11 @@
 #
 # To execute this file:
 #
-# $ sudo ./edit-options.sh
+# $ sudo ./save-log.sh
+#
+# or
+#
+# $ sudo sh save-log.sh
 
 SCRIPT_NAME="save-log.sh"
 

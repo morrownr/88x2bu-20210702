@@ -6,11 +6,15 @@
 #
 # To make this file executable:
 #
-# $ chmod +x edit-options.sh
+# $ chmod +x remove-driver.sh
 #
 # To execute this file:
 #
-# $ sudo ./edit-options.sh
+# $ sudo ./remove-driver.sh
+#
+# or
+#
+# $ sudo sh remove-driver.sh
 #
 # Copyright(c) 2023 Nick Morrow
 #

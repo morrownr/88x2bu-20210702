@@ -6,11 +6,15 @@
 #
 # To make this file executable:
 #
-# $ chmod +x edit-options.sh
+# $ chmod +x install-driver.sh
 #
 # To execute this file:
 #
-# $ sudo ./edit-options.sh
+# $ sudo ./install-driver.sh
+#
+# or
+#
+# $ sudo sh install-driver.sh
 #
 # Copyright(c) 2023 Nick Morrow
 #
@@ -121,10 +125,10 @@ for TEXT_EDITOR in "${VISUAL}" "${EDITOR}" "${DEFAULT_EDITOR}" vi; do
 done
 # fail if no editor was found
 if ! command -v "${TEXT_EDITOR}" >/dev/null 2>&1; then
-        echo "No text editor found (default: ${DEFAULT_EDITOR})."
-        echo "Please install ${DEFAULT_EDITOR} or edit the file 'default-editor.txt' to specify your editor."
-        echo "Once complete, please run \"sudo ./${SCRIPT_NAME}\""
-        exit 1
+	echo "No text editor found (default: ${DEFAULT_EDITOR})."
+	echo "Please install ${DEFAULT_EDITOR} or edit the file 'default-editor.txt' to specify your editor."
+	echo "Once complete, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
 fi
 
 echo ": ---------------------------"
@@ -184,6 +188,9 @@ fi
 #fi
 
 echo ": ---------------------------"
+echo
+echo "Checking for previously installed drivers."
+
 
 # check for and remove non-dkms installations
 # standard naming
@@ -196,6 +203,8 @@ if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
+	echo "Removal complete."
+	echo ": ---------------------------"
 fi
 
 # check for and remove non-dkms installations
@@ -209,6 +218,8 @@ if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
+	echo "Removal complete."
+	echo ": ---------------------------"
 fi
 
 # check for and remove non-dkms installations
@@ -224,6 +235,8 @@ if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODU
 	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
+	echo "Removal complete."
+	echo ": ---------------------------"
 fi
 
 # check for and remove dkms installations
@@ -235,10 +248,14 @@ if command -v dkms >/dev/null 2>&1; then
 		rm -f /etc/modprobe.d/${OPTIONS_FILE}
 		echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 		rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+		echo "Removal complete."
+		echo ": ---------------------------"
 	fi
 fi
 
 # sets module parameters (driver options) and blacklisted modules
+echo
+echo "Starting installation."
 echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
 
@@ -306,6 +323,7 @@ else
 		fi
 	else
 		echo "The driver was added to dkms successfully."
+		echo ": ---------------------------"
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
@@ -324,6 +342,7 @@ else
 		exit $RESULT
 	else
 		echo "The driver was built by dkms successfully."
+		echo ": ---------------------------"
 	fi
 
 	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -338,6 +357,7 @@ else
 		exit $RESULT
 	else
 		echo "The driver was installed by dkms successfully."
+		echo ": ---------------------------"
 	fi
 fi
 
@@ -350,6 +370,7 @@ fi
 
 # if NoPrompt is not used, ask user some questions
 if [ $NO_PROMPT -ne 1 ]; then
+	echo
 	printf "Do you want to edit the driver options file now? [y/N] "
 	read -r REPLY
 	case "$REPLY" in

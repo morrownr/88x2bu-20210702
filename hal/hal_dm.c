@@ -1392,6 +1392,7 @@ void dump_sta_info(void *sel, struct sta_info *psta)
 			HDATA_RATE(curr_tx_rate), (curr_tx_sgi) ? "S" : "L");
 	RTW_PRINT_SEL(sel, "curr_tx_bw : %s\n", ch_width_str(ra_info->curr_tx_bw));
 	RTW_PRINT_SEL(sel, "curr_retry_ratio : %d\n", ra_info->curr_retry_ratio);
+// nrm
 	RTW_PRINT_SEL(sel, "ra_mask : 0x%016llx\n", ra_info->ramask);
 }
 
