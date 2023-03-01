@@ -1,54 +1,5 @@
 ### FAQ
 
-Question: Is WPA3 supported?
-
-Answer: WPA3-SAE is supported. It works well on most modern Linux distros
-but not all. Generally the reason for WPA3 not working on Linux distros is
-that the distro has an old version of wpa_supplicant or Network Manager.
-Your options are to upgrade to a more modern distro (distros released after
-mid 2022) or compile and install new versions of wpa_supplicant and/or
-Network Manager.
-
------
-
-Question: I bought two usb wifi adapters based on this chipset and am
-planning to use both in the same computer. How do I set that up?
-
-Answer: Realtek drivers do not support more than one adapter with the
-same chipset in the same computer. You can have multiple Realtek based
-adapters in the same computer as long as the adapters are based on
-different chipsets.
-
------
-
-Question: Why do you recommend Mediatek based adapters when you maintain
-this repo for a Realtek driver?
-
-Answer: Many new and existing Linux users already have adapters based on
-Realtek chipsets. This repo is for Linux users to support their existing
-adapters but my STRONG recommendation is for Linux users to seek out USB
-WiFi solutions based on Mediatek chipsets. Mediatek is making and
-supporting their drivers per Linux Wireless Standards guidance per the
-Linux Foundation. This results in far fewer compatibility and support
-problems. More information and recommended adapters shown at the
-following site:
-
-https://github.com/morrownr/USB-WiFi
-
------
-
-Question: Will you put volunteers to work?
-
-Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
-
------
-
-Question: I am having problems with my adapter and I use Virtualbox?
-
-Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
-
------
-
 Secure Boot Information
 
 Question: The driver installation script completed successfully and the
@@ -90,8 +41,61 @@ Here is a link regarding Debian and Secure Boot:
 
 https://wiki.debian.org/SecureBoot
 
-There is work underway to add Secure Boot suuport for systems that do not
+There is work underway to add Secure Boot suport for systems that do not
 have `dkms` available or if a manual installation is desired.
+
+-----
+
+Question: Is WPA3 supported?
+
+Answer: WPA3-SAE is supported. It works well on most modern Linux distros
+but not all. Generally the reason for WPA3 not working on Linux distros is
+that the distro has an old version of wpa_supplicant or Network Manager.
+Your options are to upgrade to a more modern distro such as those released
+after mid-2022 or compile and install new versions of wpa_supplicant and/or
+Network Manager.
+
+-----
+
+Question: I bought two usb wifi adapters based on this chipset and am
+planning to use both in the same computer. How do I set that up?
+
+Answer: Realtek drivers do not support more than one adapter with the
+same chipset in the same computer. You can have multiple Realtek based
+adapters in the same computer as long as the adapters are based on
+different chipsets.
+
+Recommendation: If this is an important capability for you, I have tested
+Mediatek adapters for this capability and it does work with adapters that
+use the following chipsets: mt7921au, mt7612u and mt7610u.
+
+-----
+
+Question: Why do you recommend Mediatek based adapters when you maintain
+this repo for a Realtek driver?
+
+Answer: Many new and existing Linux users already have adapters based on
+Realtek chipsets. This repo is for Linux users to support their existing
+adapters but my STRONG recommendation is for Linux users to seek out USB
+WiFi solutions based on Mediatek chipsets. Mediatek is making and
+supporting their drivers per Linux Wireless Standards guidance per the
+Linux Foundation. This results in far fewer compatibility and support
+problems. More information and recommended adapters shown at the
+following site:
+
+https://github.com/morrownr/USB-WiFi
+
+-----
+
+Question: Will you put volunteers to work?
+
+Answer: Yes. Post a message in `Issues` or `Discussions` if interested.
+
+-----
+
+Question: I am having problems with my adapter and I use Virtualbox?
+
+Answer: This [article](https://null-byte.wonderhowto.com/forum/wifi-hacking-attach-usb-wireless-adapter-with-virtual-box-0324433/) may help.
 
 -----
 
