@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Purpose: Make it easier to edit the driver options file.
+# Purpose: Make it easier to edit the correct driver options file.
 #
 # Flexible editor support.
 #

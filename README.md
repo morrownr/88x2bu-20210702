@@ -85,7 +85,7 @@ be provided via PR or message in Issues.
 
 - [openSUSE](https://www.opensuse.org/) Tumbleweed (rolling) (kernel 5.15)
 
-- [Raspberry Pi OS](https://www.raspberrypi.org) (2022-09-22) (ARM 32 bit and 64 bit) (kernel 5.15)
+- [Raspberry Pi OS](https://www.raspberrypi.org) (2023-02-21) (ARM 32 bit and 64 bit) (kernel 5.15)
 
 - [Raspberry Pi Desktop](https://www.raspberrypi.org) (2022-07-01) (x86 32 bit) (kernel 5.10)
 
@@ -243,7 +243,7 @@ sudo xbps-install -Syu
 ```
 
 Note: It is recommended that you reboot your system at this point. The
-rest of the installation will appreciate having a fully up to date
+rest of the installation will appreciate having a fully up-to-date
 system to work with. The installation can then be continued with Step 3.
 
 ```
