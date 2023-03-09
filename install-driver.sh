@@ -238,6 +238,7 @@ if command -v dkms >/dev/null 2>&1; then
 	if dkms status | grep -i  ${DRV_NAME}; then
 		echo ": ---------------------------"
 		echo
+# need to add code here to delete any DRV_VERSION
 		echo "Removing a dkms installation."
 		dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
 		echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
