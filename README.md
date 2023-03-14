@@ -60,11 +60,11 @@ confirm that this is the correct driver for your adapter.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.2  (community support)
+- Kernels: 5.12 - 6.3  (community support)
 
 ### Tested Compilers
 
-- gcc 10, 11 and 12
+- gcc 9, 10, 11 and 12
 
 ### Tested Linux Distributions
 
