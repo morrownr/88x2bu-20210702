@@ -60,7 +60,7 @@ confirm that this is the correct driver for your adapter.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.3  (community support)
+- Kernels: 5.12 - 6.4  (community support)
 
 ### Tested Compilers
 
@@ -77,7 +77,7 @@ be provided via PR or message in Issues.
 
 - [Debian](https://www.debian.org/) (kernels 5.10 and 5.15)
 
-- [Fedora](https://getfedora.org) (kernel 6.0)
+- [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
 
 - [Kali Linux](https://www.kali.org/) (kernel 5.10)
 
@@ -95,18 +95,20 @@ be provided via PR or message in Issues.
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
-- RHEL 8.4 and 8.6 (kernel 4.18.0)
+- RHEL 8.4 and 8.6 (kernel 4.18.0), 9.1 ( kernel 5.14.0-162.23.1)
 
-Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are not
-supported due to the way kernel patches are handled. I will support
-knowledgable RHEL developers if they want to merge the required
-support and keep it current. I reserve the right to delete this support
-if it causes any problems.
+- Rocky 9.1 (kernel 5.14.0-162.23.1)
 
-Note: Android is supported in the driver according to Realtek. I will support
-knowledgable Android developers if they want to merge and keep current the
-required support (most likely just instructions about how to compile and make
-a modification or two to the Makefile).
+Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
+supported by Red Hat devs due to the way kernel patches are handled in
+Red Hat. I support knowledgable RHEL developers if they want to merge
+the required support and keep it current. I reserve the right to delete
+this support without notice if it causes any problems.
+
+Note: Android is supported in the driver according to Realtek. I will
+support knowledgable Android developers if they want to merge and keep
+current the required support (most likely just instructions about how to
+compile and maybe a modification or two to the Makefile).
 
 ### Compatible Devices
 
@@ -124,7 +126,7 @@ a modification or two to the Makefile).
 * NetGear A6150
 * TRENDnet TEW-808UBM
 * jjPlus WMU6202 miniPCIe - USB
-- Numerous adapters that are based on the supported chipsets
+- Numerous additional adapters that are based on the supported chipsets
 
 Note: If you are looking for information about what adapter to buy,
 click [here](https://github.com/morrownr/USB-WiFi) and look for Main Menu
@@ -149,7 +151,7 @@ Warning: Installing multiple out-of-kernel drivers for the same hardware
 usually does not end well. The install-driver.sh script has the capability
 to detect and remove many conflicting drivers but not all. If this driver
 does not work well after installation and you have previously installed a
-driver that you did not remove, it suggested that you run the following
+driver that you did not remove, it is suggested that you run the following
 command in an effort to determine if you need to take action to manually
 remove conflicting drivers:
 
@@ -159,8 +161,8 @@ sudo dkms status
 
 Warning: If you decide to do a distro upgrade, which will likely install a
 new version of kernel such as 5.15 to 6.1, you need to upgrade this driver
-with the newest available before performing the disto upgrade. Use the
-following commands in the driver directory:
+with the newest available code before performing the disto upgrade. Use
+the following commands in the driver directory:
 
 ```
 git pull

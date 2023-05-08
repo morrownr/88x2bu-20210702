@@ -158,6 +158,15 @@ dtoverlay=disable-wifi
 
 -----
 
+Question: After `sudo apt upgrade`, my 32 Bit Raspberry Pi OS runs on a 64 bit
+kernel and now I can't compile an out-of-kernel Realtek driver.
+
+Answer: See:
+
+https://forums.raspberrypi.com/viewtopic.php?p=2091532&hilit=Tp+link#p2091532
+
+-----
+
 Question: Were compromises made to make this work on EL8 (RHEL, CentOS,
 Rocky, etc) distributions?
 
@@ -168,7 +177,7 @@ driver contains a significant hack that ignores the current link state
 of the adapter when transmitting or receiving frames. This matches the
 behavior of ancient drivers for other chipsets that do work on EL 8.6
 (as they do not check link status at all), but is really a kludge to
-work around a station accounting issue on these kernels. Only Ad-Hoc and 
+work around a station accounting issue on these kernels. Only Ad-Hoc and
 Station mode have been tested.
 
 -----
