@@ -29,8 +29,8 @@ confirm that this is the correct driver for your adapter.
 - AP mode DFS channel support
 - Supported interface modes
   * Managed
-  * Monitor (see FAQ) (see [Monitor_Mode](https://github.com/morrownr/Monitor_Mode)
-  * AP (see FAQ)
+  * Monitor (see FAQ) (see [Monitor_Mode](https://github.com/morrownr/Monitor_Mode))
+  * AP (see FAQ) (see [Bridged Wireless Access Point](https://github.com/morrownr/USB-WiFi/blob/main/home/AP_Mode/Bridged_Wireless_Access_Point.md))
   * P2P-client
   * P2P-GO
 - Log level control
@@ -75,7 +75,7 @@ be provided via PR or message in Issues.
 
 - [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
-- [Debian](https://www.debian.org/) (kernels 5.10 and 5.15)
+- [Debian](https://www.debian.org/) (kernels 5.10, 5.15 and 6.1)
 
 - [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
 
@@ -260,13 +260,13 @@ environment for your system. General guidance follows.
 
 Development Environment Requirements: (package names may vary by distro)
 
-- Mandatory: `gcc` `make` `bc` `kernel-headers` `build-essential` `git`
-- Highly recommended: `dkms` `rfkill` `iw` `ip`
-- Mandatory if Secure Boot is active: `openssl` `mokutil`
+- Mandatory packages: `gcc` `make` `bc` `kernel-headers` `build-essential` `git`
+- Highly recommended packages: `dkms` `rfkill` `iw` `ip`
+- Mandatory packages if Secure Boot is active: `openssl` `sign-file` `mokutil`
 
 Note: The below options should take care of the mandatory and highly recommended
-requirements but only you know if Secure Boot is active. If Secure Boot is
-active on your system, please also install the mandatory packages for Secure Boot.
+requirements. If Secure Boot is active on your system, please also install the
+mandatory packages for Secure Boot as shown above.
 
 - Option for Armbian (arm64)
 
@@ -293,6 +293,8 @@ sudo apt install -y build-essential dkms git iw
 ```
 
 - Option for Fedora
+
+Note: Fedora users should also install `openssl` if secure boot is active.
 
 ```
 sudo dnf -y install git dkms kernel-devel
@@ -421,8 +423,9 @@ sudo make uninstall
 sudo reboot
 ```
 
-Note: If you use the manual installation instructions, you will need to repeat
-the process each time a new kernel is installed in your distro.
+Note: If you use the manual installation instructions, or if dkms is not
+installed, you will need to repeat the process each time a new kernel is
+installed in your distro.
 
 -----
 
@@ -549,5 +552,9 @@ After making and saving changes, reboot the router.
 - Extention cables can be problematic. A way to check if the extension cable is the problem is to plug the adapter temporarily into a USB port on the computer.
 
 - Some USB WiFi adapters require considerable electrical current and push the capabilities of the power available via USB port. One example is adapters that use the Realtek 8814au chipset. Using a powered multiport USB extension can be a good idea in cases like this.
+
+-----
+
+#### [Go to Main Menu](https://github.com/morrownr/USB-WiFi)
 
 -----
