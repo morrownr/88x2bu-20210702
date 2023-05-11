@@ -254,7 +254,6 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x012E, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-LINK */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0116, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-LINK */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0117, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-LINK */
-	{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0122, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TP-LINK */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9055, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Netgear A6150 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x1841, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* ASUS AC1300 USB-AC55 B1 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x184C, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* ASUS U2 */
