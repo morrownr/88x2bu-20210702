@@ -269,6 +269,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0E66, 0x0025, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Hawking HW12ACU */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x13B1, 0x0043, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Alpha - Linksys */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x0BDA, 0x2102, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* CCNC */
+	{USB_DEVICE_AND_INTERFACE_INFO(0x056e, 0x4011, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Elecom */
 #endif /* CONFIG_RTL8822B */
 
 #ifdef CONFIG_RTL8723D
