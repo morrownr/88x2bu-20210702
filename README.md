@@ -95,7 +95,7 @@ be provided via PR or message in Issues.
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
-- RHEL 8.4 and 8.6 (kernel 4.18.0), 9.1 ( kernel 5.14.0-162.23.1)
+- RHEL 8.4, 8.6 and 8.8 (kernel 4.18.0), 9.1 ( kernel 5.14.0-162.23.1)
 
 - Rocky 9.1 (kernel 5.14.0-162.23.1)
 
