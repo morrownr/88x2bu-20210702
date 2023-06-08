@@ -44,16 +44,26 @@ EXTRA_LDFLAGS += --strip-debug
 CONFIG_AUTOCFG_CP = n
 
 RHEL_VER := $(shell echo `grep '^ID_LIKE'  /etc/os-release |grep -qi 'fedora' && grep '^VERSION_ID' /etc/os-release | cut -f2 -d= | cut -c2`)
-ifeq (${RHEL_VER},8)
-EXTRA_CFLAGS += -DRHEL8
+ifdef RHEL_VER
 ifdef KVER
 RHEL_SVER := $(shell echo $(KVER) |sed -e 's/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*-\([0-9][0-9]*\).*/\1/')
 else
 RHEL_SVER := $(shell uname -r |sed -e 's/^[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*-\([0-9][0-9]*\).*/\1/')
 endif
+
+ifeq (${RHEL_VER},8)
+EXTRA_CFLAGS += -DRHEL8
 ifeq ($(shell test $(RHEL_SVER) -ge 477; echo $$?),0)
 EXTRA_CFLAGS += -DRHEL88
 endif
+endif
+
+ifeq (${RHEL_VER},9)
+ifeq ($(shell test $(RHEL_SVER) -ge 284; echo $$?),0)
+EXTRA_CFLAGS += -DRHEL92 -DRHEL88
+endif
+endif
+
 endif
 
 ########################## WIFI IC ############################
