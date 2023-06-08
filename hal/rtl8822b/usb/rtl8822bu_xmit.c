@@ -878,7 +878,7 @@ s32	rtl8822bu_init_xmit_priv(PADAPTER padapter)
 
 #ifdef PLATFORM_LINUX
 	tasklet_init(&pxmitpriv->xmit_tasklet,
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 17, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 17, 0) && !defined(RHEL92))
 		     (void(*)(unsigned long))rtl8822bu_xmit_tasklet,
 #else
 		     (void *)rtl8822bu_xmit_tasklet,
