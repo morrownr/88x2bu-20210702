@@ -534,7 +534,7 @@ static void  rtw_mbo_non_pref_chans_set(
 			break;
 		}
 		
-	} while(param != '\0');
+	} while(*param != '\0');
 	
 }
 

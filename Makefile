@@ -63,7 +63,6 @@ ifeq ($(shell test $(RHEL_SVER) -ge 284; echo $$?),0)
 EXTRA_CFLAGS += -DRHEL92 -DRHEL88
 endif
 endif
-
 endif
 
 ########################## WIFI IC ############################
@@ -1366,7 +1365,7 @@ endif
 EXTRA_CFLAGS += -DDM_ODM_SUPPORT_TYPE=0x04
 
 ifeq ($(CONFIG_RTW_MBO), y)
-EXTRA_CFLAGS += -DCONFIG_RTW_MBO -DCONFIG_RTW_80211K -DCONFIG_RTW_WNM -DCONFIG_RTW_BTM_ROAM
+EXTRA_CFLAGS += -DCONFIG_RTW_MBO -DCONFIG_RTW_WNM -DCONFIG_RTW_BTM_ROAM
 EXTRA_CFLAGS += -DCONFIG_RTW_80211R
 endif
 
