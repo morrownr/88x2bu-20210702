@@ -95,15 +95,17 @@ be provided via PR or message in Issues.
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
-- RHEL 8.4, 8.6 and 8.8 (kernel 4.18.0), 9.1 ( kernel 5.14.0-162.23.1)
+- RHEL 8.4, 8.6, 8.8, 9.1 and 9.2 ( kernel 5.14.0-284.11.1.el9_2.x86_64)
 
-- Rocky 9.1 (kernel 5.14.0-162.23.1)
+- Rocky 9.1 and 9.2
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
 Red Hat. I support knowledgable RHEL developers if they want to merge
 the required support and keep it current. I reserve the right to delete
 this support without notice if it causes any problems.
+
+Current RHEL maintainer: misha4gps
 
 Note: Android is supported in the driver according to Realtek. I will
 support knowledgable Android developers if they want to merge and keep
