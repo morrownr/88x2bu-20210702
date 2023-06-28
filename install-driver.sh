@@ -28,7 +28,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20230227"
+SCRIPT_VERSION="20230628"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
@@ -174,11 +174,19 @@ if command -v dkms >/dev/null 2>&1; then
 	echo ": ""${dkms_ver}"
 fi
 
-# display secure mode status if SecureBoot is enabled and if mokutil is installed
+# display secure mode status
 if command -v mokutil >/dev/null 2>&1; then
 	if mokutil --sb-state | grep -i  enabled >/dev/null 2>&1; then
-		echo ": SecureBoot enabled - read FAQ about SecureBoot"
+		echo ": SecureBoot enabled"
 	fi
+	if mokutil --sb-state | grep -i  disabled >/dev/null 2>&1; then
+		echo ": SecureBoot disabled"
+	fi
+	if mokutil --sb-state | grep -i  EFI >/dev/null 2>&1; then
+		echo ": EFI variables are not supported on this system"
+	fi
+else
+	echo ": mokutil not installed"
 fi
 
 
