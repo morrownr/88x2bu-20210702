@@ -149,6 +149,10 @@ if [ "$sproc" -gt 1 ]; then
 	then
 		sproc=2
 	fi
+	if [ "$SMEM" -lt 700000 ]
+	then
+		sproc=1
+	fi
 fi
 
 # display number of in-use processing units / total processing units
