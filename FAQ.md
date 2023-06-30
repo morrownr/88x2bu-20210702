@@ -8,7 +8,7 @@ driver is installed but does not seem to be working. What is wrong?
 Answer: This question often comes up after installing the driver to a
 system that has Secure Boot on. To test if there is a Secure Boot related
 problem, turn secure boot off in the system BIOS and reboot.  If the driver
-works as expected after reboot, them the problem is likely related to
+works as expected after reboot, then the problem is likely related to
 Secure Boot.
 
 What will increase my chances of having a sucessessful installation on a
@@ -20,7 +20,7 @@ the easiest solution is likely to do a clean reinstallation with Secure Boot
 on.
 
 Ubuntu is used as the example but other distros should be similar to one
-degree or another. During the installation there will be a box on one of
+degree or another. During the installation there may be a box on one of
 installation pages that will appear if the installation program detects
 that Secure Boot is on. You will need to check the appropriate box and
 supply a password. You can use the same password that you use for the system
@@ -43,6 +43,44 @@ https://wiki.debian.org/SecureBoot
 
 There is work underway to add Secure Boot support for systems that do not
 have `dkms` available or if a manual installation is desired.
+
+If you are using a basic command line (non-dkms) installation, see the
+following section in the Installation Steps part of the README:
+
+If you use the `install-driver.sh` script and see the following message
+
+`SecureBoot enabled - read FAQ about SecureBoot`
+
+You need to read the following:
+
+The MOK managerment screen will appear during boot:
+
+`Shim UEFI Key Management"
+
+`Press any key...`
+
+Select "Enroll key"
+
+Select "Continue"
+
+Select "Yes"
+
+When promted, enter the password you entered earlier.
+
+If you enter the wrong password, your computer will not be bootable. In
+this case, use the BOOT menu from your BIOS to boot then as follows:
+
+```
+sudo mokutil --reset
+```
+
+Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
+managerment screen, select `reset MOK list`. Then Reboot and retry the
+driver installation.
+
+Manual Installation Instructions
+
+It provides secure boot instructions.
 
 -----
 

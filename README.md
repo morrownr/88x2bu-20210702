@@ -91,7 +91,7 @@ be provided via PR or message in Issues.
 
 - [SkiffOS](https://github.com/skiffos/skiffos/) for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
+- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15), 22.10 (kernel 5.19), 23.04 (kernel 6.2)
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
@@ -388,16 +388,18 @@ Note: If you elect to skip the reboot at the end of the installation
 script, the driver may not load immediately and the driver options will
 not be applied. Rebooting is strongly recommended.
 
-Note: Fedora users that have secure boot turned on should run the following to
-enroll the key:
+Note: Fedora users that have secure boot turned on may need to run the
+following to enroll the key:
 
 ```
 sudo mokutil --import /var/lib/dkms/mok.pub
 ```
 
-Manual build and installation instructions: The above installation steps
-automate the installation process, however, if you want to or need to do a
-command line installation, use the following:
+### Manual Installation Instructions
+
+Note: The above installation steps automate the installation process,
+however, if you want to or need to do a basic command line installation,
+use the following:
 
 ```
 make clean
@@ -407,6 +409,8 @@ make clean
 make
 ```
 
+If secure boot is off:
+
 ```
 sudo make install
 ```
@@ -414,6 +418,47 @@ sudo make install
 ```
 sudo reboot
 ```
+
+If secure boot is on:
+
+Note: Please read to the end of this section before coming back here to
+enter commands.
+
+```
+sudo make sign-install
+```
+
+You will be promted for a password, please remember the password as it
+will be used in some of the following steps.
+
+```
+sudo reboot
+```
+
+The MOK managerment screen will appear during boot:
+
+`Shim UEFI Key Management"
+
+`Press any key...`
+
+Select "Enroll key"
+
+Select "Continue"
+
+Select "Yes"
+
+When promted, enter the password you entered earlier.
+
+If you enter the wrong password, your computer will not be bootable. In
+this case, use the BOOT menu from your BIOS to boot then as follows:
+
+```
+sudo mokutil --reset
+```
+
+Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
+managerment screen, select `reset MOK list`. Then Reboot and retry from
+the step `sudo make sign-install`.
 
 To remove the driver if installed by the manual installation instructions:
 
