@@ -52,7 +52,7 @@ confirm that this is the correct driver for your adapter.
 
 ### Compatible CPU Architectures
 
-- x86, i686
+- x86, i386, i686
 - x86-64, amd64
 - armv6l, armv7l (arm)
 - aarch64 (arm64)
@@ -60,11 +60,11 @@ confirm that this is the correct driver for your adapter.
 ### Compatible Kernels
 
 - Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.4  (community support)
+- Kernels: 5.12 - 6.5  (community support)
 
 ### Tested Compilers
 
-- gcc 9, 10, 11 and 12
+- gcc 10, 11 and 12
 
 ### Tested Linux Distributions
 
