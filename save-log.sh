@@ -25,7 +25,7 @@ fi
 # deletes existing log
 rm -f -- rtw.log
 
-dmesg | cut -d"]" -f2- | grep "RTW" >> rtw.log
+dmesg | cut -d"]" -f2- | grep -i RTW >> rtw.log
 RESULT=$?
 
 if [ "$RESULT" != "0" ]; then
@@ -33,5 +33,6 @@ if [ "$RESULT" != "0" ]; then
 	echo "Did you set a log level > 0 ?"
 	exit 1
 else
+#	dmesg | cut -d"]" -f2- | grep -i USB >> rtw.log
 	echo "rtw.log saved successfully."
 fi
