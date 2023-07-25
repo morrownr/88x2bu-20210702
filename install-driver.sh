@@ -32,8 +32,9 @@ SCRIPT_VERSION="20230628"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
-KARCH="$(uname -m)"
-KVER="$(uname -r)"
+KARCH="${KARCH:-$(uname -m)}"
+KVER="${KVER:-$(uname -r)}"
+KSRC="/lib/modules/$KVER/build"
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
@@ -95,7 +96,7 @@ if ! command -v make >/dev/null 2>&1; then
 fi
 
 # check to see if the correct header files are installed
-if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
+if [ ! -d "$KSRC" ]; then
 	echo "Your kernel header files aren't properly installed."
 	echo "Please consult your distro documentation or user support forums."
 	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
@@ -349,9 +350,9 @@ else
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
-		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "$KVER" --kernelsourcedir "$KSRC"
 	else
-		dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "$KVER" --kernelsourcedir "$KSRC"
 	fi
 	RESULT=$?
 
@@ -367,7 +368,7 @@ else
 		echo ": ---------------------------"
 	fi
 
-	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "$KVER" --kernelsourcedir "$KSRC"
 	RESULT=$?
 
 	if [ "$RESULT" != "0" ]; then

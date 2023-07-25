@@ -22,5 +22,6 @@ if [ "$sproc" -gt 1 ]; then
 	fi
 fi
 
-kernelver=${kernelver:-$(uname -r)}
-make "-j$sproc" "KVER=$kernelver" "KSRC=/lib/modules/$kernelver/build"
+KVER="${KVER:-$(uname -r)}"
+KSRC="/lib/modules/$KVER/build"
+make "-j$sproc" "KVER=$KVER" "KSRC=$KSRC"
