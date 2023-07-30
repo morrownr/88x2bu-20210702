@@ -32,8 +32,12 @@ SCRIPT_VERSION="20230628"
 MODULE_NAME="88x2bu"
 DRV_VERSION="5.13.1"
 
-KARCH="$(uname -m)"
-KVER="$(uname -r)"
+if [ -z "${KARCH+1}" ]; then
+	KARCH="$(uname -m)"
+fi
+if [ -z "${KVER+1}" ]; then
+	KVER="$(uname -r)"
+fi
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
 DRV_NAME="rtl${MODULE_NAME}"
@@ -349,9 +353,9 @@ else
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
-		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}"
 	else
-		dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}"
 	fi
 	RESULT=$?
 
