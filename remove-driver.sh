@@ -28,18 +28,26 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20230226"
-MODULE_NAME="88x2bu"
+SCRIPT_VERSION="20230830"
+
+DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
+MODULE_NAME="88x2bu"
 
-KARCH="$(uname -m)"
-KVER="$(uname -r)"
+#KARCH="$(uname -m)"
+if [ -z "${KARCH+1}" ]; then
+	KARCH="$(uname -m)"
+fi
+
+#KVER="$(uname -r)"
+if [ -z "${KVER+1}" ]; then
+	KVER="$(uname -r)"
+fi
+
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
-
-DRV_NAME="rtl${MODULE_NAME}"
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
-# check to ensure sudo was used to start the script
+# check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
@@ -49,7 +57,8 @@ fi
 # support for the NoPrompt option allows non-interactive use of this script
 NO_PROMPT=0
 # get the script options
-while [ $# -gt 0 ]; do
+while [ $# -gt 0 ]
+do
 	case $1 in
 		NoPrompt)
 			NO_PROMPT=1 ;;
@@ -70,8 +79,8 @@ echo ": ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
 # information that helps with bug reports
 
-# display architecture
-echo ": ${KARCH} (architecture)"
+# display kernel architecture
+echo ": ${KARCH} (kernel architecture)"
 
 # display kernel version
 echo ": ${KVER} (kernel version)"
@@ -105,17 +114,25 @@ if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODU
 	/sbin/depmod -a "${KVER}"
 fi
 
-# determine if dkms is installed and run the appropriate routines
+# check for and remove all dkms installations with DRV_NAME
+#
+# dkms status [module/module-version] [-k kernel/arch]
+#
+# $ dkms status
+#
 if command -v dkms >/dev/null 2>&1; then
-	echo "Removing a dkms installation."
-	#  2>/dev/null suppresses the output of dkms
-	dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all 2>/dev/null
+	dkms status | while IFS="/, " read -r modname modver kerver _dummy; do
+		case "$modname" in *${MODULE_NAME})
+			echo "--> ${modname} ${modver} ${kerver}"
+			dkms remove -m "${modname}" -v "${modver}" -k "${kerver}" -c "/usr/src/${modname}-${modver}/dkms.conf"
+		esac
+	done
 	RESULT=$?
-	#echo "Result=${RESULT}"
+#	echo "Result=${RESULT}"
 
-	# RESULT will be 3 if there are no instances of module to remove
-	# however we still need to remove various files or the install script
-	# may complain.
+#	 RESULT will be 3 if there are no instances of module to remove
+#	 however we still need to remove various files or the install script
+#	 may complain.
 	if [ "$RESULT" = "0" ] || [ "$RESULT" = "3" ]; then
 		if [ "$RESULT" = "0" ]; then
 			echo "${DRV_NAME}/${DRV_VERSION} has been removed"

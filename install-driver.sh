@@ -28,19 +28,33 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20230628"
-MODULE_NAME="88x2bu"
+SCRIPT_VERSION="20230830"
+
+DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
+MODULE_NAME="88x2bu"
 
-KARCH="$(uname -m)"
-KVER="$(uname -r)"
-MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
+#KARCH="$(uname -m)"
+if [ -z "${KARCH+1}" ]; then
+	KARCH="$(uname -m)"
+fi
 
-DRV_NAME="rtl${MODULE_NAME}"
+#KVER="$(uname -r)"
+if [ -z "${KVER+1}" ]; then
+	KVER="$(uname -r)"
+fi
+
+#GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
+if [ -z "${GARCH+1}" ]; then
+	GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
+fi
+
 DRV_DIR="$(pwd)"
+
+MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
-# check to ensure sudo was used to start the script
+# check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
@@ -64,11 +78,6 @@ do
 	esac
 	shift
 done
-
-# ensure /usr/sbin is in the PATH so iw can be found
-if ! echo "$PATH" | grep -qw sbin; then
-        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-fi
 
 # check to ensure gcc is installed
 if ! command -v gcc >/dev/null 2>&1; then
@@ -102,21 +111,26 @@ if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
 	exit 1
 fi
 
+# ensure /usr/sbin is in the PATH so iw can be found
+#if ! echo "$PATH" | grep -qw sbin; then
+#        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#fi
+
 # check to ensure iw is installed
-if ! command -v iw >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: iw"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
+#if ! command -v iw >/dev/null 2>&1; then
+#	echo "A required package is not installed."
+#	echo "Please install the following package: iw"
+#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
 
 # check to ensure rfkill is installed
-if ! command -v rfkill >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: rfkill"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
+#if ! command -v rfkill >/dev/null 2>&1; then
+#	echo "A required package is not installed."
+#	echo "Please install the following package: rfkill"
+#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
 
 DEFAULT_EDITOR="$(cat default-editor.txt)"
 # try to find the user's default text editor through the EDITORS_SEARCH array
@@ -138,13 +152,12 @@ echo ": ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
 # information that helps with bug reports
 
-# display architecture
-echo ": ${KARCH} (architecture)"
+# display kernel architecture
+echo ": ${KARCH} (kernel architecture)"
 
-# calculate number of cores to be used in order to avoid Out of Memory
-# condition in low-RAM systems by limiting core usage.
-# this section of code is also in the file dkms-make.sh and that 
-# code should stay the same as this code.
+# display architecture to send to gcc
+echo ": ${GARCH} (architecture to send to gcc)"
+
 SMEM=$(LANG=C free | awk '/Mem:/ { print $2 }')
 sproc=$(nproc)
 # avoid Out of Memory condition in low-RAM systems by limiting core usage
@@ -167,6 +180,10 @@ echo ": ${SMEM} (total system memory)"
 
 # display kernel version
 echo ": ${KVER} (kernel version)"
+
+# display version of gcc used to compile the kernel
+gcc_ver_used_to_compile_the_kernel=$(cat /proc/version | sed 's/^.*gcc/gcc/' | sed 's/\s.*$//')
+echo ": ""${gcc_ver_used_to_compile_the_kernel} (version of gcc used to compile the kernel)"
 
 # display gcc version
 gcc_ver=$(gcc --version | grep -i gcc)
@@ -192,17 +209,29 @@ if command -v mokutil >/dev/null 2>&1; then
 else
 	echo ": mokutil not installed"
 fi
+# need to fix the following
+#: ---------------------------
+#: install-driver.sh v20230718
+#: x86_64 (system architecture)
+#: x86_64 (gcc architecture)
+#: 4/4 (in-use/total processing units)
+#: 16283584 (total system memory)
+#: 5.19.0-50-generic (kernel version)
+#: gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+#: dkms-2.8.7
+#This system doesn't support Secure Boot
+#This system doesn't support Secure Boot
+#This system doesn't support Secure Boot
+#: ---------------------------
 
 echo ": ---------------------------"
 echo
 
-echo "Checking for previously installed drivers."
+echo "Checking for previously installed drivers..."
 
 # check for and remove non-dkms installations
 # standard naming
 if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
-	echo ": ---------------------------"
-	echo
 	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
@@ -217,8 +246,6 @@ fi
 # check for and remove non-dkms installations
 # with rtl added to module name (PClinuxOS)
 if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
-	echo ": ---------------------------"
-	echo
 	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"rtl${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
@@ -235,8 +262,6 @@ fi
 # Example: /usr/lib/modules/5.15.80-rockchip64/kernel/drivers/net/wireless/rtl8821cu/8821cu.ko.xz
 # Dear Armbiam, this is a really bad idea.
 if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]; then
-	echo ": ---------------------------"
-	echo
 	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
 	rm -f /usr/lib/modules/"${KVER}"/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a "${KVER}"
@@ -248,24 +273,40 @@ if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODU
 	echo "Removal complete."
 fi
 
-# check for and remove dkms installations
+# check for and remove all dkms installations with DRV_NAME
+#
+# dkms status [module/module-version] [-k kernel/arch]
+#
+# $ dkms status
+#
+# nvidia/535.86.05, 6.2.0-27-generic, x86_64: installed
+# nvidia/535.86.05, 6.5.0-060500rc5-generic, x86_64: installed
+# rtl8852bu/1.19.3, 6.2.0-27-generic, x86_64: installed
+# rtl8852bu/1.19.3, 6.5.0-060500rc5-generic, x86_64: installed
+# rtl8852bu/1.15.2, 6.5.0-060500rc5-generic, x86_64: installed
+#
+# dkms remove [module/module-version] [-k kernel/arch] [--all]
+#
+# $ dkms remove "${modname}/${modver}" -c "/usr/src/${modname}-${modver}/dkms.conf" --all
+#
 if command -v dkms >/dev/null 2>&1; then
-	if dkms status | grep -i  ${DRV_NAME}; then
-		echo ": ---------------------------"
-		echo
-# need to add code here to delete any DRV_VERSION
-		echo "Removing a dkms installation."
-		dkms remove -m ${DRV_NAME} -v ${DRV_VERSION} --all
-		echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	dkms status | while IFS="/, " read -r modname modver kerver _dummy; do
+		case "$modname" in *${MODULE_NAME})
+			echo "--> ${modname} ${modver} ${kerver}"
+			dkms remove -m "${modname}" -v "${modver}" -k "${kerver}" -c "/usr/src/${modname}-${modver}/dkms.conf"
+		esac
+	done
+	if [ -f /etc/modprobe.d/${OPTIONS_FILE} ]; then
 		rm -f /etc/modprobe.d/${OPTIONS_FILE}
-		echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	fi
+	if [ -f /usr/src/${DRV_NAME}-${DRV_VERSION} ]; then
 		rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-		echo "Removal complete."
 	fi
 fi
 
-# sets module parameters (driver options) and blacklisted modules
+echo "Finished checking for and removing previously installed drivers."
 echo ": ---------------------------"
+
 echo
 echo "Starting installation."
 echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
@@ -323,8 +364,10 @@ else
 # 	the dkms add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "Copying source files to /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	cp -rf "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
+#	echo "${DRV_DIR}"
+#	echo "/usr/src/${DRV_NAME}-${DRV_VERSION}"
 
-	dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
+	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 	RESULT=$?
 
 #	RESULT will be 3 if the DKMS tree already contains the same module/version
@@ -346,12 +389,13 @@ else
 	else
 		echo "The driver was added to dkms successfully."
 		echo ": ---------------------------"
+		echo
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
-		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 	else
-		dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 	fi
 	RESULT=$?
 
@@ -367,7 +411,7 @@ else
 		echo ": ---------------------------"
 	fi
 
-	dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 	RESULT=$?
 
 	if [ "$RESULT" != "0" ]; then
@@ -385,13 +429,18 @@ else
 fi
 
 # provide driver upgrade information
-echo "Info: Upgrade this driver with the following commands as needed:"
+echo "Info: Update this driver with the following commands as needed:"
+echo
 echo "$ git pull"
 echo "$ sudo sh install-driver.sh"
-echo "Note: Upgrades to this driver should be performed before distro upgrades."
-echo "Note: Upgrades can be performed as often as you like."
-echo "Note: Work on this driver is continuous."
-echo ": ---------------------------"
+echo
+echo "Note: Updates to this driver SHOULD be performed before distro"
+echo "      upgrades such as Ubuntu 23.10 to 24.04."
+echo "Note: Updates can be performed as often as you like. It is"
+echo "      recommended to update at least every 2 months."
+echo "Note: Work on this driver, like the Linux kernel, is continuous."
+echo
+echo "Enjoy!"
 echo
 
 # unblock wifi

@@ -196,12 +196,31 @@ dtoverlay=disable-wifi
 
 -----
 
-Question: After `sudo apt upgrade`, my 32 Bit Raspberry Pi OS runs on a 64 bit
-kernel and now I can't compile an out-of-kernel Realtek driver.
+Question: When running `sudo sh install-driver.sh` on my RasPi 4B or
+400, I see the following:
 
-Answer: See:
+```
+Your kernel header files aren't properly installed.
+Please consult your distro documentation or user support forums.
+Once the header files are properly installed, please run...
+```
+
+Answer: The Pi 4/400 firmware now prefers the 64-bit kernel if one
+exists so even if you installed the 32 bit version of the RasPiOS,
+you may now have the 64 bit kernel active.
+
+The fix:
+
+add the following to /boot/config.txt and reboot:
+
+arm_64bit=0
+
+Reference:
 
 https://forums.raspberrypi.com/viewtopic.php?p=2091532&hilit=Tp+link#p2091532
+
+Note to RasPiOS devs: We really really wish you would consider the 
+consequences of the changes you make. Thank you.
 
 -----
 
