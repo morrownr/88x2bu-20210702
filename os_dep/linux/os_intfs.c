@@ -21,6 +21,15 @@ MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Realtek Wireless Lan Driver");
 MODULE_AUTHOR("Realtek Semiconductor Corp.");
 MODULE_VERSION(DRIVERVERSION);
+/* Include namespace when file system namespace errors occur during
+ * kernel build. This is about 'kernel_read' or 'kernel_write'
+ *
+ * This declaration was created to resolve an error on Rockchip.
+ * You can modify or add flags in the fs/Makefile.
+ */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0)
+	MODULE_IMPORT_NS(VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver);
+#endif
 
 /* module param defaults */
 int rtw_chip_version = 0x00;
