@@ -1374,20 +1374,8 @@ ifeq ($(CONFIG_PLATFORM_AUTODETECT), y)
 EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 EXTRA_CFLAGS += -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT
 
-SUBARCH := $(shell uname -m)
-
-ifeq ($(SUBARCH), aarch64)
-SUBARCH := arm64
-endif
-
-ifeq ($(SUBARCH), armv7l)
-SUBARCH := arm
-endif
-
-ifeq ($(SUBARCH), armv6l)
-SUBARCH := arm
-endif
-
+#SUBARCH := $(shell uname -m)
+SUBARCH := $(shell uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")
 ARCH ?= $(SUBARCH)
 
 CROSS_COMPILE ?=

@@ -41,9 +41,6 @@ Here is a link regarding Debian and Secure Boot:
 
 https://wiki.debian.org/SecureBoot
 
-There is work underway to add Secure Boot support for systems that do not
-have `dkms` available or if a manual installation is desired.
-
 If you are using a basic command line (non-dkms) installation, see the
 following section in the Installation Steps part of the README:
 

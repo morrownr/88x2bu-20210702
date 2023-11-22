@@ -28,11 +28,15 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20230830"
+SCRIPT_VERSION="20231115"
+
+MODULE_NAME="88x2bu"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
-MODULE_NAME="88x2bu"
+DRV_DIR="$(pwd)"
+
+OPTIONS_FILE="${MODULE_NAME}.conf"
 
 #KARCH="$(uname -m)"
 if [ -z "${KARCH+1}" ]; then
@@ -44,15 +48,12 @@ if [ -z "${KVER+1}" ]; then
 	KVER="$(uname -r)"
 fi
 
+MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
+
 #GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
 if [ -z "${GARCH+1}" ]; then
 	GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
 fi
-
-DRV_DIR="$(pwd)"
-
-MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
-OPTIONS_FILE="${MODULE_NAME}.conf"
 
 # check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
@@ -150,15 +151,13 @@ echo ": ---------------------------"
 # displays script name and version
 echo ": ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
-# information that helps with bug reports
-
 # display kernel architecture
 echo ": ${KARCH} (kernel architecture)"
 
 # display architecture to send to gcc
 echo ": ${GARCH} (architecture to send to gcc)"
 
-SMEM=$(LANG=C free | awk '/Mem:/ { print $2 }')
+SMEM=$(LC_ALL=C free | awk '/Mem:/ { print $2 }')
 sproc=$(nproc)
 # avoid Out of Memory condition in low-RAM systems by limiting core usage
 if [ "$sproc" -gt 1 ]; then
@@ -195,34 +194,16 @@ if command -v dkms >/dev/null 2>&1; then
 	echo ": ""${dkms_ver}"
 fi
 
-# display secure mode status
+# display Secure Boot status
 if command -v mokutil >/dev/null 2>&1; then
-	if mokutil --sb-state | grep -i  enabled >/dev/null 2>&1; then
-		echo ": SecureBoot enabled"
-	fi
-	if mokutil --sb-state | grep -i  disabled >/dev/null 2>&1; then
-		echo ": SecureBoot disabled"
-	fi
-	if mokutil --sb-state | grep -i  EFI >/dev/null 2>&1; then
-		echo ": EFI variables are not supported on this system"
-	fi
+	case $(mokutil --sb-state 2>&1) in
+		*enabled*) echo ": SecureBoot enabled" ;;
+		*disabled*) echo ": SecureBoot disabled" ;;
+		*) echo ": This system doesn't support Secure Boot" ;;
+	esac
 else
 	echo ": mokutil not installed"
 fi
-# need to fix the following
-#: ---------------------------
-#: install-driver.sh v20230718
-#: x86_64 (system architecture)
-#: x86_64 (gcc architecture)
-#: 4/4 (in-use/total processing units)
-#: 16283584 (total system memory)
-#: 5.19.0-50-generic (kernel version)
-#: gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-#: dkms-2.8.7
-#This system doesn't support Secure Boot
-#This system doesn't support Secure Boot
-#This system doesn't support Secure Boot
-#: ---------------------------
 
 echo ": ---------------------------"
 echo
@@ -273,21 +254,7 @@ if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODU
 	echo "Removal complete."
 fi
 
-# check for and remove all dkms installations with DRV_NAME
-#
-# dkms status [module/module-version] [-k kernel/arch]
-#
-# $ dkms status
-#
-# nvidia/535.86.05, 6.2.0-27-generic, x86_64: installed
-# nvidia/535.86.05, 6.5.0-060500rc5-generic, x86_64: installed
-# rtl8852bu/1.19.3, 6.2.0-27-generic, x86_64: installed
-# rtl8852bu/1.19.3, 6.5.0-060500rc5-generic, x86_64: installed
-# rtl8852bu/1.15.2, 6.5.0-060500rc5-generic, x86_64: installed
-#
-# dkms remove [module/module-version] [-k kernel/arch] [--all]
-#
-# $ dkms remove "${modname}/${modver}" -c "/usr/src/${modname}-${modver}/dkms.conf" --all
+# check for and remove all dkms installations with MODULE_NAME in DRV_NAME
 #
 if command -v dkms >/dev/null 2>&1; then
 	dkms status | while IFS="/, " read -r modname modver kerver _dummy; do
@@ -393,9 +360,9 @@ else
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
-		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
+		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	else
-		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
+		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	fi
 	RESULT=$?
 
@@ -411,7 +378,7 @@ else
 		echo ": ---------------------------"
 	fi
 
-	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
+	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	RESULT=$?
 
 	if [ "$RESULT" != "0" ]; then

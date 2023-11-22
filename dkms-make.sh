@@ -4,7 +4,7 @@
 #          run from another script.
 
 # SMEM needs to be set here if dkms build is not initiated by install-driver.sh
-SMEM=$(LANG=C free | awk '/Mem:/ { print $2 }')
+SMEM=$(LC_ALL=C free | awk '/Mem:/ { print $2 }')
 
 # sproc needs to be set here if dkms build is not initiated by install-driver.sh
 sproc=$(nproc)

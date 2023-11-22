@@ -152,10 +152,9 @@ adapters.
 Note: If you decide to buy an adapter that is supported by this driver,
 I recommend you search for an adapter that is `single-state and
 single-function`. Multi-function adapters, wifi and bluetooth, can be
-problematic. The rtl8852bu chipset is multi-fuction. The rtl8832bu
-chipset is single-function. For advice about single-state and
-multi-state adapters. click [here](https://github.com/morrownr/USB-WiFi)
-and look for Main Menu item 1.
+problematic. For advice about single-state and multi-state adapters, 
+click [here](https://github.com/morrownr/USB-WiFi) and look for Main
+Menu item 1.
 
 ### Installation Information
 
@@ -326,9 +325,6 @@ sudo apt install -y build-essential dkms git iw
 
 - Option for Fedora
 
-Note: Fedora users should also install `openssl` if secure boot is
-active.
-
 ```
 sudo dnf -y install git dkms kernel-devel
 ```
@@ -406,13 +402,17 @@ compile the kernel that is in use:
 
 Example of bad situation:
 
+```
 gcc 12.1 (used to compile the kernel)
 gcc 10.3 (version of gcc in use)
+```
 
 Example of good situation:
 
+```
 gcc 12.2 (used to compile the kernel)
 gcc 12.1 (version of gcc in use)
+```
 
 To determine the values:
 
@@ -716,6 +716,15 @@ on the computer.
 push the capabilities of the power available via USB port. One example
 is adapters that use the Realtek 8814au chipset. Using a powered
 multiport USB extension can be a good idea in cases like this.
+
+-----
+
+To Contribute:
+
+Fork this repository.
+Make your edits.
+TEST THEM!
+Create a pull request.
 
 -----
 

@@ -28,11 +28,14 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20230830"
+SCRIPT_VERSION="20231118"
+
+MODULE_NAME="88x2bu"
 
 DRV_NAME="rtl88x2bu"
 DRV_VERSION="5.13.1"
-MODULE_NAME="88x2bu"
+
+OPTIONS_FILE="${MODULE_NAME}.conf"
 
 #KARCH="$(uname -m)"
 if [ -z "${KARCH+1}" ]; then
@@ -45,7 +48,6 @@ if [ -z "${KVER+1}" ]; then
 fi
 
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
-OPTIONS_FILE="${MODULE_NAME}.conf"
 
 # check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
@@ -116,10 +118,6 @@ fi
 
 # check for and remove all dkms installations with DRV_NAME
 #
-# dkms status [module/module-version] [-k kernel/arch]
-#
-# $ dkms status
-#
 if command -v dkms >/dev/null 2>&1; then
 	dkms status | while IFS="/, " read -r modname modver kerver _dummy; do
 		case "$modname" in *${MODULE_NAME})
@@ -128,7 +126,6 @@ if command -v dkms >/dev/null 2>&1; then
 		esac
 	done
 	RESULT=$?
-#	echo "Result=${RESULT}"
 
 #	 RESULT will be 3 if there are no instances of module to remove
 #	 however we still need to remove various files or the install script
