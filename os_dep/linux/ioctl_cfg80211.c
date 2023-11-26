@@ -5321,11 +5321,7 @@ static int cfg80211_rtw_add_beacon(struct wiphy *wiphy, struct net_device *ndev,
 	}
 	rtw_mi_scan_abort(adapter, _TRUE);
 	rtw_mi_buddy_set_scan_deny(adapter, 300);
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0))
-	ret = rtw_add_beacon(adapter, ap->beacon.head, ap->beacon.head_len, ap->beacon.tail, ap->beacon.tail_len);
-#else
 	ret = rtw_add_beacon(adapter, info->head, info->head_len, info->tail, info->tail_len);
-#endif
 exit:
 	return ret;
 }
@@ -5410,9 +5406,9 @@ exit:
 
 static int cfg80211_rtw_change_beacon(struct wiphy *wiphy, struct net_device *ndev,
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0))
-		struct cfg80211_ap_update *ap)
+	struct cfg80211_ap_update *info)
 #else
-		struct cfg80211_beacon_data *info)
+	struct cfg80211_beacon_data *info)
 #endif		
 {
 	int ret = 0;
@@ -5421,7 +5417,7 @@ static int cfg80211_rtw_change_beacon(struct wiphy *wiphy, struct net_device *nd
 	RTW_INFO(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0))
-	ret = rtw_add_beacon(adapter, ap->beacon.head, ap->beacon.head_len, ap->beacon.tail, ap->beacon.tail_len);
+	ret = rtw_add_beacon(adapter, info->beacon.head, info->beacon.head_len, info->beacon.tail, info->beacon.tail_len);
 #else
 	ret = rtw_add_beacon(adapter, info->head, info->head_len, info->tail, info->tail_len);
 #endif
