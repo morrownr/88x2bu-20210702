@@ -91,7 +91,7 @@ which can be provided via PR or message in Issues.
 
 - [openSUSE](https://www.opensuse.org/) Tumbleweed (rolling) (kernel 5.15)
 
-- [Raspberry Pi OS](https://www.raspberrypi.org) (2023-05-03)(ARM 32 bit and 64 bit) (kernel 6.1.38)
+- [Raspberry Pi OS](https://www.raspberrypi.org) (2023-10-10) (ARM and ARM64) (kernel 6.1)
 
 - [Raspberry Pi Desktop](https://www.raspberrypi.org) (2022-07-01) (x86 32 bit) (kernel 5.10)
 
@@ -101,9 +101,9 @@ which can be provided via PR or message in Issues.
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
-- RHEL 8.4, 8.6, 8.8, 9.1 and 9.2 ( kernel 5.14.0-284.11.1.el9_2.x86_64)
+- RHEL 8.4, 8.6, 8.8, 9.1, 9.2 and 9.3 
 
-- Rocky 9.1 and 9.2
+- Rocky 9.1, 9.2 and 9.3
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
