@@ -67,6 +67,9 @@ ifeq (${RHEL_VER},9)
 ifeq ($(shell test $(RHEL_SVER) -ge 284; echo $$?),0)
 EXTRA_CFLAGS += -DRHEL92 -DRHEL88
 endif
+ifeq ($(shell test $(RHEL_SVER) -ge 362; echo $$?),0)
+EXTRA_CFLAGS += -DRHEL93
+endif
 endif
 endif
 
