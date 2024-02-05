@@ -19,7 +19,8 @@ EXTRA_CFLAGS += -Wno-misleading-indentation
 EXTRA_CFLAGS += -Wno-implicit-fallthrough
 #EXTRA_CFLAGS += -Wno-return-type
 #EXTRA_CFLAGS += -Wno-discarded-qualifiers
-
+EXTRA_CFLAGS += -Wno-missing-prototypes
+EXTRA_CFLAGS += -Wno-missing-declarations
 # Activates Concurrent Mode if uncommented
 #EXTRA_CFLAGS += -DCONFIG_CONCURRENT_MODE
 
