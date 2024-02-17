@@ -263,6 +263,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331E, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-181 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331C, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-182 - D1 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x331F, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Dlink - DWA-183 - D */		
+	{USB_DEVICE_AND_INTERFACE_INFO(0x20F4, 0x805A, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TRENDnet TEW-805UBH */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x20F4, 0x808A, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* TRENDnet TEW-808UBM */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x13B1, 0x0045, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* Linksys WUSB3600 v2 */
 	{USB_DEVICE_AND_INTERFACE_INFO(0x04CA, 0x8602, 0xff, 0xff, 0xff), .driver_info = RTL8822B}, /* LiteOn */
