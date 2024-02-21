@@ -48,6 +48,7 @@ ID 0E66:0025
 ID 13B1:0043
 ID 0BDA:2102
 ID 056E:4011
+ID 20F4:805A
 
 If your adapter matches one of the default or seller specific
 IDs then this is the driver to use.
