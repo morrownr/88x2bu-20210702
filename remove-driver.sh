@@ -16,6 +16,10 @@
 #
 # $ sudo sh remove-driver.sh
 #
+# To check for errors and to check that this script does not require bash:
+#
+# $ shellcheck remove-driver.sh
+#
 # Copyright(c) 2023 Nick Morrow
 #
 # This program is free software; you can redistribute it and/or modify
@@ -28,7 +32,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="remove-driver.sh"
-SCRIPT_VERSION="20231118"
+SCRIPT_VERSION="20240129"
 
 MODULE_NAME="88x2bu"
 
@@ -100,6 +104,7 @@ fi
 
 # check for and remove non-dkms installations
 # with rtl added to module name (PClinuxOS)
+# Dear PCLinuxOS devs, the driver name uses rtl, the module name does not.
 if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
 	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"rtl${MODULE_NAME}.ko
@@ -109,42 +114,35 @@ fi
 # check for and remove non-dkms installations
 # with compressed module in a unique non-standard location (Armbian)
 # Example: /usr/lib/modules/5.15.80-rockchip64/kernel/drivers/net/wireless/rtl8821cu/8821cu.ko.xz
-# Dear Armbiam, this is a really bad idea.
 if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]; then
 	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
 	rm -f /usr/lib/modules/"${KVER}"/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a "${KVER}"
 fi
 
-# check for and remove all dkms installations with DRV_NAME
+# check for and remove dkms installations
 #
 if command -v dkms >/dev/null 2>&1; then
-	dkms status | while IFS="/, " read -r modname modver kerver _dummy; do
-		case "$modname" in *${MODULE_NAME})
-			echo "--> ${modname} ${modver} ${kerver}"
-			dkms remove -m "${modname}" -v "${modver}" -k "${kerver}" -c "/usr/src/${modname}-${modver}/dkms.conf"
+	dkms status | while IFS="/,: " read -r drvname drvver kerver _dummy; do
+		case "$drvname" in *${MODULE_NAME})
+			if [ "${kerver}" = "added" ]; then
+				dkms remove -m "${drvname}" -v "${drvver}" --all
+			else
+				dkms remove -m "${drvname}" -v "${drvver}" -k "${kerver}" -c "/usr/src/${drvname}-${drvver}/dkms.conf"
+			fi
 		esac
 	done
-	RESULT=$?
-
-#	 RESULT will be 3 if there are no instances of module to remove
-#	 however we still need to remove various files or the install script
-#	 may complain.
-	if [ "$RESULT" = "0" ] || [ "$RESULT" = "3" ]; then
-		if [ "$RESULT" = "0" ]; then
-			echo "${DRV_NAME}/${DRV_VERSION} has been removed"
-		fi
-	else
-		echo "An error occurred. dkms remove error:  ${RESULT}"
-		echo "Please report this error."
-		exit $RESULT
+	if [ -f /etc/modprobe.d/${OPTIONS_FILE} ]; then
+		echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+		rm /etc/modprobe.d/${OPTIONS_FILE}
+	fi
+	if [ -d /usr/src/${DRV_NAME}-${DRV_VERSION} ]; then
+		echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+		rm -r /usr/src/${DRV_NAME}-${DRV_VERSION}
 	fi
 fi
 
-echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
-rm -f /etc/modprobe.d/${OPTIONS_FILE}
-echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
-rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+# ensure the driver directory is clean in case driver was manually compiled
 make clean >/dev/null 2>&1
 echo "The driver was removed successfully."
 echo "You may now delete the driver directory if desired."

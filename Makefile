@@ -21,6 +21,7 @@ EXTRA_CFLAGS += -Wno-implicit-fallthrough
 #EXTRA_CFLAGS += -Wno-discarded-qualifiers
 EXTRA_CFLAGS += -Wno-missing-prototypes
 EXTRA_CFLAGS += -Wno-missing-declarations
+
 # Activates Concurrent Mode if uncommented
 #EXTRA_CFLAGS += -DCONFIG_CONCURRENT_MODE
 
@@ -2538,7 +2539,8 @@ sign:
 	@mokutil --import MOK.der
 	@$(KSRC)/scripts/sign-file sha256 MOK.priv MOK.der 88x2bu.ko
 
-sign-install: sign install
+sign-install:
+	sign install
 
 backup_rtlwifi:
 	@echo "Making backup rtlwifi drivers"
