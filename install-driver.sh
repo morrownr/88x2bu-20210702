@@ -32,7 +32,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20240129"
+SCRIPT_VERSION="20240222"
 
 MODULE_NAME="88x2bu"
 
@@ -42,22 +42,22 @@ DRV_DIR="$(pwd)"
 
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
-#KARCH="$(uname -m)"
-if [ -z "${KARCH+1}" ]; then
-	KARCH="$(uname -m)"
-fi
+KARCH="$(uname -m)"
+#if [ -z "${KARCH+1}" ]; then
+#	KARCH="$(uname -m)"
+#fi
 
-#KVER="$(uname -r)"
-if [ -z "${KVER+1}" ]; then
-	KVER="$(uname -r)"
-fi
+KVER="$(uname -r)"
+#if [ -z "${KVER+1}" ]; then
+#	KVER="$(uname -r)"
+#fi
 
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
-#GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
-if [ -z "${GARCH+1}" ]; then
-	GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
-fi
+GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
+#if [ -z "${GARCH+1}" ]; then
+#	GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
+#fi
 
 # check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
@@ -341,7 +341,9 @@ else
 	echo "Copying source files to /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	cp -r "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 
-	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
+
+	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
+#	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER/${KARCH}}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 	RESULT=$?
 
 #	RESULT will be 3 if the DKMS tree already contains the same module/version
@@ -367,9 +369,11 @@ else
 	fi
 
 	if command -v /usr/bin/time >/dev/null 2>&1; then
-		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
+		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
+#		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	else
-		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
+		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
+#		dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	fi
 	RESULT=$?
 
@@ -385,7 +389,8 @@ else
 		echo ": ---------------------------"
 	fi
 
-	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
+	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
+#	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	RESULT=$?
 
 	if [ "$RESULT" != "0" ]; then
