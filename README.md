@@ -101,7 +101,7 @@ which can be provided via PR or message in Issues.
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
-- RHEL 8.4, 8.6, 8.8, 8.9, 9.1, 9.2 and 9.3 
+- RHEL 8.4, 8.6, 8.8, 8.9, 9.1, 9.2, 9.3 and 9.4 
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
