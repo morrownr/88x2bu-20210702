@@ -12,43 +12,43 @@ ID VendorID:DeviceID = 0bda:b812
 
 We can search the list of driver supported IDs shown below.
 
-Realtek default IDs
+Realtek default IDs (3)
 
-ID 0BDA:B82C - Default ID for USB multi-function (such as WiFi plus bluetooth)
 ID 0BDA:B812 - Default ID for USB Single-function, WiFi only
 ID 0BDA:B81A - Default ID
+ID 0BDA:B82C - Default ID for USB multi-function (such as WiFi plus bluetooth)
 
-Seller specific IDs
+Seller specific IDs (29)
 
-ID 7392:B822
-ID 7392:C822
-ID 7392:D822
-ID 7392:E822
-ID 7392:F822
-ID 13b1:0043
-ID 2357:012D
-ID 2357:0138
-ID 2357:0115
-ID 2357:012E
-ID 2357:0116
-ID 2357:0117
-ID 0846:9055
-ID 0b05:1841
-ID 0B05:184C
-ID 0B05:19AA
-ID 0B05:1870
-ID 0B05:1874
-ID 2001:331E
-ID 2001:331C
-ID 2001:331F
-ID 20F4:808A
-ID 13B1:0045
-ID 04CA:8602
-ID 0E66:0025
-ID 13B1:0043
-ID 0BDA:2102
-ID 056E:4011
-ID 20F4:805A
+ID 04CA:8602  /* LiteOn */
+ID 056E:4011  /* Elecom */
+ID 0846:9055  /* Netgear A6150 */
+ID 0B05:1841  /* ASUS AC1300 USB-AC55 B1 */
+ID 0B05:184C  /* ASUS U2 */
+ID 0B05:1870  /* ASUS */
+ID 0B05:1874  /* ASUS */
+ID 0B05:19AA  /* ASUS - USB-AC58 rev A1 */
+ID 0BDA:2102  /* CCNC */
+ID 0E66:0025  /* Hawking HW12ACU */
+ID 13B1:0043  /* Alpha - Linksys */
+ID 13B1:0045  /* Linksys WUSB3600 v2 */
+ID 2001:331E  /* Dlink - DWA-182 - D1 */
+ID 2001:331C  /* Dlink - DWA-181 */
+ID 2001:331F  /* Dlink - DWA-183 - D */
+ID 20F4:805A  /* TRENDnet TEW-805UBH */
+ID 20F4:808A  /* TRENDnet TEW-808UBM */
+ID 2357:0115  /* TP-Link Archer T4U V3 */
+ID 2357:0116  /* TP-LINK */
+ID 2357:0117  /* TP-LINK */
+ID 2357:012D  /* TP-Link Archer T3U v1 */
+ID 2357:012E  /* TP-LINK */
+ID 2357:0138  /* TP-Link Archer T3U Plus v1 */
+ID 2C4E:0107  /* Mercusys MA30H */
+ID 7392:B822  /* Edimax */
+ID 7392:C822  /* Edimax */
+ID 7392:D822  /* Edimax */
+ID 7392:E822  /* Edimax */
+ID 7392:F822  /* Edimax */
 
 If your adapter matches one of the default or seller specific
 IDs then this is the driver to use.
