@@ -16,6 +16,13 @@
 #
 # $ sudo sh install-driver.sh
 #
+# Note: It is common for Realtek out-of-kernel drivers to have many
+# source files set to executable. This can cause problems in some
+# situations. To remove executable from files only, run the following
+# in the subdirectories:
+#
+# find . -type f -exec chmod -x {} \;
+#
 # To check for errors and to check that this script does not require bash:
 #
 # $ shellcheck remove-driver.sh
@@ -32,7 +39,7 @@
 # GNU General Public License for more details.
 
 SCRIPT_NAME="install-driver.sh"
-SCRIPT_VERSION="20240222"
+SCRIPT_VERSION="20241003"
 
 MODULE_NAME="88x2bu"
 
@@ -59,12 +66,14 @@ GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch
 #	GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
 #fi
 
+
 # check to ensure sudo or su - was used to start the script
 if [ "$(id -u)" -ne 0 ]; then
 	echo "You must run this script with superuser (root) privileges."
 	echo "Try: \"sudo ./${SCRIPT_NAME}\""
 	exit 1
 fi
+
 
 # support for the NoPrompt option allows non-interactive use of this script
 NO_PROMPT=0
@@ -84,59 +93,8 @@ do
 	shift
 done
 
-# check to ensure gcc is installed
-if ! command -v gcc >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: gcc"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
 
-# check to ensure bc is installed
-if ! command -v bc >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: bc"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-# check to ensure make is installed
-if ! command -v make >/dev/null 2>&1; then
-	echo "A required package is not installed."
-	echo "Please install the following package: make"
-	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-# check to see if the correct header files are installed
-if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
-	echo "Your kernel header files aren't properly installed."
-	echo "Please consult your distro documentation or user support forums."
-	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
-	exit 1
-fi
-
-# ensure /usr/sbin is in the PATH so iw can be found
-#if ! echo "$PATH" | grep -qw sbin; then
-#        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-#fi
-
-# check to ensure iw is installed
-#if ! command -v iw >/dev/null 2>&1; then
-#	echo "A required package is not installed."
-#	echo "Please install the following package: iw"
-#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-#	exit 1
-#fi
-
-# check to ensure rfkill is installed
-#if ! command -v rfkill >/dev/null 2>&1; then
-#	echo "A required package is not installed."
-#	echo "Please install the following package: rfkill"
-#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
-#	exit 1
-#fi
-
+# set default editor
 DEFAULT_EDITOR="$(cat default-editor.txt)"
 # try to find the user's default text editor through the EDITORS_SEARCH array
 for TEXT_EDITOR in "${VISUAL}" "${EDITOR}" "${DEFAULT_EDITOR}" vi; do
@@ -152,11 +110,14 @@ fi
 
 echo ": ---------------------------"
 
+
 # displays script name and version
 echo ": ${SCRIPT_NAME} v${SCRIPT_VERSION}"
 
+
 # display kernel architecture
 echo ": ${KARCH} (kernel architecture)"
+
 
 # display architecture to send to gcc
 echo ": ${GARCH} (architecture to send to gcc)"
@@ -175,28 +136,35 @@ if [ "$sproc" -gt 1 ]; then
 	fi
 fi
 
+
 # display number of in-use processing units / total processing units
 echo ": ${sproc}/$(nproc) (in-use/total processing units)"
+
 
 # display total system memory
 echo ": ${SMEM} (total system memory)"
 
+
 # display kernel version
 echo ": ${KVER} (kernel version)"
+
 
 # display version of gcc used to compile the kernel
 gcc_ver_used_to_compile_the_kernel=$(cat /proc/version | sed 's/^.*gcc/gcc/' | sed 's/\s.*$//')
 echo ": ""${gcc_ver_used_to_compile_the_kernel} (version of gcc used to compile the kernel)"
 
+
 # display gcc version
 gcc_ver=$(gcc --version | grep -i gcc)
 echo ": ""${gcc_ver}"
+
 
 # display dkms version if installed
 if command -v dkms >/dev/null 2>&1; then
 	dkms_ver=$(dkms --version)
 	echo ": ""${dkms_ver}"
 fi
+
 
 # display Secure Boot status
 if command -v mokutil >/dev/null 2>&1; then
@@ -212,60 +180,127 @@ fi
 echo ": ---------------------------"
 echo
 
-echo "Checking for previously installed drivers..."
 
-# check for and remove non-dkms installations
-# standard naming
-if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
-	echo "Removing a non-dkms installation: ${MODDESTDIR}${MODULE_NAME}.ko"
-	rm -f "${MODDESTDIR}"${MODULE_NAME}.ko
-	/sbin/depmod -a "${KVER}"
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
-	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
-	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
-	make clean >/dev/null 2>&1
-	echo "Removal complete."
+# check to ensure gcc is installed
+if ! command -v gcc >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: gcc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
 fi
 
-# check for and remove non-dkms installations
+
+# check to ensure bc is installed
+if ! command -v bc >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: bc"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# check to ensure make is installed
+if ! command -v make >/dev/null 2>&1; then
+	echo "A required package is not installed."
+	echo "Please install the following package: make"
+	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# check to see if the correct header files are installed
+# - problem with fedora 40 reported
+if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
+	echo "Your kernel header files aren't properly installed."
+	echo "Please consult your distro documentation or user support forums."
+	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
+	exit 1
+fi
+
+
+# ensure /usr/sbin is in the PATH so iw can be found
+#if ! echo "$PATH" | grep -qw sbin; then
+#        export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#fi
+
+
+# check to ensure iw is installed
+#if ! command -v iw >/dev/null 2>&1; then
+#	echo "A required package is not installed."
+#	echo "Please install the following package: iw"
+#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
+
+
+# check to ensure rfkill is installed
+#if ! command -v rfkill >/dev/null 2>&1; then
+#	echo "A required package is not installed."
+#	echo "Please install the following package: rfkill"
+#	echo "Once the package is installed, please run \"sudo ./${SCRIPT_NAME}\""
+#	exit 1
+#fi
+
+
+echo "Checking for previously installed drivers..."
+
+
+# check for and uninstall non-dkms installations
+# standard naming
+if [ -f "${MODDESTDIR}${MODULE_NAME}.ko" ]; then
+	echo "Uninstalling a non-dkms installation:"
+	echo "${MODDESTDIR}${MODULE_NAME}.ko"
+	rm -f "${MODDESTDIR}"${MODULE_NAME}.ko
+	/sbin/depmod -a "${KVER}"
+	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
+	rm -f /etc/modprobe.d/${OPTIONS_FILE}
+	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
+	make clean >/dev/null 2>&1
+fi
+
+
+# check for and uninstall non-dkms installations
 # with rtl added to module name (PClinuxOS)
 # Dear PCLinuxOS devs, the driver name uses rtl, the module name does not.
 if [ -f "${MODDESTDIR}rtl${MODULE_NAME}.ko" ]; then
-	echo "Removing a non-dkms installation: ${MODDESTDIR}rtl${MODULE_NAME}.ko"
+	echo "Uninstalling a non-dkms installation:"
+	echo "${MODDESTDIR}rtl${MODULE_NAME}.ko"
 	rm -f "${MODDESTDIR}"rtl${MODULE_NAME}.ko
 	/sbin/depmod -a "${KVER}"
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
-	echo "Removal complete."
 fi
 
-# check for and remove non-dkms installations
-# with compressed module in a unique non-standard location (Armbian)
+
+# check for and uninstall non-dkms installations
+# with module in a unique non-standard location (Armbian)
 # Example: /usr/lib/modules/5.15.80-rockchip64/kernel/drivers/net/wireless/rtl8821cu/8821cu.ko.xz
 if [ -f "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz" ]; then
-	echo "Removing a non-dkms installation: /usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
+	echo "Uninstalling a non-dkms installation:"
+	echo "/usr/lib/modules/${KVER}/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz"
 	rm -f /usr/lib/modules/"${KVER}"/kernel/drivers/net/wireless/${DRV_NAME}/${MODULE_NAME}.ko.xz
 	/sbin/depmod -a "${KVER}"
-	echo "Removing ${OPTIONS_FILE} from /etc/modprobe.d"
+	echo "Deleting ${OPTIONS_FILE} from /etc/modprobe.d"
 	rm -f /etc/modprobe.d/${OPTIONS_FILE}
-	echo "Removing source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
+	echo "Deleting source files from /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	rm -rf /usr/src/${DRV_NAME}-${DRV_VERSION}
 	make clean >/dev/null 2>&1
-	echo "Removal complete."
 fi
 
+
 # check for and remove dkms installations
-#
 if command -v dkms >/dev/null 2>&1; then
 	dkms status | while IFS="/,: " read -r drvname drvver kerver _dummy; do
 		case "$drvname" in *${MODULE_NAME})
 			if [ "${kerver}" = "added" ]; then
+				echo "Removing a driver that was added to dkms."
 				dkms remove -m "${drvname}" -v "${drvver}" --all
 			else
+				echo "Removing a driver that was installed by dkms."
 				dkms remove -m "${drvname}" -v "${drvver}" -k "${kerver}" -c "/usr/src/${drvname}-${drvver}/dkms.conf"
 			fi
 		esac
@@ -280,13 +315,16 @@ if command -v dkms >/dev/null 2>&1; then
 	fi
 fi
 
-echo "Finished checking for and removing previously installed drivers."
+echo "Finished checking for and uninstalling previously installed drivers."
 echo ": ---------------------------"
 
 echo
+#echo "Updating driver."
+#git pull
 echo "Starting installation."
-echo "Installing ${OPTIONS_FILE} to /etc/modprobe.d"
+echo "Copying ${OPTIONS_FILE} to /etc/modprobe.d"
 cp -f ${OPTIONS_FILE} /etc/modprobe.d
+
 
 # determine if dkms is installed and run the appropriate installation routines
 if ! command -v dkms >/dev/null 2>&1; then
@@ -294,7 +332,7 @@ if ! command -v dkms >/dev/null 2>&1; then
 
 	make clean >/dev/null 2>&1
 
-	make -j"$(nproc)"
+	make -j"${sproc}"
 	RESULT=$?
 
 	if [ "$RESULT" != "0" ]; then
@@ -305,6 +343,7 @@ if ! command -v dkms >/dev/null 2>&1; then
 		echo "$ sudo ./remove-driver.sh"
 		exit $RESULT
 	fi
+
 
 #	if secure boot is active, use sign-install
 	if command -v mokutil >/dev/null 2>&1; then
@@ -337,11 +376,13 @@ if ! command -v dkms >/dev/null 2>&1; then
 else
 	echo "The dkms installation routines are in use."
 
+
 # 	the dkms add command requires source in /usr/src/${DRV_NAME}-${DRV_VERSION}
 	echo "Copying source files to /usr/src/${DRV_NAME}-${DRV_VERSION}"
 	cp -r "${DRV_DIR}" /usr/src/${DRV_NAME}-${DRV_VERSION}
 
 
+# run dkms add
 	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 #	dkms add -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER/${KARCH}}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf"
 	RESULT=$?
@@ -368,6 +409,8 @@ else
 		echo
 	fi
 
+
+# run dkms build
 	if command -v /usr/bin/time >/dev/null 2>&1; then
 		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 #		/usr/bin/time -f "Compile time: %U seconds" dkms build -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
@@ -389,6 +432,8 @@ else
 		echo ": ---------------------------"
 	fi
 
+
+# run dkms install
 	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 #	dkms install -m ${DRV_NAME} -v ${DRV_VERSION} -k "${KVER}/${KARCH}" -c "/usr/src/${DRV_NAME}-${DRV_VERSION}/dkms.conf" --force
 	RESULT=$?
@@ -407,6 +452,7 @@ else
 	fi
 fi
 
+
 # provide driver upgrade information
 echo "Info: Update this driver with the following commands as needed:"
 echo
@@ -424,12 +470,14 @@ echo
 echo "Enjoy!"
 echo
 
+
 # unblock wifi
 if command -v rfkill >/dev/null 2>&1; then
 	rfkill unblock wlan
 else
 	echo "Unable to run $ rfkill unblock wlan"
 fi
+
 
 # if NoPrompt is not used, ask user some questions
 if [ $NO_PROMPT -ne 1 ]; then
