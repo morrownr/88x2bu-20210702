@@ -31,7 +31,7 @@
 #endif
 
 #ifndef RTW_P2P_GROUP_INTERFACE
-	#define RTW_P2P_GROUP_INTERFACE 0
+	#define RTW_P2P_GROUP_INTERFACE 1
 #endif
 
 /*
