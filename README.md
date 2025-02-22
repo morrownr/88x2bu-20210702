@@ -56,21 +56,22 @@ how to confirm that this is the correct driver for your adapter.
 - x86-64, amd64
 - armv6l, armv7l (arm)
 - aarch64 (arm64)
+- riscv
 
 Note: Additional CPU architectures may work but I currently only have
 the hardware to test the above.
 
 ### Compatible Kernels
 
-- Kernels: 4.19 - 5.11 (Realtek)
-- Kernels: 5.12 - 6.9  (community support)
+- Kernels: 5.10 - 5.11 (Realtek)
+- Kernels: 5.12 - 6.14  (community support)
 
-Note: Kernels earlier than 4.19 may work but are not tested or
+Note: Kernels earlier than 5.10 may work but are not tested or
 supported.
 
 ### Tested Compilers
 
-- gcc 11, 12 and 13
+- gcc 12, 13 and 14
 
 ### Tested Linux Distributions
 
@@ -97,7 +98,7 @@ which can be provided via PR or message in Issues.
 
 - [SkiffOS](https://github.com/skiffos/skiffos/) for Odroid XU4 (ARM 32 bit) (kernel 6.0.7)
 
-- [Ubuntu](https://www.ubuntu.com) 22.04 (kernel 5.15) and 22.10 (kernel 5.19) (kernel 6.2)
+- [Ubuntu](https://www.ubuntu.com) 24.04 (kernel 6.8) and 24.10 (kernel 6.11)
 
 - [Void Linux](https://voidlinux.org/) (kernel 5.18)
 
