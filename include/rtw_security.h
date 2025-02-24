@@ -366,7 +366,7 @@ void rtw_seccalctkipmic(
 	u8 *Miccode,
 	u8   priority);
 
-u32 rtw_aes_encrypt(_adapter *padapter, u8 *pxmitframe);
+u32 rtw_aes_encrypt_rtl8822b(_adapter *padapter, u8 *pxmitframe);
 u32 rtw_tkip_encrypt(_adapter *padapter, u8 *pxmitframe);
 void rtw_wep_encrypt(_adapter *padapter, u8  *pxmitframe);
 
