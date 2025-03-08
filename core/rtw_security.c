@@ -1587,7 +1587,7 @@ static sint aes_cipher(u8 *key, uint	hdrlen,
 
 
 #if NEW_CRYPTO
-u32 rtw_aes_encrypt(_adapter *padapter, u8 *pxmitframe)
+u32 rtw_aes_encrypt_rtl8822b(_adapter *padapter, u8 *pxmitframe)
 {
 	/* Intermediate Buffers */
 	struct pkt_attrib *pattrib = &((struct xmit_frame *)pxmitframe)->attrib;
@@ -1666,7 +1666,7 @@ u32 rtw_aes_encrypt(_adapter *padapter, u8 *pxmitframe)
 	return res;
 }
 #else
-u32	rtw_aes_encrypt(_adapter *padapter, u8 *pxmitframe)
+u32	rtw_aes_encrypt_rtl8822b(_adapter *padapter, u8 *pxmitframe)
 {
 	/* exclude ICV */
 
