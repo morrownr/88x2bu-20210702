@@ -31,7 +31,7 @@ MODULE_VERSION(DRIVERVERSION);
  * This declaration was created to resolve an error on Rockchip.
  * You can modify or add flags in the fs/Makefile.
  */
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0)
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0) && LINUX_VERSION_CODE < KERNEL_VERSION(6, 13, 0))
 	MODULE_IMPORT_NS(VFS_internal_I_am_really_a_filesystem_and_am_NOT_a_driver);
 #endif
 
