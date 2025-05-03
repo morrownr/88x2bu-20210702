@@ -35,13 +35,13 @@ nano Makefile
 Change the following line:
 
 ```
-#EXTRA_CFLAGS += -DCONFIG_CONCURRENT_MODE
+#ccflags-y += -DCONFIG_CONCURRENT_MODE
 ```
 
 to 
 
 ```
-EXTRA_CFLAGS += -DCONFIG_CONCURRENT_MODE
+ccflags-y += -DCONFIG_CONCURRENT_MODE
 ```
 
 and then install the driver per the installation steps. If
