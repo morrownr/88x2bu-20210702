@@ -2607,7 +2607,3 @@ clean:
 	rm -fr .tmp_versions
 	rm -fr MOK.der MOK.priv
 endif
-
-# For compatibility with kernels prior to 2.6.24.
-EXTRA_CFLAGS += $(ccflags-y)
-EXTRA_LDFLAGS += $(ldflags-y)
