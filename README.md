@@ -1,19 +1,19 @@
-Notice: A new standards compliant (mac80211), in-kernel driver for
-rtl8822/12bu chipset based adapters and modules has been merged into
-Linux kernels 6.13 and 6.14. If your distro uses kernel 6.14 or later,
-there is no need to install this driver. The new driver is part of the
-rtw88 series of drivers. The new in-kernel driver is Linux Standards
-compliant (mac80211) and is a much better driver than this one. This
-driver will no longer get API related updates beyond kernel 6.14 (unless
-provided by a user). If you use a kernel prior to 6.14, it is possible
-to use the new standards compliant driver by going to the following
-repo:
+Notice: An updated standards compliant (mac80211), in-kernel driver for
+rtl8822/12bu chipset based adapters and modules is available and as of
+kernel 6.12 is of good quality. If your distro uses kernel 6.12 or
+later, there is no need to install this driver. The in-kernel driver is
+part of the rtw88 series of drivers. The in-kernel driver is Linux
+Standards compliant (mac80211) and is a much better driver than this
+one. This driver will no longer get API related updates beyond kernel
+6.14 (unless provided by a user). If you use a kernel prior to 6.14, it
+is possible to use the new standards compliant driver by going to the
+following repo:
 
 https://github.com/lwfinger/rtw88
 
-If you decide to use the new driver, remember to first remove the driver
-in this repo. You can run the following to remove the driver in this
-repo:
+If you decide to use the in-kernel driver, remember to first remove the
+driver in this repo. You can run the following to remove the driver in
+this repo:
 
 $ sudo sh remove-driver.sh
 
