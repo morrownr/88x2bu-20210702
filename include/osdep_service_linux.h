@@ -55,6 +55,17 @@
 #include <linux/kthread.h>
 #include <linux/list.h>
 #include <linux/vmalloc.h>
+#include <linux/timer.h>
+
+#ifndef from_timer
+#ifdef timer_container_of
+#define from_timer(var, callback_timer, timer_fieldname) \
+	timer_container_of(var, callback_timer, timer_fieldname)
+#else
+#define from_timer(var, callback_timer, timer_fieldname) \
+	container_of(callback_timer, typeof(*var), timer_fieldname)
+#endif
+#endif
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0) || defined(RHEL8))
 	#include <uapi/linux/sched/types.h>
