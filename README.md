@@ -94,6 +94,7 @@ the hardware to test the above.
 
 - Kernels: 5.10 - 5.11 (Realtek)
 - Kernels: 5.12 - 6.14  (community support)
+- Kernels: 6.18.4 and later (debian based distros only with gcc 15.2)
 
 Note: Kernels earlier than 5.10 may work but are not tested or
 supported.
@@ -101,6 +102,7 @@ supported.
 ### Tested Compilers
 
 - gcc 12, 13 and 14
+- gcc 15.2 (only for kernels 6.18.4 and later)
 
 ### Tested Linux Distributions
 
@@ -111,11 +113,11 @@ which can be provided via PR or message in Issues.
 
 - [Armbian](https://www.armbian.com/) (kernel 5.15) (Rock 4 SE (Rock 4b image with xfce))
 
-- [Debian](https://www.debian.org/) (kernels 5.10, 5.15 and 6.1)
+- [Debian](https://www.debian.org/) (kernels 5.10, 5.15, 6.1, 6.18.4)
 
 - [Fedora](https://getfedora.org) Fedora 38 (6.2.13-300)
 
-- [Kali Linux](https://www.kali.org/) (kernel 6.3)
+- [Kali Linux](https://www.kali.org/) (kernel 6.3, 6.18.4)
 
 - [Manjaro](https://manjaro.org) (kernel 5.15)
 
@@ -170,6 +172,7 @@ OpenWRT so it is strongly advised to use the already supported chipsets.
 * NetGear A6150
 * TRENDnet TEW-808UBM
 * jjPlus WMU6202 miniPCIe - USB
+* TP-Link Archer T4U ver.3 - USB (Realtek 802.11ac NIC 2357:0115)
 - Numerous additional adapters that are based on the supported chipsets
 
 Note: If you are looking for information about what adapter to buy,

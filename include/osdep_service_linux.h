@@ -369,7 +369,7 @@ static inline void timer_hdl(unsigned long cntx)
 #endif
 {
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 14, 0))
-	_timer *ptimer = from_timer(ptimer, in_timer, timer);
+	_timer *ptimer = container_of(in_timer, _timer, timer);
 #else
 	_timer *ptimer = (_timer *)cntx;
 #endif
