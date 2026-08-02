@@ -1,6 +1,5 @@
 config RTL8822BU
 	tristate "Realtek 8822B USB WiFi"
-	depends on USB
+	depends on USB && CFG80211
 	help
 	  Help message of RTL8822BU
-
