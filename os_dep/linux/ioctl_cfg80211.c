@@ -3673,7 +3673,7 @@ static void cfg80211_rtw_abort_scan(struct wiphy *wiphy,
 }
 #endif
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 18, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 17, 0))
 static int cfg80211_rtw_set_wiphy_params(struct wiphy *wiphy, int link_id, u32 changed)
 #else
 static int cfg80211_rtw_set_wiphy_params(struct wiphy *wiphy, u32 changed)
@@ -4662,7 +4662,7 @@ static int cfg80211_rtw_set_txpower(struct wiphy *wiphy,
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0))
 	struct wireless_dev *wdev,
 #endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 18, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 17, 0))
 	int link_id,
 #endif
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 36)) || defined(COMPAT_KERNEL_RELEASE)
@@ -4727,7 +4727,7 @@ static int cfg80211_rtw_get_txpower(struct wiphy *wiphy,
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0))
 	struct wireless_dev *wdev,
 #endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 18, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 17, 0))
 	int link_id,
 	unsigned int link_mask,
 #elif (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 14, 0))
