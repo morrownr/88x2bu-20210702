@@ -8612,7 +8612,7 @@ static int cfg80211_rtw_tdls_mgmt(struct wiphy *wiphy,
 #else
 	u8 *peer,
 #endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 5, 0)) || defined(RHEL94)
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 5, 0)) || defined(RHEL94) || defined(RTW_CFG80211_TDLS_LINK_ID)
 	int link_id,
 #endif
 	u8 action_code,

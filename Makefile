@@ -2418,6 +2418,10 @@ ifeq ($(shell awk '/\*set_monitor_channel/,/;/ { if (/struct net_device/) { prin
 ccflags-y += -DRTW_CFG80211_MONITOR_CHANNEL_HAS_NETDEV
 endif
 
+ifeq ($(shell awk '/\*tdls_mgmt/,/;/ { if (/int link_id/) { print "y"; exit } }' $(srctree)/include/net/cfg80211.h 2>/dev/null), y)
+ccflags-y += -DRTW_CFG80211_TDLS_LINK_ID
+endif
+
 ifeq ($(shell awk '/@drvwrap/ { print "y"; exit }' $(srctree)/include/linux/usb.h), y)
 ccflags-y += -DRTW_USB_HAS_DRVWRAP
 endif
