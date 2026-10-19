@@ -2412,6 +2412,12 @@ endif
 
 ifneq ($(KERNELRELEASE),)
 
+# Detect backported cfg80211 API changes from the target kernel's headers
+# instead of relying on LINUX_VERSION_CODE (e.g. Ubuntu 6.8.0-147+).
+ifeq ($(shell awk '/\*set_monitor_channel/,/;/ { if (/struct net_device/) { print "y"; exit } }' $(srctree)/include/net/cfg80211.h 2>/dev/null), y)
+ccflags-y += -DRTW_CFG80211_MONITOR_CHANNEL_HAS_NETDEV
+endif
+
 ########### this part for *.mk ############################
 include $(src)/hal/phydm/phydm.mk
 
