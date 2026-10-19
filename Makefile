@@ -2418,6 +2418,10 @@ ifeq ($(shell awk '/\*set_monitor_channel/,/;/ { if (/struct net_device/) { prin
 ccflags-y += -DRTW_CFG80211_MONITOR_CHANNEL_HAS_NETDEV
 endif
 
+ifeq ($(shell awk '/@drvwrap/ { print "y"; exit }' $(srctree)/include/linux/usb.h), y)
+ccflags-y += -DRTW_USB_HAS_DRVWRAP
+endif
+
 ########### this part for *.mk ############################
 include $(src)/hal/phydm/phydm.mk
 
