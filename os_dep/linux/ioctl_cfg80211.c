@@ -7057,7 +7057,7 @@ static void rtw_get_chbwoff_from_cfg80211_chan_def(
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0)) */
 
 static int cfg80211_rtw_set_monitor_channel(struct wiphy *wiphy
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 101))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 101)) || defined(RTW_CFG80211_MONITOR_CHANNEL_HAS_NETDEV)
 	, struct net_device *dev
 	, struct cfg80211_chan_def *chandef
 #elif (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 8, 0))
@@ -8612,7 +8612,7 @@ static int cfg80211_rtw_tdls_mgmt(struct wiphy *wiphy,
 #else
 	u8 *peer,
 #endif
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 5, 0)) || defined(RHEL94)
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 5, 0)) || defined(RHEL94) || defined(RTW_CFG80211_TDLS_LINK_ID)
 	int link_id,
 #endif
 	u8 action_code,
