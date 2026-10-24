@@ -137,14 +137,14 @@ which can be provided via PR or message in Issues.
 
 Note: Red Hat Enterprise Linux (RHEL) and distros based on RHEL are
 supported by Red Hat devs due to the way kernel patches are handled in
-Red Hat. I support knowledgable RHEL developers if they want to merge
+Red Hat. I support knowledgeable RHEL developers if they want to merge
 the required support and keep it current. I reserve the right to delete
 this support without notice if it causes any problems.
 
 Current RHEL maintainer: misha4gps
 
 Note: Android is supported in the driver according to Realtek. I will
-support knowledgable Android developers if they want to merge and keep
+support knowledgeable Android developers if they want to merge and keep
 current the required support (most likely just instructions about how to
 compile and maybe a modification or two to the Makefile).
 
@@ -524,14 +524,14 @@ enter commands.
 sudo make sign-install
 ```
 
-Note: You will be promted for a password, please remember the password
+Note: You will be prompted for a password, please remember the password
 as it will be used in some of the following steps.
 
 ```
 sudo reboot
 ```
 
-The MOK managerment screen will appear during boot:
+The MOK management screen will appear during boot:
 
 `Shim UEFI Key Management`
 
@@ -543,7 +543,7 @@ Select "Continue"
 
 Select "Yes"
 
-When promted, enter the password you entered earlier.
+When prompted, enter the password you entered earlier.
 
 Warning: If you enter the wrong password, your computer will not be
 bootable. In this case, use the BOOT menu from your BIOS to boot then as
@@ -554,7 +554,7 @@ sudo mokutil --reset
 ```
 
 Restart your computer. Use the BOOT menu from BIOS to boot. In the MOK
-managerment screen, select `reset MOK list`, then reboot and retry from
+management screen, select `reset MOK list`, then reboot and retry from
 the above step `sudo make sign-install`.
 
 Note: If you use the Manual Installation Instructions, you will need to
@@ -739,7 +739,7 @@ not with USB 3.1 Gen 2.
 cable needs to be USB 3 capable (if not, you will be limited to USB 2
 speeds).
 
-- Extention cables can be problematic. A way to check if the extension
+- Extension cables can be problematic. A way to check if the extension
 cable is the problem is to plug the adapter temporarily into a USB port
 on the computer.
 

@@ -50,7 +50,7 @@ If you use the `install-driver.sh` script and see the following message
 
 You need to read the following:
 
-The MOK managerment screen will appear during boot:
+The MOK management screen will appear during boot:
 
 `Shim UEFI Key Management"
 
@@ -62,7 +62,7 @@ Select "Continue"
 
 Select "Yes"
 
-When promted, enter the password you entered earlier.
+When prompted, enter the password you entered earlier.
 
 If you enter the wrong password, your computer will not be bootable. In
 this case, use the BOOT menu from your BIOS to boot then as follows:
@@ -72,7 +72,7 @@ sudo mokutil --reset
 ```
 
 Restart your computer and use the BOOT menu from BIOS to boot. In the MOK
-managerment screen, select `reset MOK list`. Then Reboot and retry the
+management screen, select `reset MOK list`. Then Reboot and retry the
 driver installation.
 
 Manual Installation Instructions
