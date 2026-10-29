@@ -180,6 +180,10 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE(0x2001, 0x3316), .driver_info = RTL8812}, /* D-Link - Cameo */
 #endif
 
+#ifdef CONFIG_RTL8812B
+   {USB_DEVICE(0x0bda, 0xb812), .driver_info = RTL8812}, /* Cudy - WU1400 */ 
+#endif
+
 #ifdef CONFIG_RTL8821A
 	/*=== Realtek demoboard ===*/
 	{USB_DEVICE(USB_VENDER_ID_REALTEK, 0x0811), .driver_info = RTL8821}, /* Default ID */
