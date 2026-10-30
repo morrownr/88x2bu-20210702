@@ -20,4 +20,5 @@ if [ "$sproc" -gt 1 ]; then
 fi
 
 kernelver=${kernelver:-$(uname -r)}
-make "-j$sproc" "KVER=$kernelver" "KSRC=/lib/modules/$kernelver/build"
+# pass through arguments added by dkms, e.g. LLVM=1 for clang-built kernels
+make "-j$sproc" "KVER=$kernelver" "KSRC=/lib/modules/$kernelver/build" "$@"

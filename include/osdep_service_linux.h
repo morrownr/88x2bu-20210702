@@ -16,6 +16,24 @@
 #define __OSDEP_LINUX_SERVICE_H_
 
 #include <linux/version.h>
+#include <linux/string.h>
+#ifdef RTW_NO_STRNCPY
+/* strncpy() was removed in Linux 7.2; keep its zero-padding semantics */
+static inline char *rtw_strncpy(char *dest, const char *src, size_t count)
+{
+	char *tmp = dest;
+
+	while (count) {
+		*tmp = *src;
+		if (*src)
+			src++;
+		tmp++;
+		count--;
+	}
+	return dest;
+}
+#define strncpy rtw_strncpy
+#endif
 #include <linux/spinlock.h>
 #include <linux/compiler.h>
 #include <linux/kernel.h>
