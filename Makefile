@@ -2426,6 +2426,20 @@ ifeq ($(shell awk '/@drvwrap/ { print "y"; exit }' $(srctree)/include/linux/usb.
 ccflags-y += -DRTW_USB_HAS_DRVWRAP
 endif
 
+# Linux 7.2 removed strncpy() and WIPHY_FLAG_SUPPORTS_5_10_MHZ and added
+# rx_addr to remain_on_channel.
+ifeq ($(shell awk '!/^[ \t]*\*/ && /strncpy[^_a-zA-Z0-9]/ { f = 1 } END { if (!f) print "y" }' $(srctree)/include/linux/string.h $(srctree)/include/linux/fortify-string.h 2>/dev/null), y)
+ccflags-y += -DRTW_NO_STRNCPY
+endif
+
+ifeq ($(shell awk '/WIPHY_FLAG_SUPPORTS_5_10_MHZ/ { f = 1 } END { if (!f) print "y" }' $(srctree)/include/net/cfg80211.h 2>/dev/null), y)
+ccflags-y += -DRTW_CFG80211_NO_5_10_MHZ
+endif
+
+ifeq ($(shell awk '/\*remain_on_channel[^_a-z]/,/;/ { if (/rx_addr/) { print "y"; exit } }' $(srctree)/include/net/cfg80211.h 2>/dev/null), y)
+ccflags-y += -DRTW_CFG80211_ROC_HAS_RX_ADDR
+endif
+
 ########### this part for *.mk ############################
 include $(src)/hal/phydm/phydm.mk
 
