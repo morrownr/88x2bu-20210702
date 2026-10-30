@@ -41,6 +41,14 @@
 	#include "./8192cd_debug.h"
 #endif /* rtw_wifi_driver */
 
+/*
+ * Recent kernels (7.1 and later) only expose the pppoe_hdr::tag and
+ * pppoe_tag::tag_data flexible arrays to userspace. Both start right
+ * after their packed headers, so address them from the end of the header.
+ */
+#define RTW_PPPOE_HDR_TAGS(ph)	((unsigned char *)((struct pppoe_hdr *)(ph) + 1))
+#define RTW_PPPOE_TAG_DATA(tag)	((unsigned char *)((struct pppoe_tag *)(tag) + 1))
+
 #ifdef CL_IPV6_PASS
 	#ifdef __KERNEL__
 		#include <linux/ipv6.h>
@@ -89,7 +97,7 @@ static unsigned char *__nat25_find_pppoe_tag(struct pppoe_hdr *ph, unsigned shor
 	unsigned char *cur_ptr, *start_ptr;
 	unsigned short tagLen, tagType;
 
-	start_ptr = cur_ptr = (unsigned char *)ph->tag;
+	start_ptr = cur_ptr = RTW_PPPOE_HDR_TAGS(ph);
 	while ((cur_ptr - start_ptr) < ntohs(ph->length)) {
 		/* prevent un-alignment access */
 		tagType = (unsigned short)((cur_ptr[0] << 8) + cur_ptr[1]);
@@ -115,9 +123,9 @@ static int __nat25_add_pppoe_tag(struct sk_buff *skb, struct pppoe_tag *tag)
 
 	skb_put(skb, data_len);
 	/* have a room for new tag */
-	memmove(((unsigned char *)ph->tag + data_len), (unsigned char *)ph->tag, ntohs(ph->length));
+	memmove((RTW_PPPOE_HDR_TAGS(ph) + data_len), RTW_PPPOE_HDR_TAGS(ph), ntohs(ph->length));
 	ph->length = htons(ntohs(ph->length) + data_len);
-	memcpy((unsigned char *)ph->tag, tag, data_len);
+	memcpy(RTW_PPPOE_HDR_TAGS(ph), tag, data_len);
 	return data_len;
 }
 
@@ -1150,8 +1158,8 @@ int nat25_db_handle(_adapter *priv, struct sk_buff *skb, int method)
 								return -1;
 							}
 
-							memcpy(tag->tag_data + MAGIC_CODE_LEN + RTL_RELAY_TAG_LEN,
-							       pOldTag->tag_data, old_tag_len);
+							memcpy(RTW_PPPOE_TAG_DATA(tag) + MAGIC_CODE_LEN + RTL_RELAY_TAG_LEN,
+							       RTW_PPPOE_TAG_DATA(pOldTag), old_tag_len);
 
 							if (skb_pull_and_merge(skb, (unsigned char *)pOldTag, TAG_HDR_LEN + old_tag_len) < 0) {
 								DEBUG_ERR("call skb_pull_and_merge() failed in PADI/R packet!\n");
@@ -1164,9 +1172,9 @@ int nat25_db_handle(_adapter *priv, struct sk_buff *skb, int method)
 						tag->tag_len = htons(MAGIC_CODE_LEN + RTL_RELAY_TAG_LEN + old_tag_len);
 
 						/* insert the magic_code+client mac in relay tag */
-						pMagic = (unsigned short *)tag->tag_data;
+						pMagic = (unsigned short *)RTW_PPPOE_TAG_DATA(tag);
 						*pMagic = htons(MAGIC_CODE);
-						memcpy(tag->tag_data + MAGIC_CODE_LEN, skb->data + ETH_ALEN, ETH_ALEN);
+						memcpy(RTW_PPPOE_TAG_DATA(tag) + MAGIC_CODE_LEN, skb->data + ETH_ALEN, ETH_ALEN);
 
 						/* Add relay tag */
 						if (__nat25_add_pppoe_tag(skb, tag) < 0)
@@ -1227,14 +1235,14 @@ int nat25_db_handle(_adapter *priv, struct sk_buff *skb, int method)
 						return -1;
 					}
 
-					pMagic = (unsigned short *)tag->tag_data;
+					pMagic = (unsigned short *)RTW_PPPOE_TAG_DATA(tag);
 					if (ntohs(*pMagic) != MAGIC_CODE) {
 						DEBUG_ERR("Can't find MAGIC_CODE in %s packet!\n",
 							(ph->code == PADO_CODE ? "PADO" : "PADS"));
 						return -1;
 					}
 
-					memcpy(skb->data, tag->tag_data + MAGIC_CODE_LEN, ETH_ALEN);
+					memcpy(skb->data, RTW_PPPOE_TAG_DATA(tag) + MAGIC_CODE_LEN, ETH_ALEN);
 
 					if (tagLen > MAGIC_CODE_LEN + RTL_RELAY_TAG_LEN)
 						offset = TAG_HDR_LEN;
