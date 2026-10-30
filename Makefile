@@ -2440,6 +2440,16 @@ ifeq ($(shell awk '/\*remain_on_channel[^_a-z]/,/;/ { if (/rx_addr/) { print "y"
 ccflags-y += -DRTW_CFG80211_ROC_HAS_RX_ADDR
 endif
 
+# Linux 7.3 passes the remain_on_channel and mgmt_tx cookies in by value;
+# cfg80211 allocates them instead of the driver.
+ifeq ($(shell awk '/\*remain_on_channel[^_a-z]/,/;/ { if (/u64 cookie/) { print "y"; exit } }' $(srctree)/include/net/cfg80211.h 2>/dev/null), y)
+ccflags-y += -DRTW_CFG80211_ROC_COOKIE_BY_VALUE
+endif
+
+ifeq ($(shell awk '/\*mgmt_tx[^_a-z]/,/;/ { if (/u64 cookie/) { print "y"; exit } }' $(srctree)/include/net/cfg80211.h 2>/dev/null), y)
+ccflags-y += -DRTW_CFG80211_MGMT_TX_COOKIE_BY_VALUE
+endif
+
 ########### this part for *.mk ############################
 include $(src)/hal/phydm/phydm.mk
 
