@@ -290,7 +290,7 @@ void rtw_indicate_sta_disassoc_event(_adapter *padapter, struct sta_info *psta)
 
 #ifdef CONFIG_HOSTAPD_MLME
 
-static int mgnt_xmit_entry(struct sk_buff *skb, struct net_device *pnetdev)
+static netdev_tx_t mgnt_xmit_entry(struct sk_buff *skb, struct net_device *pnetdev)
 {
 	struct hostapd_priv *phostapdpriv = rtw_netdev_priv(pnetdev);
 	_adapter *padapter = (_adapter *)phostapdpriv->padapter;
