@@ -514,7 +514,7 @@ fail:
 }
 #endif
 
-int rtw_xmit_entry(_pkt *pkt, _nic_hdl pnetdev)
+netdev_tx_t rtw_xmit_entry(_pkt *pkt, _nic_hdl pnetdev)
 {
 	_adapter *padapter = (_adapter *)rtw_netdev_priv(pnetdev);
 	struct	mlme_priv	*pmlmepriv = &(padapter->mlmepriv);

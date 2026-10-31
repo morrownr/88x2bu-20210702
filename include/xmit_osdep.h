@@ -68,7 +68,7 @@ struct xmit_frame;
 struct xmit_buf;
 
 extern int _rtw_xmit_entry(_pkt *pkt, _nic_hdl pnetdev);
-extern int rtw_xmit_entry(_pkt *pkt, _nic_hdl pnetdev);
+extern netdev_tx_t rtw_xmit_entry(_pkt *pkt, _nic_hdl pnetdev);
 
 #endif /* PLATFORM_LINUX */
 
